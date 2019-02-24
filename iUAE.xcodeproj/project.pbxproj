@@ -218,7 +218,6 @@
 		7E82CBF319E1C0A70014AC6D /* m68k_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 059E3A2610636CBA0056A577 /* m68k_interface.cpp */; };
 		7E82CBF419E1C0BA0014AC6D /* m68k_intrf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0552BD010F3D797C005B30DF /* m68k_intrf.cpp */; };
 		7E82CBF719E1CFE10014AC6D /* combined_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 054525AF106EC5550032FC41 /* combined_modules.cpp */; };
-		7E8C24F21EA0E31300673701 /* rom.key in Resources */ = {isa = PBXBuildFile; fileRef = 7E8C24F11EA0E31300673701 /* rom.key */; };
 		7E922A801CF0AD6000D8006F /* touchstick.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E922A7F1CF0AD6000D8006F /* touchstick.mm */; };
 		7E98D5751D4E1241002EFBE0 /* savestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97855145153A454100580B91 /* savestate.cpp */; };
 		7EA2BCA1188B0EF6003DCE10 /* SingleWindowAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 053368B113B1BDD60012D55A /* SingleWindowAppDelegate.mm */; };
@@ -1610,7 +1609,6 @@
 		7E770D7A1D109DEC000E5E1A /* CoreSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreSetting.h; sourceTree = "<group>"; };
 		7E770D7B1D109DEC000E5E1A /* CoreSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreSetting.m; sourceTree = "<group>"; };
 		7E7936981D9D5FC5003274B4 /* constSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constSettings.h; sourceTree = "<group>"; };
-		7E8C24F11EA0E31300673701 /* rom.key */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = rom.key; path = ../../../Desktop/rom.key; sourceTree = "<group>"; };
 		7E922A7F1CF0AD6000D8006F /* touchstick.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = touchstick.mm; sourceTree = "<group>"; };
 		7EA4D6491923EC9700C58BB9 /* BaseWebviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseWebviewController.h; path = iUAEParents/BaseWebviewController.h; sourceTree = "<group>"; };
 		7EA4D64A1923EC9700C58BB9 /* BaseWebviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseWebviewController.m; path = iUAEParents/BaseWebviewController.m; sourceTree = "<group>"; };
@@ -1671,7 +1669,6 @@
 		7EF2F7BC1D2807B00019A579 /* joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joystick.h; sourceTree = "<group>"; };
 		7EF97ABB1A7586E7002CC332 /* SelectConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectConfigurationViewController.h; path = ../SelectConfigurationViewController.h; sourceTree = "<group>"; };
 		7EF97ABC1A7586E7002CC332 /* SelectConfigurationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SelectConfigurationViewController.mm; path = ../SelectConfigurationViewController.mm; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9064AD541C7D09FA004CAE28 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		9064AD601C7F7982004CAE28 /* MultiPeerConnectivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiPeerConnectivityController.h; path = iUAEParents/MultiPeerConnectivityController.h; sourceTree = "<group>"; };
 		9064AD611C7F7982004CAE28 /* MultiPeerConnectivityController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MultiPeerConnectivityController.mm; path = iUAEParents/MultiPeerConnectivityController.mm; sourceTree = "<group>"; };
@@ -2707,7 +2704,6 @@
 		057440D40FC2A4A7003BE251 /* roms */ = {
 			isa = PBXGroup;
 			children = (
-				7E8C24F11EA0E31300673701 /* rom.key */,
 			);
 			path = roms;
 			sourceTree = "<group>";
@@ -2847,14 +2843,6 @@
 		05BC1B1910734C0700EABC6E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				7E770D7A1D109DEC000E5E1A /* CoreSetting.h */,
-				7E770D7B1D109DEC000E5E1A /* CoreSetting.m */,
-				7E770D771D109BF4000E5E1A /* UnappliedSettingLabelHandler.h */,
-				7E770D781D109BF4000E5E1A /* UnappliedSettingLabelHandler.m */,
-				7E6F37771CDB4E58005BA173 /* SettingsSelectPortViewController.h */,
-				7E6F37781CDB4E58005BA173 /* SettingsSelectPortViewController.mm */,
-				E937D8AE1CB58CE3008DCC27 /* VPadTouchOrGyro.h */,
-				E937D8AF1CB58CE3008DCC27 /* VPadTouchOrGyro.mm */,
 				7E079CBF1A81594B00EC0DE4 /* AddConfigurationViewController.h */,
 				7E079CC01A81594B00EC0DE4 /* AddConfigurationViewController.mm */,
 				BE6086D71C2CF5AC008E668B /* adfresolver.h */,
@@ -4173,7 +4161,7 @@
 				LastUpgradeCheck = 0730;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = 6854WVMAT3;
+						DevelopmentTeam = WAJ9STR6KN;
 					};
 					BE17E1141D6C2E8200221E7F = {
 						CreatedOnToolsVersion = 7.3;
@@ -4341,7 +4329,6 @@
 				7E1B8C4D19FAE04700B6136B /* unsticky.png in Resources */,
 				7E5AF6111C444854000BF5CB /* keyboard_selected_svg.svg in Resources */,
 				97855112153A3F2E00580B91 /* Aperture (2x4 RB).png in Resources */,
-				7E8C24F21EA0E31300673701 /* rom.key in Resources */,
 				7E5AF61A1C444854000BF5CB /* controller_selected.png in Resources */,
 				97855115153A3F2E00580B91 /* Aperture (4x6).png in Resources */,
 				9785511B153A3F2E00580B91 /* Scanlines (100%).png in Resources */,
@@ -4859,20 +4846,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export CODESIGN_ALLOCATE=/Library/JailCoder/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ]; then\n/Library/JailCoder/Entitlements/Entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
-		};
-
-		7E57D8A219119D9500648935 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "/opt/iOSOpenDev/bin/iosod --xcbp";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -5687,6 +5660,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = WAJ9STR6KN;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iUAE_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5706,7 +5680,7 @@
 					"/**",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ursschhmid.iUAE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stoens.iUAE;
 				PRODUCT_NAME = iUAE;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5727,6 +5701,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = WAJ9STR6KN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -5753,7 +5728,7 @@
 					"/**",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ursschhmid.iUAE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stoens.iUAE;
 				PRODUCT_NAME = iUAE;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -5773,6 +5748,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = WAJ9STR6KN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -5797,7 +5773,7 @@
 					"/**",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ursschhmid.iUAE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stoens.iUAE;
 				PRODUCT_NAME = iUAE;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";

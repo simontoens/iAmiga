@@ -222,7 +222,7 @@ static const char *OFF_STATES = "eczqtrfnmpgv";
     
     int tiState = (int) _iCadeState;
     
-    char *p = strchr(ON_STATES, ch);
+    const char *p = strchr(ON_STATES, ch);
     bool stateChanged = false;
     if (p) {
         int index = p-ON_STATES;
