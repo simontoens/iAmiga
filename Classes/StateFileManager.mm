@@ -19,8 +19,10 @@
 
 static NSString *const kStatesDirectoryName = @"states";      // top level directory under Documents where all state information goes
 static NSString *const kStateImagesDirectoryName = @"images"; // sub directory that stores the screenshot associated with a saved state
+static NSString *const kStateConfigDirectoryName = @"config"; // sub directory that stores additional config files associated with a saved state
 static NSString *const kStateFileExtension = @".asf";
-static NSString *const kStateFileImageExtension = @".jpg";
+static NSString *const kStateImageFileExtension = @".jpg";
+static NSString *const kStateConfigFileExtension = @".cfg";
 
 @implementation StateFileManager {
     @private
@@ -28,6 +30,7 @@ static NSString *const kStateFileImageExtension = @".jpg";
     NSString *_documentsDirectoryPath;
     NSString *_statesDirectoryPath;
     NSString *_imagesDirectoryPath;
+    NSString *_configDirectoryPath;
 }
 
 # pragma mark - init/dealloc
@@ -38,6 +41,7 @@ static NSString *const kStateFileImageExtension = @".jpg";
         _documentsDirectoryPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] retain];
         _statesDirectoryPath = [[StateFileManager createAndGetDirectory:_fileManager rootDirectory:_documentsDirectoryPath directoryName:kStatesDirectoryName] retain];
         _imagesDirectoryPath = [[StateFileManager createAndGetDirectory:_fileManager rootDirectory:_statesDirectoryPath directoryName:kStateImagesDirectoryName] retain];
+        _configDirectoryPath = [[StateFileManager createAndGetDirectory:_fileManager rootDirectory:_statesDirectoryPath directoryName:kStateConfigDirectoryName] retain];
     }
     return self;
 }
@@ -47,6 +51,7 @@ static NSString *const kStateFileImageExtension = @".jpg";
     [_documentsDirectoryPath release];
     [_statesDirectoryPath release];
     [_imagesDirectoryPath release];
+    [_configDirectoryPath release];
     [super dealloc];
 }
 
@@ -83,7 +88,9 @@ static NSString *const kStateFileImageExtension = @".jpg";
     NSDate *modificationDate = [self getFileModificationDate:stateFilePath];
     NSString *imagePath = [self getStateImagePathForStateName:stateName];
     imagePath = [_fileManager fileExistsAtPath:imagePath] ? imagePath : nil;
-    return [[[State alloc] initWithName:stateName path:stateFilePath modificationDate:modificationDate imagePath:imagePath] autorelease];
+    State *state = [[[State alloc] initWithName:stateName path:stateFilePath modificationDate:modificationDate imagePath:imagePath] autorelease];
+    [self addConfigFilesToState:state];
+    return state;
 }
 
 - (void)deleteState:(State *)state {
@@ -91,19 +98,21 @@ static NSString *const kStateFileImageExtension = @".jpg";
     
     NSString *stateImagePath = [self getStateImagePathForStateName:state.name];
     [_fileManager removeItemAtPath:stateImagePath error:NULL];
+    
+    NSString *cfgDirPath = [self getStateConfigDirPath:state.name];
+    [_fileManager removeItemAtPath:cfgDirPath error:NULL];
 }
 
 - (State *)newState:(NSString *)stateName {
-    return [[[State alloc] initWithName:stateName path:[self getStateFilePathForStateName:stateName] modificationDate:nil imagePath:nil] autorelease];
+    return [[[State alloc] initWithName:stateName
+                                   path:[self getStateFilePathForStateName:stateName]
+                       modificationDate:nil
+                              imagePath:nil] autorelease];
 }
 
 - (void)saveState:(State *)state {
     [self writeImageFileForState:state];
-}
-
-- (NSString *)getStateFilePathForStateName:(NSString *)stateName {
-    stateName = [self trimNilIfEmpty:stateName];
-    return stateName ? [[_statesDirectoryPath stringByAppendingPathComponent:stateName] stringByAppendingString:kStateFileExtension] : nil;
+    [self writeConfigFilesForState:state];
 }
 
 #pragma mark - Private methods
@@ -116,6 +125,27 @@ static NSString *const kStateFileImageExtension = @".jpg";
     }
 }
 
+- (void)writeConfigFilesForState:(State *)state {
+    for (NSString *configFileName in [state getAllConfigNames]) {
+        NSString *configFilePath = [self getStateConfigFilePath:configFileName forStateName:state.name];
+        NSString *content = [state getConfigContentWithName:configFileName];
+        NSError *error;
+        [content writeToFile:configFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        NSAssert(error, @"Error while writing file");
+    }
+}
+
+- (void)addConfigFilesToState:(State *)state {
+    NSString *cfgDir = [self getStateConfigDirPath:state.name];
+    NSArray *cfgFiles = [_fileManager contentsOfDirectoryAtPath:cfgDir error:NULL];
+    for (NSString *cfgFileName in cfgFiles) {
+        NSString *cfgFilePath = [cfgDir stringByAppendingPathComponent:cfgFileName];
+        NSString *content = [NSString stringWithContentsOfFile:cfgFilePath encoding:NSUTF8StringEncoding error:NULL];
+        NSString *cfgName = [cfgFileName stringByDeletingPathExtension];
+        [state addConfigContent:content withName:cfgName];
+    }
+}
+
 - (NSDate *)getFileModificationDate:(NSString *)filePath {
     NSDictionary *attributes = [_fileManager attributesOfItemAtPath:filePath error:NULL];
     return [attributes objectForKey:NSFileModificationDate];
@@ -125,8 +155,24 @@ static NSString *const kStateFileImageExtension = @".jpg";
     return [fileName hasSuffix:kStateFileExtension];
 }
 
+- (NSString *)getStateFilePathForStateName:(NSString *)stateName {
+    stateName = [self trimNilIfEmpty:stateName];
+    return stateName ? [[_statesDirectoryPath stringByAppendingPathComponent:stateName] stringByAppendingString:kStateFileExtension] : nil;
+}
+
 - (NSString *)getStateImagePathForStateName:(NSString *)stateName {
-    return [[_imagesDirectoryPath stringByAppendingPathComponent:stateName] stringByAppendingString:kStateFileImageExtension];
+    return [[_imagesDirectoryPath stringByAppendingPathComponent:stateName] stringByAppendingString:kStateImageFileExtension];
+}
+
+- (NSString *)getStateConfigDirPath:(NSString *)stateName {
+    return [StateFileManager createAndGetDirectory:_fileManager rootDirectory:_configDirectoryPath
+                                     directoryName:stateName];
+}
+
+- (NSString *)getStateConfigFilePath:(NSString *)configName forStateName:(NSString *)stateName {
+    NSString *cfgDirPath = [self getStateConfigDirPath:stateName];
+    NSString *fileName = [configName stringByAppendingString:kStateConfigFileExtension];
+    return [cfgDirPath stringByAppendingPathComponent:fileName];
 }
 
 - (NSString *)trimNilIfEmpty:(NSString *)string {

@@ -20,6 +20,10 @@
 
 - (instancetype)initWithName:(NSString *)name path:(NSString *)path modificationDate:(NSDate *)modificationDate imagePath:(NSString *)imagePath;
 
+- (void)addConfigContent:(NSString *)configContent withName:(NSString *)configName;
+- (NSString *)getConfigContentWithName:(NSString *)configName;
+- (NSArray *)getAllConfigNames;
+
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSString *path;
 @property (nonatomic, readonly) NSString *modificationDate;

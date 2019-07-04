@@ -20,6 +20,8 @@
 #include "savestate.h"
 
 #import "CoreSetting.h"
+#import "KeyButtonConfiguration.h"
+#import "Settings.h"
 #import "ScrollToRowHandler.h"
 #import "State.h"
 #import "StateManagementController.h"
@@ -27,10 +29,12 @@
 #import "SVProgressHUD.h"
 
 static NSString *const kSaveStateAlertTitle = @"Save";
+static NSString *const kKeyButtonsConfigName = @"keybuttons";
 
 @implementation StateManagementController {
     @private
     ScrollToRowHandler *_scrollToRowHandler;
+    Settings *_settings;
     StateFileManager *_stateFileManager;
     NSArray *_states;
     UIBarButtonItem *_saveButton;
@@ -41,6 +45,7 @@ static NSString *const kSaveStateAlertTitle = @"Save";
 
 - (void)dealloc {
     [_scrollToRowHandler release];
+    [_settings release];
     [_stateFileManager release];
     [_states release];
     [_saveButton release];
@@ -55,6 +60,7 @@ static NSString *const kSaveStateAlertTitle = @"Save";
     [super viewDidLoad];
     [self initNavigationBarButtons];
     _scrollToRowHandler = [[ScrollToRowHandler alloc] initWithTableView:self.statesTableView identity:@"states"];
+    _settings = [[Settings alloc] init];
     _stateFileManager = [[StateFileManager alloc] init];
     [_stateNameTextField addTarget:self action:@selector(onStateNameTextFieldChanged) forControlEvents:UIControlEventEditingChanged];
     [self reloadStates];
@@ -174,16 +180,25 @@ static NSString *const kSaveStateAlertTitle = @"Save";
 
 - (void)restoreState {
     NSString *stateName = _stateNameTextField.text;
-    State *stateToRestore = [_stateFileManager loadState:stateName];
+    State *state = [_stateFileManager loadState:stateName];
     static char path[1024];
-    [stateToRestore.path getCString:path maxLength:sizeof(path) encoding:[NSString defaultCStringEncoding]];
+    [state.path getCString:path maxLength:sizeof(path) encoding:[NSString defaultCStringEncoding]];
     savestate_filename = path;
     savestate_state = STATE_DORESTORE;
     [CoreSettings onReset]; // restoring a state resets the emulator
     
     // set the selected state to the one that is being restored
-    NSUInteger index = [_states indexOfObject:stateToRestore];
+    NSUInteger index = [_states indexOfObject:state];
     [_scrollToRowHandler setRow:[NSIndexPath indexPathForRow:index inSection:0]];
+    
+    // the state may have associated key buttons
+    NSString *json = [state getConfigContentWithName:kKeyButtonsConfigName];
+    if (!json) {
+        // the state we're loading doesn't have an associate key buttons config,
+        // so make an empty one here
+        json = [KeyButtonConfiguration serializeToJSON:@[]];
+    }
+    [_settings setKeyButtonConfigurations:[KeyButtonConfiguration deserializeFromJSON:json] inMemory:YES];
     
     // the state restore logic, including inserting the floppy(ies) associated with the state,
     // only runs after exiting settings - in order to reduce confusion about what floppies are
@@ -198,6 +213,13 @@ static NSString *const kSaveStateAlertTitle = @"Save";
         state.image = _emulatorScreenshot;
         _selectedStateScreenshot.image = state.image;
     }
+    
+    if (_settings.keyButtonsEnabled) {
+        // get current key buttons and save them along with the state
+        NSString *json = [KeyButtonConfiguration serializeToJSON:_settings.keyButtonConfigurations];
+        [state addConfigContent:json withName:kKeyButtonsConfigName];
+    }
+    
     [_stateFileManager saveState:state];
     static char path[1024];
     [state.path getCString:path maxLength:sizeof(path) encoding:[NSString defaultCStringEncoding]];
@@ -232,7 +254,7 @@ static NSString *const kSaveStateAlertTitle = @"Save";
 }
 
 - (void)updateNavigationBarTitle {
-    self.navigationItem.title = [_states count] == 0 ? @"No saved states" : [NSString stringWithFormat:@"Saved states: %i", [_states count]];
+    self.navigationItem.title = [_states count] == 0 ? @"No saved states" : [NSString stringWithFormat:@"Saved states: %lu", (unsigned long)[_states count]];
 }
 
 - (void)setStateNameTextFieldForSelectedState {

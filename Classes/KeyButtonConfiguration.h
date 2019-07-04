@@ -34,4 +34,7 @@
 
 - (KeyButtonConfiguration *)clone;
 
++ (NSString *)serializeToJSON:(NSArray<KeyButtonConfiguration *> *)keyButtonConfigurations;
++ (NSArray<KeyButtonConfiguration *> *)deserializeFromJSON:(NSString *)json;
+
 @end

@@ -57,6 +57,15 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
 @property (nonatomic, readwrite, assign) NSInteger CMem;
 @property (nonatomic, readwrite, assign) NSInteger FMem;
 
+/**
+ * Some settings are written and read from memory instead of using the device's storage.
+ * This method clears the in-memory storage of settings.
+ *
+ * For example, when an enumator state is restored from memory, some related settings
+ * are written to in-memory storage, to prevent overwriting the persisted value.
+ */
+- (void)clearMemorySettings;
+
 - (void)initializespecificsettings;
 - (void)setFloppyConfigurations:(NSArray *)adfPaths;
 - (void)setFloppyConfiguration:(NSString *)adfPath;
@@ -64,6 +73,8 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
 - (void)setKeyconfiguration:(NSString *)configuredkey Button:(int)button;
 - (void)setKeyconfigurationname:(NSString *)configuredkey forController:(int)cNumber Button:(int)button;
 - (void)setKeyconfigurationname:(NSString *)configuredkey Button:(int)button;
+
+- (void)setKeyButtonConfigurations:(NSArray *)keyButtonConfigurations inMemory:(BOOL)inMemory;
 
 - (void)setCNumber:(int)cNumber;
 

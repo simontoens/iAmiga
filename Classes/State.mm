@@ -21,6 +21,7 @@
     UIImage *_image;
     NSDate *_modificationDate;
     NSString *_formattedModificationDate;
+    NSMutableDictionary *_configNameToConfigContent;
 }
 
 @dynamic modificationDate, image;
@@ -31,6 +32,7 @@
         _path = [path retain];
         _modificationDate = [modificationDate retain];
         _imagePath = [imagePath retain];
+        _configNameToConfigContent = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -42,6 +44,7 @@
     [_imagePath release];
     [_formattedModificationDate release];
     [_image release];
+    [_configNameToConfigContent release];
     [super dealloc];
 }
 
@@ -58,6 +61,18 @@
         [_image release];
         _image = [image retain];
     }
+}
+
+- (void)addConfigContent:(NSString *)configContent withName:(NSString *)configName {
+    [_configNameToConfigContent setObject:configContent forKey:configName];
+}
+
+- (NSString *)getConfigContentWithName:(NSString *)configName {
+    return [_configNameToConfigContent objectForKey:configName];
+}
+
+- (NSArray *)getAllConfigNames {
+    return _configNameToConfigContent.allKeys;
 }
 
 - (BOOL)isEqual:(id)other {

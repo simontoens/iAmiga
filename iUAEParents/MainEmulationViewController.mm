@@ -188,6 +188,7 @@ extern void uae_reset();
 
 - (void)didSelectReset:(DriveState *)driveState {
     uae_reset();
+    [_settings clearMemorySettings];
     [self initDriveSetupTimer:driveState];
 }
 

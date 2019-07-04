@@ -39,8 +39,17 @@ extern int joystickselected;
 static NSString *_configurationname;
 static int _cNumber = 1;
 
+// single instance shared by all Settings instances
+static volatile NSMutableDictionary *memory;
+
 @implementation Settings {
     NSUserDefaults *defaults;
+}
+
++ (void) initialize {
+    if (self == [Settings class]) {
+        memory = [[NSMutableDictionary alloc] init];
+    }
 }
 
 - (id)init {
@@ -95,7 +104,7 @@ static int _cNumber = 1;
     else
     {
         mainMenu_stretchscreen = self.stretchScreen;
-        mainMenu_AddVerticalStretchValue = self.addVerticalStretchValue;
+        mainMenu_AddVerticalStretchValue = (int)self.addVerticalStretchValue;
         mainMenu_showStatus = self.showStatus;
     }
     
@@ -299,7 +308,6 @@ static int _cNumber = 1;
     [self setFloat:gyroSensitivity forKey:kGyroSensitivity];
 }
 
-
 - (BOOL)RStickAnalogIsMouse {
     return [self boolForKey:kRstickmouseFlag];
 }
@@ -323,7 +331,6 @@ static int _cNumber = 1;
 - (void) setUseR2forRightMouseButton:(BOOL)R2mouseFlag {
     [self setBool:R2mouseFlag forKey:kR2mouseFlag];
 }
-
 
 - (void)setRStickAnalogIsMouse:(BOOL)rstickmouseFlag
 {
@@ -476,75 +483,71 @@ static int _cNumber = 1;
     [self setBool:keyButtonsEnabled forKey:kKeyButtonsEnabledKey];
 }
 
-NSString *const kPositionAttrName = @"position";
-NSString *const kSizeAttrName = @"size";
-NSString *const kKeyAttrName = @"key";
-NSString *const kKeyNameAttrName = @"keyname";
-NSString *const kGroupNameAttrName = @"groupname";
-NSString *const kShowOutlineAttrName = @"showoutline";
-NSString *const kEnabledAttrName = @"enabled";
-
 - (NSArray *)keyButtonConfigurations {
     NSString *json = [self stringForKey:kKeyButtonConfigurationsKey];
-    if (!json) {
-        return @[];
-    }
-    NSData *jsonData = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
-    NSArray *dicts = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
-    NSMutableArray *keyButtonConfigurations = [[[NSMutableArray alloc] initWithCapacity:[dicts count]] autorelease];
-    for (NSDictionary *dict : dicts) {
-        KeyButtonConfiguration *button = [[[KeyButtonConfiguration alloc] init] autorelease];
-        button.position = CGPointFromString([dict objectForKey:kPositionAttrName]);
-        button.size = CGSizeFromString([dict objectForKey:kSizeAttrName]);
-        button.key = (SDLKey)[[dict objectForKey:kKeyAttrName] intValue];
-        button.keyName = [dict objectForKey:kKeyNameAttrName];
-        button.groupName = [dict objectForKey:kGroupNameAttrName];
-        button.showOutline = [[dict objectForKey:kShowOutlineAttrName] boolValue];
-        button.enabled = [[dict objectForKey:kEnabledAttrName] boolValue];
-        [keyButtonConfigurations addObject:button];
-    }
-    return keyButtonConfigurations;
+    return [KeyButtonConfiguration deserializeFromJSON:json];
 }
 
 - (void)setKeyButtonConfigurations:(NSArray *)keyButtonConfigurations {
-    NSMutableArray *dicts = [NSMutableArray arrayWithCapacity:[keyButtonConfigurations count]];
-    for (KeyButtonConfiguration *button in keyButtonConfigurations) {
-        NSDictionary *dict = @{kPositionAttrName : NSStringFromCGPoint(button.position),
-                               kSizeAttrName : NSStringFromCGSize(button.size),
-                               kKeyAttrName : @(button.key),
-                               kKeyNameAttrName : button.keyName,
-                               kGroupNameAttrName : button.groupName,
-                               kShowOutlineAttrName : @(button.showOutline),
-                               kEnabledAttrName : @(button.enabled)};
-        [dicts addObject:dict];
-    }
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dicts options:0 error:nil];
-    NSString *json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [self setObject:json forKey:kKeyButtonConfigurationsKey];
+    [self setKeyButtonConfigurations:keyButtonConfigurations inMemory:NO];
 }
 
-- (void)setBool:(BOOL)value forKey:(NSString *)settingitemname {
-    [defaults setBool:value forKey:[self getInternalSettingKey:settingitemname]];
-}
-
-- (void)setObject:(id)value forKey:(NSString *)settingitemname {
-    [defaults setObject:value forKey:[self getInternalSettingKey:settingitemname]];
+- (void)setKeyButtonConfigurations:(NSArray *)keyButtonConfigurations inMemory:(BOOL)inMemory {
+    NSString *json = [KeyButtonConfiguration serializeToJSON:keyButtonConfigurations];
+    [self setObject:json forKey:kKeyButtonConfigurationsKey inMemory:inMemory];
 }
 
 - (bool)boolForKey:(NSString *)settingitemname {
     return [defaults boolForKey:[self getInternalSettingKey:settingitemname]];
 }
-         
-- (NSString *)stringForKey:(NSString *)settingitemname {
-    return [defaults stringForKey:[self getInternalSettingKey:settingitemname]];
+
+- (void)setBool:(BOOL)value forKey:(NSString *)settingitemname {
+    [self setBool:value forKey:settingitemname inMemory:NO];
 }
 
-- (void)setInteger:(NSInteger)value forKey:(NSString *)settingitemname {
-    [defaults setInteger:value forKey:[self getInternalSettingKey:settingitemname]];
+- (void)setBool:(BOOL)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
+    NSString *key = [self getInternalSettingKey:settingitemname];
+    if (mem || [memory objectForKey:key] != nil) {
+        // write to memory if asked explicitly or if the setting already exists in memory
+    } else {
+        [defaults setBool:value forKey:key];
+    }
+}
+
+- (id)objectForKey:(NSString *)settingitemname {
+    return [defaults objectForKey:[self getInternalSettingKey:settingitemname]];
+}
+
+- (void)setObject:(id)value forKey:(NSString *)settingitemname {
+    [self setObject:value forKey:settingitemname inMemory:NO];
+}
+
+- (void)setObject:(id)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
+    NSString *key = [self getInternalSettingKey:settingitemname];
+    if (mem || [memory objectForKey:key] != nil) {
+        // write to memory if asked explicitly or if the setting already exists in memory
+        [memory setObject:value forKey:key];
+    } else {
+        [defaults setObject:value forKey:key];
+    }
 }
 
 - (NSInteger)integerForKey:(NSString *)settingitemname {
     return [defaults integerForKey:[self getInternalSettingKey:settingitemname]];
+}
+
+- (void)setInteger:(NSInteger)value forKey:(NSString *)settingitemname {
+    [self setInteger:value forKey:settingitemname inMemory:NO];
+}
+
+- (void)setInteger:(NSInteger)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
+    NSString *key = [self getInternalSettingKey:settingitemname];
+    if (mem || [memory objectForKey:key] != nil) {
+        // write to memory if asked explicitly or if the setting already exists in memory
+        [memory setObject:[NSNumber numberWithInteger:value] forKey:key];
+    } else {
+        [defaults setInteger:value forKey:key];
+    }
 }
 
 - (float)floatForKey:(NSString *)settingitemname {
@@ -552,15 +555,30 @@ NSString *const kEnabledAttrName = @"enabled";
 }
 
 - (void)setFloat:(float)value forKey:(NSString *)settingitemname {
-    [defaults setFloat:value forKey:[self getInternalSettingKey:settingitemname]];
+    [self setFloat:value forKey:settingitemname inMemory:NO];
+}
+
+- (void)setFloat:(float)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
+    NSString *key = [self getInternalSettingKey:settingitemname];
+    if (mem || [memory objectForKey:key] != nil) {
+        // write to memory if asked explicitly or if the setting already exists in memory
+        [memory setObject:[NSNumber numberWithFloat:value] forKey:key];
+    } else {
+        [defaults setFloat:value forKey:key];
+    }
+}
+
+- (NSString *)stringForKey:(NSString *)settingitemname {
+    NSString *key = [self getInternalSettingKey:settingitemname];
+    NSString *value = [memory objectForKey:key];
+    if (value) {
+        return value;
+    }
+    return [defaults stringForKey:[self getInternalSettingKey:settingitemname]];
 }
 
 - (NSArray *)arrayForKey:(NSString *)settingitemname {
     return [defaults arrayForKey:[self getInternalSettingKey:settingitemname]];
-}
-
-- (id)objectForKey:(NSString *)settingitemname {
-    return [defaults objectForKey:[self getInternalSettingKey:settingitemname]];
 }
 
 - (void)removeObjectForKey:(NSString *) settingitemname {
@@ -578,20 +596,19 @@ NSString *const kEnabledAttrName = @"enabled";
 }
 
 - (void)setConfig:(NSString *)configName forDisk:(NSString *)diskName {
-    
     NSString *configstring = [NSString stringWithFormat:@"cnf%@", diskName];
-    
-    if([configName isEqual:@"None"])
-    {
-        if([self configForDisk:diskName])
-        {
+    if ([configName isEqual:@"None"]) {
+        if ([self configForDisk:diskName]) {
             [defaults setObject:nil forKey:configstring];
         }
     }
-    else
-    {
+    else {
         [defaults setObject:configName forKey:configstring];
     }
+}
+
+- (void)clearMemorySettings {
+    [memory removeAllObjects];
 }
 
 - (void)dealloc {

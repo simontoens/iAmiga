@@ -72,6 +72,63 @@ static NSString *const kDefaultGroupName = @"default";
     return clone;
 }
 
++ (NSString *)serializeToJSON:(NSArray<KeyButtonConfiguration *> *)keyButtonConfigurations
+{
+    NSMutableArray *dicts = [NSMutableArray arrayWithCapacity:[keyButtonConfigurations count]];
+    for (KeyButtonConfiguration *cfg in keyButtonConfigurations) {
+        [dicts addObject:[cfg toDict]];
+    }
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dicts options:0 error:nil];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
++ (NSArray<KeyButtonConfiguration *> *)deserializeFromJSON:(NSString *)json
+{
+    if (!json) {
+        return @[];
+    }
+    NSData *jsonData = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+    NSArray *dicts = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    NSMutableArray *keyButtonConfigurations = [[[NSMutableArray alloc] initWithCapacity:[dicts count]] autorelease];
+    for (NSDictionary *dict in dicts) {
+        KeyButtonConfiguration *cfg = [KeyButtonConfiguration fromDict:dict];
+        [keyButtonConfigurations addObject:cfg];
+    }
+    return keyButtonConfigurations;
+
+}
+
+NSString *const kPositionAttrName = @"position";
+NSString *const kSizeAttrName = @"size";
+NSString *const kKeyAttrName = @"key";
+NSString *const kKeyNameAttrName = @"keyname";
+NSString *const kGroupNameAttrName = @"groupname";
+NSString *const kShowOutlineAttrName = @"showoutline";
+NSString *const kEnabledAttrName = @"enabled";
+
+- (NSDictionary *)toDict {
+    return @{kPositionAttrName : NSStringFromCGPoint(self.position),
+                 kSizeAttrName : NSStringFromCGSize(self.size),
+                  kKeyAttrName : @(self.key),
+              kKeyNameAttrName : self.keyName,
+            kGroupNameAttrName : self.groupName,
+          kShowOutlineAttrName : @(self.showOutline),
+              kEnabledAttrName : @(self.enabled)};
+}
+
++ (KeyButtonConfiguration *)fromDict:(NSDictionary *)dict
+{
+    KeyButtonConfiguration *cfg = [[[KeyButtonConfiguration alloc] init] autorelease];
+    cfg.position = CGPointFromString([dict objectForKey:kPositionAttrName]);
+    cfg.size = CGSizeFromString([dict objectForKey:kSizeAttrName]);
+    cfg.key = (SDLKey)[[dict objectForKey:kKeyAttrName] intValue];
+    cfg.keyName = [dict objectForKey:kKeyNameAttrName];
+    cfg.groupName = [dict objectForKey:kGroupNameAttrName];
+    cfg.showOutline = [[dict objectForKey:kShowOutlineAttrName] boolValue];
+    cfg.enabled = [[dict objectForKey:kEnabledAttrName] boolValue];
+    return cfg;
+}
+
 - (id)copyWithZone:(NSZone*)zone {
     return [self retain];
 }
