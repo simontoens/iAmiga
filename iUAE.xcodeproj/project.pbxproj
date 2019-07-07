@@ -5568,7 +5568,7 @@
 				);
 				INFOPLIST_FILE = "TargetSpecific/$(PRODUCT_NAME)/info.plist";
 				INSTALL_PATH = /Applications;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-mno-thumb";
@@ -5608,6 +5608,7 @@
 					uae4all_gp2x_0.7.2a/src/iphone,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"/**",
@@ -5656,6 +5657,7 @@
 					uae4all_gp2x_0.7.2a/src/iphone,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"/**",
@@ -5701,6 +5703,7 @@
 					uae4all_gp2x_0.7.2a/src/iphone,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"/**",
@@ -6041,7 +6044,7 @@
 				);
 				INFOPLIST_FILE = "TargetSpecific/$(PRODUCT_NAME)/info.plist";
 				INSTALL_PATH = /Applications;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -6092,7 +6095,7 @@
 				);
 				INFOPLIST_FILE = "TargetSpecific/$(PRODUCT_NAME)/info.plist";
 				INSTALL_PATH = /Applications;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MACH_O_TYPE = mh_execute;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = "-mno-thumb";
