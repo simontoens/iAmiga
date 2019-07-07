@@ -298,7 +298,7 @@ static FMemCoreSetting *_fmeminstance;
 @end
 
 @implementation CMemCoreSetting {
-    int _actcmem;
+    NSInteger _actcmem;
 }
 
 + (CMemCoreSetting *)getInstance {
@@ -325,25 +325,24 @@ static FMemCoreSetting *_fmeminstance;
 }
 
 - (void)hook_onReset:(NSNumber *)cmem {
-    prefs_chipmem_size = _settings.CMem * 1024;
+    prefs_chipmem_size = (unsigned int)(_settings.CMem * 1024);
     _actcmem = _settings.CMem;
 }
 
 - (NSNumber *)hook_getEmulatorValue {
-    return [NSNumber numberWithInt:_actcmem];
+    return [NSNumber numberWithInteger:_actcmem];
 }
 
 - (NSString *)getUnappliedValue {
+
+    NSInteger curcmem = _settings.CMem;
+    NSInteger actcmem = [[self hook_getEmulatorValue] integerValue];
     
-    int curcmem = _settings.CMem;
-    int actcmem = [[self hook_getEmulatorValue] integerValue];
-    
-    if(curcmem == actcmem) {
+    if (curcmem == actcmem) {
         return nil;
     }
     else {
-        NSString *scurcmem = [NSString stringWithFormat:@"%i", curcmem];
-        return scurcmem;
+        return [NSString stringWithFormat:@"%li", (long)curcmem];
     }
     
 }
@@ -351,7 +350,7 @@ static FMemCoreSetting *_fmeminstance;
 @end
 
 @implementation FMemCoreSetting {
-    int _actfmem;
+    NSInteger _actfmem;
 }
 
 + (FMemCoreSetting *)getInstance {
@@ -377,27 +376,25 @@ static FMemCoreSetting *_fmeminstance;
 }
 
 - (void)hook_onReset:(NSNumber *)cmem {
-    prefs_fastmem_size = _settings.FMem * 1024 * 1024;
+    prefs_fastmem_size = (unsigned int)_settings.FMem * 1024 * 1024;
     _actfmem = _settings.FMem;
 }
 
 - (NSNumber *)hook_getEmulatorValue {
-    return [NSNumber numberWithInt:_actfmem];
+    return [NSNumber numberWithInteger:_actfmem];
 }
 
 - (NSString *)getUnappliedValue {
     
-    int curfmem = _settings.FMem;
-    int actfmem = [[self hook_getEmulatorValue] integerValue];
+    NSInteger curfmem = _settings.FMem;
+    NSInteger actfmem = [[self hook_getEmulatorValue] integerValue];
     
-    if(curfmem == actfmem) {
+    if (curfmem == actfmem) {
         return nil;
-    }
-    else {
-        NSString *scurfmem = [NSString stringWithFormat:@"%i", curfmem];
+    } else {
+        NSString *scurfmem = [NSString stringWithFormat:@"%li", (long)curfmem];
         return scurfmem;
-    }
-    
+    }    
 }
 
 @end
