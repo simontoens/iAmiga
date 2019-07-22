@@ -15,7 +15,6 @@
 
 extern int mainMenu_showStatus;
 extern int mainMenu_stretchscreen;
-extern int mainMenu_AddVerticalStretchValue;
 
 @implementation SettingsDisplayController {
     @private
@@ -38,7 +37,6 @@ extern int mainMenu_AddVerticalStretchValue;
                       @"Scanline (50%)", @"Scanline (100%)",
                       @"Aperture 1x2 RB", @"Aperture 1x3 RB",
                       @"Aperture 2x4 RB", @"Aperture 2x4 BG"] retain];
-    self.additionalVerticalStretchValue.delegate = self;
     _settingLabelHandler = [[UnappliedSettingLabelHandler alloc] init];
 }
 
@@ -118,11 +116,6 @@ extern int mainMenu_AddVerticalStretchValue;
         effectIndex = _settings.selectedEffectIndex;
     }
     [self populateEffectLabel:effectIndex];
-}
-
-- (IBAction)setAdditionalVerticalStretch:(id)sender {
-    mainMenu_AddVerticalStretchValue = (int)[_additionalVerticalStretchValue.text doubleValue];
-    _settings.addVerticalStretchValue = mainMenu_AddVerticalStretchValue;
 }
 
 - (IBAction)onVolumeChanged {

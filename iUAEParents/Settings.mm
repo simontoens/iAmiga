@@ -18,13 +18,13 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-#import "uae.h"
+//#import "uae.h"
 #import "sysconfig.h"
 #import "sysdeps.h"
-#import "options.h"
-#import "SDL.h"
-#import "UIKitDisplayView.h"
-#import "savestate.h"
+//#import "options.h"
+//#import "SDL.h"
+//#import "UIKitDisplayView.h"
+//#import "savestate.h"
 #import "JoypadKey.h"
 
 #import "Settings.h"
@@ -33,7 +33,6 @@
 
 extern int mainMenu_showStatus;
 extern int mainMenu_stretchscreen;
-extern int mainMenu_AddVerticalStretchValue;
 extern int joystickselected;
 
 static NSString *_configurationname;
@@ -96,15 +95,12 @@ static volatile NSMutableDictionary *memory;
 - (void)initializespecificsettings {
     if(![self boolForKey:kInitializeKey])
     {
-        self.stretchScreen = mainMenu_stretchscreen;
-        self.addVerticalStretchValue = mainMenu_AddVerticalStretchValue;
         self.showStatus = mainMenu_showStatus;
         [self setBool:TRUE forKey:kInitializeKey];
     }
     else
     {
         mainMenu_stretchscreen = self.stretchScreen;
-        mainMenu_AddVerticalStretchValue = (int)self.addVerticalStretchValue;
         mainMenu_showStatus = self.showStatus;
     }
     
@@ -211,10 +207,6 @@ static volatile NSMutableDictionary *memory;
     [self setBool:stretchScreen forKey:kStretchScreenKey];
 }
 
-- (NSUInteger)addVerticalStretchValue {
-    return [self integerForKey:kAddVerticalStretchKey];
-}
-
 - (NSInteger)CMem {
     return [self integerForKey:kCmem];
 }
@@ -229,10 +221,6 @@ static volatile NSMutableDictionary *memory;
 
 - (void)setFMem:(NSInteger)cmem {
     [self setInteger:cmem forKey:kFmem];
-}
-
-- (void)setAddVerticalStretchValue:(NSUInteger)addVerticalStretchVal {
-    [self setInteger: addVerticalStretchVal forKey:kAddVerticalStretchKey];
 }
 
 - (BOOL)showStatus {

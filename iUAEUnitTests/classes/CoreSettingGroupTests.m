@@ -23,21 +23,28 @@
 
 @implementation TestGroupMember {
     @public
-    NSString *persistValueArgument;
     NSString *onResetArgument;
-    NSString *emulatorValue;
+    NSString *currentValue;
 }
 
-- (void)hook_persistValue:(NSString *)arg {
-    persistValueArgument = arg;
+- (void)setValue:(id)value {
+    [super setValue:value];
+    currentValue = value;
+}
+
+- (NSString *)getUnappliedValue {
+    return currentValue;
 }
 
 - (void)hook_onReset:(NSString *)arg {
     onResetArgument = arg;
 }
 
-- (NSString *)hook_getEmulatorValue {
-    return emulatorValue;
+- (void)hook_persistValue:(id)value {
+}
+
+- (id)hook_getEmulatorValue {
+    return nil;
 }
 
 - (Class)getGroup {

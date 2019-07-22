@@ -28,7 +28,6 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
 
 @property (nonatomic, readwrite, assign) BOOL ntsc;
 @property (nonatomic, readwrite, assign) BOOL stretchScreen;
-@property (nonatomic, readwrite, assign) NSUInteger addVerticalStretchValue;
 @property (nonatomic, readwrite, assign) BOOL showStatus;
 @property (nonatomic, readwrite, assign) BOOL showStatusBar;
 @property (nonatomic, readwrite, assign) NSUInteger selectedEffectIndex;

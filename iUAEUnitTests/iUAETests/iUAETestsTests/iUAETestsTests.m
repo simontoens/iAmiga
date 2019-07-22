@@ -1,17 +1,18 @@
 //
-//  iUAEUnitTests.m
-//  iUAEUnitTests
+//  iUAETestsTests.m
+//  iUAETestsTests
 //
-//  Created by Simon Toens on 7/7/19.
+//  Created by Simon Toens on 7/17/19.
+//  Copyright © 2019 Simon Toens. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface iUAEUnitTests : XCTestCase
+@interface iUAETestsTests : XCTestCase
 
 @end
 
-@implementation iUAEUnitTests
+@implementation iUAETestsTests
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.

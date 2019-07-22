@@ -155,7 +155,6 @@ static FMemCoreSetting *_fmeminstance;
 }
 
 - (BOOL)hasUnappliedValue {
-    
     return [self getUnappliedValue] != nil;
 }
 
@@ -261,38 +260,28 @@ static FMemCoreSetting *_fmeminstance;
 }
 
 - (NSString *)hook_getEmulatorValue {
-    
-    if([_diskDriveService getRomPath])
-    {
+    if ([_diskDriveService getRomPath]) {
         NSString *romPath = [[NSString alloc] initWithString:[_diskDriveService getRomPath]];
         return romPath;
     }
-    else
-    {
+    else {
         return nil;
     }
 }
 
 - (NSString *)getUnappliedValue {
-    
     if(!_settings.romPath) [self initromPath];
-    
     NSString *curRompath = _settings.romPath;
-    
     NSString *actRompath = [self hook_getEmulatorValue];
-    
     NSString *curRomfile = [[curRompath lastPathComponent] stringByDeletingPathExtension];
     NSString *actRomfile = [[actRompath lastPathComponent] stringByDeletingPathExtension];
-    
-    if([curRomfile isEqualToString:actRomfile] || !(curRomfile)) {
+    if ([curRomfile isEqualToString:actRomfile] || !(curRomfile)) {
         return nil;
-    }
-    else {
+    } else {
         [self initromPath];
         NSString *fixedPath = [[NSString alloc] initWithString:_settings.romPath];
         return fixedPath;
     }
-    
 }
 
 @end

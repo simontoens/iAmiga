@@ -1,0 +1,616 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE0FE81422E54EDB00D44FE4 /* MultiDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FE81222E54EDB00D44FE4 /* MultiDictionary.m */; };
+		BE0FE81722E55D0600D44FE4 /* CoreSettingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE0FE81622E55D0600D44FE4 /* CoreSettingTests.m */; };
+		BE0FE81A22E55D8700D44FE4 /* Settings.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE0FE81922E55D8700D44FE4 /* Settings.mm */; };
+		BE514DED22DF4AEF001B3E73 /* FakeEMUBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3479722DF4A71002F60AE /* FakeEMUBrowser.m */; };
+		BEAA6A5422E5B6A9009B4059 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BEAA6A5222E5B6A9009B4059 /* AppDelegate.m */; };
+		BEBDE0A922E0623400A8790F /* FakeDiskDriveService.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBDE0A822E0623400A8790F /* FakeDiskDriveService.m */; };
+		BEBDE0AD22E062D300A8790F /* FakeHardDriveService.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBDE0AC22E062D300A8790F /* FakeHardDriveService.m */; };
+		BEBDE0AF22E0656C00A8790F /* FakeKeyButtonConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBDE0AE22E0656C00A8790F /* FakeKeyButtonConfiguration.m */; };
+		BEBDE0B122E067D500A8790F /* FakeGlobalSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBDE0B022E067D500A8790F /* FakeGlobalSymbols.m */; };
+		BED3462E22DF202D002F60AE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3462D22DF202D002F60AE /* ViewController.m */; };
+		BED3463122DF202D002F60AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BED3462F22DF202D002F60AE /* Main.storyboard */; };
+		BED3463322DF202E002F60AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BED3463222DF202E002F60AE /* Assets.xcassets */; };
+		BED3463622DF202E002F60AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BED3463422DF202E002F60AE /* LaunchScreen.storyboard */; };
+		BED3463922DF202E002F60AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3463822DF202E002F60AE /* main.m */; };
+		BED3464622DF2067002F60AE /* iUAETestsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3464522DF2067002F60AE /* iUAETestsTests.m */; };
+		BED3464E22DF20D9002F60AE /* CoreSettingGroupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3464D22DF20D8002F60AE /* CoreSettingGroupTests.m */; };
+		BED3465522DF21AD002F60AE /* MultiDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3465322DF21AD002F60AE /* MultiDictionary.m */; };
+		BED3478522DF237E002F60AE /* DriveState.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3470F22DF237D002F60AE /* DriveState.m */; };
+		BED3478822DF237E002F60AE /* NSObject+Blocks.mm in Sources */ = {isa = PBXBuildFile; fileRef = BED3471322DF237D002F60AE /* NSObject+Blocks.mm */; };
+		BED3478A22DF237E002F60AE /* CoreSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = BED3471622DF237D002F60AE /* CoreSetting.m */; };
+		BED3479422DF47DD002F60AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED3479322DF47DD002F60AE /* CoreGraphics.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BED3464822DF2067002F60AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BED3461E22DF202D002F60AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BED3462522DF202D002F60AE;
+			remoteInfo = iUAETests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BE0FE81222E54EDB00D44FE4 /* MultiDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MultiDictionary.m; path = ../Submodules/STObjCToolbelt/Source/MultiDictionary.m; sourceTree = "<group>"; };
+		BE0FE81322E54EDB00D44FE4 /* MultiDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiDictionary.h; path = ../Submodules/STObjCToolbelt/Source/MultiDictionary.h; sourceTree = "<group>"; };
+		BE0FE81522E55A5500D44FE4 /* EMUFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMUFileInfo.h; path = "File Browser/EMUFileInfo.h"; sourceTree = "<group>"; };
+		BE0FE81622E55D0600D44FE4 /* CoreSettingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreSettingTests.m; path = ../../classes/CoreSettingTests.m; sourceTree = "<group>"; };
+		BE0FE81822E55D8700D44FE4 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Settings.h; path = ../iUAEParents/Settings.h; sourceTree = "<group>"; };
+		BE0FE81922E55D8700D44FE4 /* Settings.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Settings.mm; path = ../iUAEParents/Settings.mm; sourceTree = "<group>"; };
+		BEAA6A5222E5B6A9009B4059 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BEAA6A5322E5B6A9009B4059 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BEBDE0A822E0623400A8790F /* FakeDiskDriveService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeDiskDriveService.m; sourceTree = "<group>"; };
+		BEBDE0AA22E0625D00A8790F /* DiskDriveService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskDriveService.h; sourceTree = "<group>"; };
+		BEBDE0AB22E062B100A8790F /* HardDriveService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardDriveService.h; sourceTree = "<group>"; };
+		BEBDE0AC22E062D300A8790F /* FakeHardDriveService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeHardDriveService.m; sourceTree = "<group>"; };
+		BEBDE0AE22E0656C00A8790F /* FakeKeyButtonConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeKeyButtonConfiguration.m; sourceTree = "<group>"; };
+		BEBDE0B022E067D500A8790F /* FakeGlobalSymbols.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakeGlobalSymbols.m; sourceTree = "<group>"; };
+		BED3462622DF202D002F60AE /* iUAETests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iUAETests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BED3462C22DF202D002F60AE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		BED3462D22DF202D002F60AE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BED3463022DF202D002F60AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BED3463222DF202E002F60AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BED3463522DF202E002F60AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BED3463722DF202E002F60AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BED3463822DF202E002F60AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BED3464322DF2067002F60AE /* iUAETestsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iUAETestsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BED3464522DF2067002F60AE /* iUAETestsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iUAETestsTests.m; sourceTree = "<group>"; };
+		BED3464722DF2067002F60AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BED3464D22DF20D8002F60AE /* CoreSettingGroupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreSettingGroupTests.m; path = ../../classes/CoreSettingGroupTests.m; sourceTree = "<group>"; };
+		BED3464F22DF2107002F60AE /* CoreSettingGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreSettingGroup.h; path = ../../../Classes/CoreSettingGroup.h; sourceTree = "<group>"; };
+		BED3465322DF21AD002F60AE /* MultiDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiDictionary.m; path = ../../../Submodules/STObjCToolbelt/Source/MultiDictionary.m; sourceTree = "<group>"; };
+		BED3465422DF21AD002F60AE /* MultiDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiDictionary.h; path = ../../../Submodules/STObjCToolbelt/Source/MultiDictionary.h; sourceTree = "<group>"; };
+		BED3466922DF237D002F60AE /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		BED3467022DF237D002F60AE /* VirtualKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualKeyboard.h; sourceTree = "<group>"; };
+		BED3467222DF237D002F60AE /* iAmigaAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAmigaAppDelegate.h; sourceTree = "<group>"; };
+		BED3467322DF237D002F60AE /* ScrollToRowHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollToRowHandler.h; sourceTree = "<group>"; };
+		BED3467422DF237D002F60AE /* adfresolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = adfresolver.h; sourceTree = "<group>"; };
+		BED3467A22DF237D002F60AE /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		BED3467C22DF237D002F60AE /* SettingsSelectPortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSelectPortViewController.h; sourceTree = "<group>"; };
+		BED3467F22DF237D002F60AE /* AudioService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioService.h; sourceTree = "<group>"; };
+		BED3468122DF237D002F60AE /* DriveState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveState.h; sourceTree = "<group>"; };
+		BED3468F22DF237D002F60AE /* UnappliedSettingLabelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnappliedSettingLabelHandler.h; sourceTree = "<group>"; };
+		BED3469122DF237D002F60AE /* VPadLeftOrRight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPadLeftOrRight.h; sourceTree = "<group>"; };
+		BED3469C22DF237D002F60AE /* TouchHandlerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchHandlerView.h; sourceTree = "<group>"; };
+		BED346A722DF237D002F60AE /* CoreSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreSetting.h; sourceTree = "<group>"; };
+		BED346A822DF237D002F60AE /* KeyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyView.h; sourceTree = "<group>"; };
+		BED346E922DF237D002F60AE /* VPadTouchOrGyro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPadTouchOrGyro.h; sourceTree = "<group>"; };
+		BED346EA22DF237D002F60AE /* KeyButtonViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyButtonViewHandler.h; sourceTree = "<group>"; };
+		BED346FA22DF237D002F60AE /* SettingsJoypadStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsJoypadStyle.h; sourceTree = "<group>"; };
+		BED3470F22DF237D002F60AE /* DriveState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriveState.m; sourceTree = "<group>"; };
+		BED3471222DF237D002F60AE /* CoreSettingGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreSettingGroup.h; sourceTree = "<group>"; };
+		BED3471322DF237D002F60AE /* NSObject+Blocks.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSObject+Blocks.mm"; sourceTree = "<group>"; };
+		BED3471622DF237D002F60AE /* CoreSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreSetting.m; sourceTree = "<group>"; };
+		BED3471922DF237D002F60AE /* KeyButtonConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyButtonConfiguration.h; sourceTree = "<group>"; };
+		BED3471C22DF237D002F60AE /* CocoaUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaUtility.h; sourceTree = "<group>"; };
+		BED3471E22DF237D002F60AE /* NSObject+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Blocks.h"; sourceTree = "<group>"; };
+		BED3472022DF237D002F60AE /* KeyButtonConfigurationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyButtonConfigurationController.h; sourceTree = "<group>"; };
+		BED3472222DF237E002F60AE /* constSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constSettings.h; sourceTree = "<group>"; };
+		BED3478E22DF435B002F60AE /* sysconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sysconfig.h; path = ../../../uae4all_gp2x_0.7.2a/src/sysconfig.h; sourceTree = "<group>"; };
+		BED3478F22DF4381002F60AE /* sysdeps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sysdeps.h; path = ../../../uae4all_gp2x_0.7.2a/src/include/sysdeps.h; sourceTree = "<group>"; };
+		BED3479022DF43BD002F60AE /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = target.h; path = ../../../uae4all_gp2x_0.7.2a/src/target.h; sourceTree = "<group>"; };
+		BED3479122DF44B2002F60AE /* JoypadKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JoypadKey.h; path = ../../../JoypadKey.h; sourceTree = "<group>"; };
+		BED3479322DF47DD002F60AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BED3479522DF4990002F60AE /* EMUBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMUBrowser.h; path = "File Browser/EMUBrowser.h"; sourceTree = "<group>"; };
+		BED3479722DF4A71002F60AE /* FakeEMUBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FakeEMUBrowser.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BED3462322DF202D002F60AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED3464022DF2067002F60AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED3479422DF47DD002F60AE /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BED3461D22DF202D002F60AE = {
+			isa = PBXGroup;
+			children = (
+				BED3462822DF202D002F60AE /* iUAETests */,
+				BED3464422DF2067002F60AE /* iUAETestsTests */,
+				BED3462722DF202D002F60AE /* Products */,
+				BED3479222DF47DD002F60AE /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BED3462722DF202D002F60AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BED3462622DF202D002F60AE /* iUAETests.app */,
+				BED3464322DF2067002F60AE /* iUAETestsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BED3462822DF202D002F60AE /* iUAETests */ = {
+			isa = PBXGroup;
+			children = (
+				BEAA6A5322E5B6A9009B4059 /* AppDelegate.h */,
+				BEAA6A5222E5B6A9009B4059 /* AppDelegate.m */,
+				BED3462C22DF202D002F60AE /* ViewController.h */,
+				BED3462D22DF202D002F60AE /* ViewController.m */,
+				BED3462F22DF202D002F60AE /* Main.storyboard */,
+				BED3463222DF202E002F60AE /* Assets.xcassets */,
+				BED3463422DF202E002F60AE /* LaunchScreen.storyboard */,
+				BED3463722DF202E002F60AE /* Info.plist */,
+				BED3463822DF202E002F60AE /* main.m */,
+			);
+			path = iUAETests;
+			sourceTree = "<group>";
+		};
+		BED3464422DF2067002F60AE /* iUAETestsTests */ = {
+			isa = PBXGroup;
+			children = (
+				BED3479622DF4A32002F60AE /* FakeImpls */,
+				BED3479122DF44B2002F60AE /* JoypadKey.h */,
+				BED3479022DF43BD002F60AE /* target.h */,
+				BED3478F22DF4381002F60AE /* sysdeps.h */,
+				BED3478E22DF435B002F60AE /* sysconfig.h */,
+				BED3465422DF21AD002F60AE /* MultiDictionary.h */,
+				BED3465322DF21AD002F60AE /* MultiDictionary.m */,
+				BED3465D22DF237D002F60AE /* Classes */,
+				BED3464F22DF2107002F60AE /* CoreSettingGroup.h */,
+				BE0FE81622E55D0600D44FE4 /* CoreSettingTests.m */,
+				BED3464D22DF20D8002F60AE /* CoreSettingGroupTests.m */,
+				BED3464522DF2067002F60AE /* iUAETestsTests.m */,
+				BED3464722DF2067002F60AE /* Info.plist */,
+			);
+			path = iUAETestsTests;
+			sourceTree = "<group>";
+		};
+		BED3465D22DF237D002F60AE /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BE0FE81822E55D8700D44FE4 /* Settings.h */,
+				BE0FE81922E55D8700D44FE4 /* Settings.mm */,
+				BE0FE81522E55A5500D44FE4 /* EMUFileInfo.h */,
+				BE0FE81322E54EDB00D44FE4 /* MultiDictionary.h */,
+				BE0FE81222E54EDB00D44FE4 /* MultiDictionary.m */,
+				BEBDE0AB22E062B100A8790F /* HardDriveService.h */,
+				BEBDE0AA22E0625D00A8790F /* DiskDriveService.h */,
+				BED3479522DF4990002F60AE /* EMUBrowser.h */,
+				BED3466922DF237D002F60AE /* debug.h */,
+				BED3467022DF237D002F60AE /* VirtualKeyboard.h */,
+				BED3467222DF237D002F60AE /* iAmigaAppDelegate.h */,
+				BED3467322DF237D002F60AE /* ScrollToRowHandler.h */,
+				BED3467422DF237D002F60AE /* adfresolver.h */,
+				BED3467A22DF237D002F60AE /* ZipArchive.h */,
+				BED3467C22DF237D002F60AE /* SettingsSelectPortViewController.h */,
+				BED3467F22DF237D002F60AE /* AudioService.h */,
+				BED3468122DF237D002F60AE /* DriveState.h */,
+				BED3468F22DF237D002F60AE /* UnappliedSettingLabelHandler.h */,
+				BED3469122DF237D002F60AE /* VPadLeftOrRight.h */,
+				BED3469C22DF237D002F60AE /* TouchHandlerView.h */,
+				BED346A722DF237D002F60AE /* CoreSetting.h */,
+				BED346A822DF237D002F60AE /* KeyView.h */,
+				BED346E922DF237D002F60AE /* VPadTouchOrGyro.h */,
+				BED346EA22DF237D002F60AE /* KeyButtonViewHandler.h */,
+				BED346FA22DF237D002F60AE /* SettingsJoypadStyle.h */,
+				BED3470F22DF237D002F60AE /* DriveState.m */,
+				BED3471222DF237D002F60AE /* CoreSettingGroup.h */,
+				BED3471322DF237D002F60AE /* NSObject+Blocks.mm */,
+				BED3471622DF237D002F60AE /* CoreSetting.m */,
+				BED3471922DF237D002F60AE /* KeyButtonConfiguration.h */,
+				BED3471C22DF237D002F60AE /* CocoaUtility.h */,
+				BED3471E22DF237D002F60AE /* NSObject+Blocks.h */,
+				BED3472022DF237D002F60AE /* KeyButtonConfigurationController.h */,
+				BED3472222DF237E002F60AE /* constSettings.h */,
+			);
+			name = Classes;
+			path = ../../../Classes;
+			sourceTree = "<group>";
+		};
+		BED3479222DF47DD002F60AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BED3479322DF47DD002F60AE /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BED3479622DF4A32002F60AE /* FakeImpls */ = {
+			isa = PBXGroup;
+			children = (
+				BEBDE0B022E067D500A8790F /* FakeGlobalSymbols.m */,
+				BEBDE0AE22E0656C00A8790F /* FakeKeyButtonConfiguration.m */,
+				BEBDE0AC22E062D300A8790F /* FakeHardDriveService.m */,
+				BEBDE0A822E0623400A8790F /* FakeDiskDriveService.m */,
+				BED3479722DF4A71002F60AE /* FakeEMUBrowser.m */,
+			);
+			path = FakeImpls;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BED3462522DF202D002F60AE /* iUAETests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BED3463C22DF202E002F60AE /* Build configuration list for PBXNativeTarget "iUAETests" */;
+			buildPhases = (
+				BED3462222DF202D002F60AE /* Sources */,
+				BED3462322DF202D002F60AE /* Frameworks */,
+				BED3462422DF202D002F60AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iUAETests;
+			productName = iUAETests;
+			productReference = BED3462622DF202D002F60AE /* iUAETests.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BED3464222DF2067002F60AE /* iUAETestsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BED3464A22DF2067002F60AE /* Build configuration list for PBXNativeTarget "iUAETestsTests" */;
+			buildPhases = (
+				BED3463F22DF2067002F60AE /* Sources */,
+				BED3464022DF2067002F60AE /* Frameworks */,
+				BED3464122DF2067002F60AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BED3464922DF2067002F60AE /* PBXTargetDependency */,
+			);
+			name = iUAETestsTests;
+			productName = iUAETestsTests;
+			productReference = BED3464322DF2067002F60AE /* iUAETestsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BED3461E22DF202D002F60AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Simon Toens";
+				TargetAttributes = {
+					BED3462522DF202D002F60AE = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					BED3464222DF2067002F60AE = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = BED3462522DF202D002F60AE;
+					};
+				};
+			};
+			buildConfigurationList = BED3462122DF202D002F60AE /* Build configuration list for PBXProject "iUAETests" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BED3461D22DF202D002F60AE;
+			productRefGroup = BED3462722DF202D002F60AE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BED3462522DF202D002F60AE /* iUAETests */,
+				BED3464222DF2067002F60AE /* iUAETestsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BED3462422DF202D002F60AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED3463622DF202E002F60AE /* LaunchScreen.storyboard in Resources */,
+				BED3463322DF202E002F60AE /* Assets.xcassets in Resources */,
+				BED3463122DF202D002F60AE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED3464122DF2067002F60AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BED3462222DF202D002F60AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED3462E22DF202D002F60AE /* ViewController.m in Sources */,
+				BED3463922DF202E002F60AE /* main.m in Sources */,
+				BEAA6A5422E5B6A9009B4059 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED3463F22DF2067002F60AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEBDE0A922E0623400A8790F /* FakeDiskDriveService.m in Sources */,
+				BE514DED22DF4AEF001B3E73 /* FakeEMUBrowser.m in Sources */,
+				BED3464622DF2067002F60AE /* iUAETestsTests.m in Sources */,
+				BE0FE81722E55D0600D44FE4 /* CoreSettingTests.m in Sources */,
+				BE0FE81A22E55D8700D44FE4 /* Settings.mm in Sources */,
+				BEBDE0B122E067D500A8790F /* FakeGlobalSymbols.m in Sources */,
+				BED3478822DF237E002F60AE /* NSObject+Blocks.mm in Sources */,
+				BED3465522DF21AD002F60AE /* MultiDictionary.m in Sources */,
+				BEBDE0AF22E0656C00A8790F /* FakeKeyButtonConfiguration.m in Sources */,
+				BEBDE0AD22E062D300A8790F /* FakeHardDriveService.m in Sources */,
+				BE0FE81422E54EDB00D44FE4 /* MultiDictionary.m in Sources */,
+				BED3464E22DF20D9002F60AE /* CoreSettingGroupTests.m in Sources */,
+				BED3478A22DF237E002F60AE /* CoreSetting.m in Sources */,
+				BED3478522DF237E002F60AE /* DriveState.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BED3464922DF2067002F60AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BED3462522DF202D002F60AE /* iUAETests */;
+			targetProxy = BED3464822DF2067002F60AE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BED3462F22DF202D002F60AE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BED3463022DF202D002F60AE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BED3463422DF202E002F60AE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BED3463522DF202E002F60AE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BED3463A22DF202E002F60AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "../../libraries/sdl-mini/include/";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BED3463B22DF202E002F60AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "../../libraries/sdl-mini/include/";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BED3463D22DF202E002F60AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iUAETests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stoens.test.iUAETests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BED3463E22DF202E002F60AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iUAETests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stoens.test.iUAETests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BED3464B22DF2067002F60AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iUAETestsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stoens.test.iUAETestsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iUAETests.app/iUAETests";
+			};
+			name = Debug;
+		};
+		BED3464C22DF2067002F60AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = iUAETestsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stoens.test.iUAETestsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iUAETests.app/iUAETests";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BED3462122DF202D002F60AE /* Build configuration list for PBXProject "iUAETests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BED3463A22DF202E002F60AE /* Debug */,
+				BED3463B22DF202E002F60AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BED3463C22DF202E002F60AE /* Build configuration list for PBXNativeTarget "iUAETests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BED3463D22DF202E002F60AE /* Debug */,
+				BED3463E22DF202E002F60AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BED3464A22DF2067002F60AE /* Build configuration list for PBXNativeTarget "iUAETestsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BED3464B22DF2067002F60AE /* Debug */,
+				BED3464C22DF2067002F60AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BED3461E22DF202D002F60AE /* Project object */;
+}

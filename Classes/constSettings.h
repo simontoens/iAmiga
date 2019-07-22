@@ -20,7 +20,6 @@ static NSString *const kKeyButtonConfigurationsKey = @"_keyButtonConfigurations"
 
 static NSString *const kNtscKey = @"_ntsc";
 static NSString *const kStretchScreenKey = @"_stretchscreen";
-static NSString *const kAddVerticalStretchKey = @"_addverticalstretchvalue";
 static NSString *const kShowStatusKey = @"_showstatus";
 static NSString *const kShowStatusBarKey = @"_showstatusbar";
 static NSString *const kSelectedEffectIndexKey = @"_selectedeffectindex";
