@@ -1262,6 +1262,7 @@
 		BEE41BD41B4784AC00CE487D /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = BEE41BCD1B4784AC00CE487D /* unzip.c */; };
 		BEE41BD51B4784AC00CE487D /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = BEE41BCF1B4784AC00CE487D /* mztools.c */; };
 		BEE41BD61B4784AC00CE487D /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = BEE41BD11B4784AC00CE487D /* ioapi.c */; };
+		BEE78DD92341A3FC003AAD04 /* StateKeyButtonSettingHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE78DD82341A3FC003AAD04 /* StateKeyButtonSettingHandler.m */; };
 		BEEFB2DE1D72C6A00056CC8E /* MultiDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEFB2DD1D72C6A00056CC8E /* MultiDictionary.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		BEF413D21CA411CF00CCC1F5 /* HardDriveService.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEF413D11CA411CF00CCC1F5 /* HardDriveService.mm */; };
 		BEF413D41CA414E700CCC1F5 /* filesys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEF413D31CA414E700CCC1F5 /* filesys.cpp */; };
@@ -2167,6 +2168,8 @@
 		BEE41BD01B4784AC00CE487D /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = minizip/ioapi.h; sourceTree = "<group>"; };
 		BEE41BD11B4784AC00CE487D /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = minizip/ioapi.c; sourceTree = "<group>"; };
 		BEE41BD21B4784AC00CE487D /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = minizip/crypt.h; sourceTree = "<group>"; };
+		BEE78DD82341A3FC003AAD04 /* StateKeyButtonSettingHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StateKeyButtonSettingHandler.m; sourceTree = "<group>"; };
+		BEE78DDA2341A4D5003AAD04 /* StateKeyButtonSettingHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateKeyButtonSettingHandler.h; sourceTree = "<group>"; };
 		BEEFB2DC1D72C6A00056CC8E /* MultiDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiDictionary.h; path = Submodules/STObjCToolbelt/Source/MultiDictionary.h; sourceTree = "<group>"; };
 		BEEFB2DD1D72C6A00056CC8E /* MultiDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultiDictionary.m; path = Submodules/STObjCToolbelt/Source/MultiDictionary.m; sourceTree = "<group>"; };
 		BEF413D01CA411CF00CCC1F5 /* HardDriveService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardDriveService.h; sourceTree = "<group>"; };
@@ -2877,6 +2880,8 @@
 				7EB017761B09164900C74B9D /* State.mm */,
 				7EB017741B09164900C74B9D /* StateFileManager.mm */,
 				7EB017751B09164900C74B9D /* StateFileManager.h */,
+				BEE78DDA2341A4D5003AAD04 /* StateKeyButtonSettingHandler.h */,
+				BEE78DD82341A3FC003AAD04 /* StateKeyButtonSettingHandler.m */,
 				7EB017641B09115900C74B9D /* StateManagementController.h */,
 				7EB017631B09115900C74B9D /* StateManagementController.mm */,
 				7E770D771D109BF4000E5E1A /* UnappliedSettingLabelHandler.h */,
@@ -4946,6 +4951,7 @@
 				BEF413D61CA414F600CCC1F5 /* cfgfile.cpp in Sources */,
 				BEE41BC61B47836D00CE487D /* ZipArchive.mm in Sources */,
 				BE951AFA1CA93FB7008DD94B /* fsdb.cpp in Sources */,
+				BEE78DD92341A3FC003AAD04 /* StateKeyButtonSettingHandler.m in Sources */,
 				057B26B513B325AB006BB230 /* NSObject+Blocks.mm in Sources */,
 				7EF97ABD1A7586E7002CC332 /* SelectConfigurationViewController.mm in Sources */,
 				978550C7153A3F2E00580B91 /* SDL_events.c in Sources */,

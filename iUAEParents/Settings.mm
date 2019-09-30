@@ -18,13 +18,8 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-//#import "uae.h"
 #import "sysconfig.h"
 #import "sysdeps.h"
-//#import "options.h"
-//#import "SDL.h"
-//#import "UIKitDisplayView.h"
-//#import "savestate.h"
 #import "JoypadKey.h"
 
 #import "Settings.h"
@@ -38,8 +33,7 @@ extern int joystickselected;
 static NSString *_configurationname;
 static int _cNumber = 1;
 
-// single instance shared by all Settings instances
-static volatile NSMutableDictionary *memory;
+static volatile NSMutableDictionary<NSString *, id<SettingHandler>> *settingNameToHandler;
 
 @implementation Settings {
     NSUserDefaults *defaults;
@@ -47,8 +41,16 @@ static volatile NSMutableDictionary *memory;
 
 + (void) initialize {
     if (self == [Settings class]) {
-        memory = [[NSMutableDictionary alloc] init];
+        settingNameToHandler = [[NSMutableDictionary alloc] init];
     }
+}
+
++ (void)registerSettingHandler:(id<SettingHandler>)settingHandler forSettingName:(NSString *)settingName {
+    [settingNameToHandler setObject:settingHandler forKey:settingName];
+}
+
++ (void)unregisterSettingHandlerForSettingName:(NSString *)settingName {
+    [settingNameToHandler removeObjectForKey:settingName];
 }
 
 - (id)init {
@@ -476,93 +478,105 @@ static volatile NSMutableDictionary *memory;
     return [KeyButtonConfiguration deserializeFromJSON:json];
 }
 
+- (void)registerKeyButtonSettingHandler:(id<SettingHandler>)settingHandler {
+    [settingNameToHandler setObject:settingHandler forKey:kKeyButtonConfigurationsKey];
+}
+
 - (void)setKeyButtonConfigurations:(NSArray *)keyButtonConfigurations {
-    [self setKeyButtonConfigurations:keyButtonConfigurations inMemory:NO];
-}
-
-- (void)setKeyButtonConfigurations:(NSArray *)keyButtonConfigurations inMemory:(BOOL)inMemory {
     NSString *json = [KeyButtonConfiguration serializeToJSON:keyButtonConfigurations];
-    [self setObject:json forKey:kKeyButtonConfigurationsKey inMemory:inMemory];
+    [self setObject:json forKey:kKeyButtonConfigurationsKey];
 }
 
-- (bool)boolForKey:(NSString *)settingitemname {
-    return [defaults boolForKey:[self getInternalSettingKey:settingitemname]];
+- (BOOL)boolForKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        NSNumber *n = [handler loadSettingValue];
+        return [n boolValue];
+    } else {
+        return [defaults boolForKey:key];
+    }
 }
 
-- (void)setBool:(BOOL)value forKey:(NSString *)settingitemname {
-    [self setBool:value forKey:settingitemname inMemory:NO];
-}
-
-- (void)setBool:(BOOL)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
-    NSString *key = [self getInternalSettingKey:settingitemname];
-    if (mem || [memory objectForKey:key] != nil) {
-        // write to memory if asked explicitly or if the setting already exists in memory
+- (void)setBool:(BOOL)value forKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        [handler saveSettingValue:[NSNumber numberWithBool:value]];
     } else {
         [defaults setBool:value forKey:key];
     }
 }
 
-- (id)objectForKey:(NSString *)settingitemname {
-    return [defaults objectForKey:[self getInternalSettingKey:settingitemname]];
+- (id)objectForKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        return [handler loadSettingValue];
+    } else {
+        return [defaults objectForKey:key];
+    }
 }
 
-- (void)setObject:(id)value forKey:(NSString *)settingitemname {
-    [self setObject:value forKey:settingitemname inMemory:NO];
-}
-
-- (void)setObject:(id)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
-    NSString *key = [self getInternalSettingKey:settingitemname];
-    if (mem || [memory objectForKey:key] != nil) {
-        // write to memory if asked explicitly or if the setting already exists in memory
-        [memory setObject:value forKey:key];
+- (void)setObject:(id)value forKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        [handler saveSettingValue:value];
     } else {
         [defaults setObject:value forKey:key];
     }
 }
 
-- (NSInteger)integerForKey:(NSString *)settingitemname {
-    return [defaults integerForKey:[self getInternalSettingKey:settingitemname]];
+- (NSInteger)integerForKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        NSNumber *n = [handler loadSettingValue];
+        return [n integerValue];
+    } else {
+        return [defaults integerForKey:key];
+    }
 }
 
-- (void)setInteger:(NSInteger)value forKey:(NSString *)settingitemname {
-    [self setInteger:value forKey:settingitemname inMemory:NO];
-}
-
-- (void)setInteger:(NSInteger)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
-    NSString *key = [self getInternalSettingKey:settingitemname];
-    if (mem || [memory objectForKey:key] != nil) {
-        // write to memory if asked explicitly or if the setting already exists in memory
-        [memory setObject:[NSNumber numberWithInteger:value] forKey:key];
+- (void)setInteger:(NSInteger)value forKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        [handler saveSettingValue:[NSNumber numberWithInteger:value]];
     } else {
         [defaults setInteger:value forKey:key];
     }
 }
 
-- (float)floatForKey:(NSString *)settingitemname {
-    return [defaults floatForKey:[self getInternalSettingKey:settingitemname]];
+- (float)floatForKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        NSNumber *n = [handler loadSettingValue];
+        return [n floatValue];
+    } else {
+        return [defaults floatForKey:key];
+    }
 }
 
-- (void)setFloat:(float)value forKey:(NSString *)settingitemname {
-    [self setFloat:value forKey:settingitemname inMemory:NO];
-}
-
-- (void)setFloat:(float)value forKey:(NSString *)settingitemname inMemory:(BOOL)mem {
-    NSString *key = [self getInternalSettingKey:settingitemname];
-    if (mem || [memory objectForKey:key] != nil) {
-        // write to memory if asked explicitly or if the setting already exists in memory
-        [memory setObject:[NSNumber numberWithFloat:value] forKey:key];
+- (void)setFloat:(float)value forKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        [handler saveSettingValue:[NSNumber numberWithFloat:value]];
     } else {
         [defaults setFloat:value forKey:key];
     }
 }
 
-- (NSString *)stringForKey:(NSString *)settingitemname {
-    NSString *key = [self getInternalSettingKey:settingitemname];
-    NSString *value = [memory objectForKey:key];
-    if (value) {
-        return value;
+- (NSString *)stringForKey:(NSString *)settingName {
+    NSString *key = [self getInternalSettingKey:settingName];
+    id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
+    if (handler) {
+        return [handler loadSettingValue];
     }
-    return [defaults stringForKey:[self getInternalSettingKey:settingitemname]];
+    return [defaults stringForKey:key];
 }
 
 - (NSArray *)arrayForKey:(NSString *)settingitemname {
@@ -595,8 +609,8 @@ static volatile NSMutableDictionary *memory;
     }
 }
 
-- (void)clearMemorySettings {
-    [memory removeAllObjects];
+- (void)clearAllSettingHandlers {
+    [settingNameToHandler removeAllObjects];
 }
 
 - (void)dealloc {

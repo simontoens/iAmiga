@@ -49,9 +49,15 @@
 - (State *)newState:(NSString *)stateName;
 
 /**
- * Saves meta information about the specified state (but not the state itself, that's handled by the core emulator).
+ * Saves meta information about the specified state (but not the state itself, that is handled
+ * by the core emulator).
  */
 - (void)saveState:(State *)state;
+
+/**
+ * Saves the specified configuration only.
+ */
+- (void)saveConfig:(NSString *)configName forState:(State *)state;
 
 /**
  * Deletes the specified state.

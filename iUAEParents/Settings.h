@@ -16,6 +16,16 @@
 static NSString *const kJoyStyleOneButton = @"OneButton";
 static NSString *const kJoyStyleFourButton = @"FourButton";
 
+/**
+ * Abstracts how/where a Setting is persisted.
+ */
+@protocol SettingHandler <NSObject>
+
+- (id)loadSettingValue;
+- (void)saveSettingValue:(id)value;
+
+@end
+
 @interface Settings : NSObject
 
 /**
@@ -57,13 +67,15 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
 @property (nonatomic, readwrite, assign) NSInteger FMem;
 
 /**
- * Some settings are written and read from memory instead of using the device's storage.
- * This method clears the in-memory storage of settings.
- *
- * For example, when an enumator state is restored from memory, some related settings
- * are written to in-memory storage, to prevent overwriting the persisted value.
+ * Some settings are written and read using custom logic instead of default device storage.
+ * This method clears all registered custom logic handlers.
  */
-- (void)clearMemorySettings;
+- (void)clearAllSettingHandlers;
+
+/**
+ * Register a settingHandler for the KeyButtons settings.
+ */
+- (void)registerKeyButtonSettingHandler:(id<SettingHandler>)settingHandler;
 
 - (void)initializespecificsettings;
 - (void)setFloppyConfigurations:(NSArray *)adfPaths;
@@ -73,13 +85,11 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
 - (void)setKeyconfigurationname:(NSString *)configuredkey forController:(int)cNumber Button:(int)button;
 - (void)setKeyconfigurationname:(NSString *)configuredkey Button:(int)button;
 
-- (void)setKeyButtonConfigurations:(NSArray *)keyButtonConfigurations inMemory:(BOOL)inMemory;
-
 - (void)setCNumber:(int)cNumber;
 
 - (void)setBool:(BOOL)value forKey:(NSString *)settingitemname;
 - (void)setObject:(id)value forKey:(NSString *)settingitemname;
-- (bool)boolForKey:(NSString *)settingitemname;
+- (BOOL)boolForKey:(NSString *)settingitemname;
 - (NSString *)stringForKey:(NSString *)settingitemname;
 - (NSArray *)arrayForKey:(NSString *)settingitemname;
 - (void)removeObjectForKey:(NSString *) settingitemname;
@@ -91,6 +101,5 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
 - (NSString *)keyConfigurationNameforButton:(int)bID;
 - (NSString *)keyConfigurationforButton:(int)bID forController:(int)cNumber;
 - (NSString *)keyConfigurationforButton:(int)bID;
-
 
 @end

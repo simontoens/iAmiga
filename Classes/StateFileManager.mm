@@ -112,7 +112,17 @@ static NSString *const kStateConfigFileExtension = @".cfg";
 
 - (void)saveState:(State *)state {
     [self writeImageFileForState:state];
-    [self writeConfigFilesForState:state];
+    for (NSString *configName in [state getAllConfigNames]) {
+        [self saveConfig:configName forState:state];
+    }
+}
+
+- (void)saveConfig:(NSString *)configName forState:(State *)state {
+    NSString *content = [state getConfigContentWithName:configName];
+    NSString *configFilePath = [self getStateConfigFilePath:configName forStateName:state.name];
+    NSError *error;
+    [content writeToFile:configFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    NSAssert(error, @"Error while writing file");
 }
 
 #pragma mark - Private methods
@@ -122,16 +132,6 @@ static NSString *const kStateConfigFileExtension = @".cfg";
         NSData *imageBytes = UIImageJPEGRepresentation(state.image, 0.3f);
         NSString *imageFilePath = [self getStateImagePathForStateName:state.name];
         [imageBytes writeToFile:imageFilePath atomically:YES];
-    }
-}
-
-- (void)writeConfigFilesForState:(State *)state {
-    for (NSString *configFileName in [state getAllConfigNames]) {
-        NSString *configFilePath = [self getStateConfigFilePath:configFileName forStateName:state.name];
-        NSString *content = [state getConfigContentWithName:configFileName];
-        NSError *error;
-        [content writeToFile:configFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
-        NSAssert(error, @"Error while writing file");
     }
 }
 

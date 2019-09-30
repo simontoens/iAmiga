@@ -24,17 +24,18 @@
 #import "Settings.h"
 #import "ScrollToRowHandler.h"
 #import "State.h"
+#import "StateKeyButtonSettingHandler.h"
 #import "StateManagementController.h"
 #import "StateFileManager.h"
 #import "SVProgressHUD.h"
 
 static NSString *const kSaveStateAlertTitle = @"Save";
-static NSString *const kKeyButtonsConfigName = @"keybuttons";
 
 @implementation StateManagementController {
     @private
     ScrollToRowHandler *_scrollToRowHandler;
     Settings *_settings;
+    StateKeyButtonSettingHandler *_stateKeyButtonSettingHandler;
     StateFileManager *_stateFileManager;
     NSArray *_states;
     UIBarButtonItem *_saveButton;
@@ -191,19 +192,19 @@ static NSString *const kKeyButtonsConfigName = @"keybuttons";
     NSUInteger index = [_states indexOfObject:state];
     [_scrollToRowHandler setRow:[NSIndexPath indexPathForRow:index inSection:0]];
     
-    // the state may have associated key buttons
-    NSString *json = [state getConfigContentWithName:kKeyButtonsConfigName];
-    if (!json) {
-        // the state we're loading doesn't have an associate key buttons config,
-        // so make an empty one here
-        json = [KeyButtonConfiguration serializeToJSON:@[]];
-    }
-    [_settings setKeyButtonConfigurations:[KeyButtonConfiguration deserializeFromJSON:json] inMemory:YES];
-    
+    [self registerKeyButtonSettingHandler:state];
+
     // the state restore logic, including inserting the floppy(ies) associated with the state,
     // only runs after exiting settings - in order to reduce confusion about what floppies are
     // inserted after a state has been selected to be restored, exit settings now
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+                                                
+- (void)registerKeyButtonSettingHandler:(State *)state {
+    [_stateKeyButtonSettingHandler release];
+    _stateKeyButtonSettingHandler = [[StateKeyButtonSettingHandler alloc]
+                                     initWithState:state stateFileManager:_stateFileManager];
+    [_settings registerKeyButtonSettingHandler:_stateKeyButtonSettingHandler];
 }
 
 - (void)saveState {
@@ -215,9 +216,19 @@ static NSString *const kKeyButtonsConfigName = @"keybuttons";
     }
     
     if (_settings.keyButtonsEnabled) {
-        // get current key buttons and save them along with the state
-        NSString *json = [KeyButtonConfiguration serializeToJSON:_settings.keyButtonConfigurations];
-        [state addConfigContent:json withName:kKeyButtonsConfigName];
+        NSArray<KeyButtonConfiguration *> *keyButtonConfig = nil;
+        if (_stateKeyButtonSettingHandler) {
+            // copy from previous state
+            keyButtonConfig = [_stateKeyButtonSettingHandler.value retain];
+        } else {
+            // global key button setting managed by settings
+            keyButtonConfig = [_settings.keyButtonConfigurations retain];
+        }
+        [self registerKeyButtonSettingHandler:state];
+        if (keyButtonConfig) {
+            [_stateKeyButtonSettingHandler saveSettingValue:keyButtonConfig];
+        }
+        [keyButtonConfig release]; // explicit retain/release is on purpose
     }
     
     [_stateFileManager saveState:state];
