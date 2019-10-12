@@ -219,16 +219,16 @@ static NSString *const kSaveStateAlertTitle = @"Save";
         NSArray<KeyButtonConfiguration *> *keyButtonConfig = nil;
         if (_stateKeyButtonSettingHandler) {
             // copy from previous state
-            keyButtonConfig = [_stateKeyButtonSettingHandler.value retain];
+            NSString *json = _stateKeyButtonSettingHandler.value;
+            keyButtonConfig = [KeyButtonConfiguration deserializeFromJSON:json];
         } else {
             // global key button setting managed by settings
-            keyButtonConfig = [_settings.keyButtonConfigurations retain];
+            keyButtonConfig = _settings.keyButtonConfigurations;
         }
         [self registerKeyButtonSettingHandler:state];
         if (keyButtonConfig) {
-            [_stateKeyButtonSettingHandler saveSettingValue:keyButtonConfig];
+            [_stateKeyButtonSettingHandler saveSettingValue:[KeyButtonConfiguration serializeToJSON:keyButtonConfig]];
         }
-        [keyButtonConfig release]; // explicit retain/release is on purpose
     }
     
     [_stateFileManager saveState:state];

@@ -13,7 +13,7 @@ static NSString *const kKeyButtonsConfigName = @"keybuttons";
 @implementation StateKeyButtonSettingHandler {
     State *_state;
     StateFileManager *_stateFileManager;
-    NSArray<KeyButtonConfiguration *> *_currentValue;
+    NSString *_currentValue; // json
 }
 
 - (id)initWithState:(State *)state stateFileManager:(StateFileManager *)stateFileManager {
@@ -25,7 +25,7 @@ static NSString *const kKeyButtonsConfigName = @"keybuttons";
     return self;
 }
 
-- (NSArray<KeyButtonConfiguration *> *)value {
+- (NSString *)value {
     return _currentValue;
 }
 
@@ -37,16 +37,15 @@ static NSString *const kKeyButtonsConfigName = @"keybuttons";
         json = [KeyButtonConfiguration serializeToJSON:@[]];
     }
     [_currentValue release];
-    _currentValue = [[KeyButtonConfiguration deserializeFromJSON:json] retain];
-    return _currentValue;
+    _currentValue = [json retain];
+    return json;
 }
 
 - (void)saveSettingValue:(id)value {
+    [_state addConfigContent:value withName:kKeyButtonsConfigName];
+    [_stateFileManager saveConfig:kKeyButtonsConfigName forState:_state];
     [_currentValue release];
     _currentValue = [value retain];
-    NSString *json = [KeyButtonConfiguration serializeToJSON:_currentValue];
-    [_state addConfigContent:json withName:kKeyButtonsConfigName];
-    [_stateFileManager saveConfig:kKeyButtonsConfigName forState:_state];
 }
 
 - (void)dealloc {

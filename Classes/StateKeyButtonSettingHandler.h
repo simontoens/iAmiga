@@ -16,6 +16,6 @@
 
 - (id)initWithState:(State *)state stateFileManager:(StateFileManager *)stateFileManager;
 
-@property (nonatomic, readonly) NSArray<KeyButtonConfiguration *> *value;
+@property (nonatomic, readonly) NSString *value;
 
 @end

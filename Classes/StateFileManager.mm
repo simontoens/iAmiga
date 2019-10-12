@@ -120,9 +120,11 @@ static NSString *const kStateConfigFileExtension = @".cfg";
 - (void)saveConfig:(NSString *)configName forState:(State *)state {
     NSString *content = [state getConfigContentWithName:configName];
     NSString *configFilePath = [self getStateConfigFilePath:configName forStateName:state.name];
-    NSError *error;
-    [content writeToFile:configFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
-    NSAssert(error, @"Error while writing file");
+    NSError *error = NULL;
+    BOOL success = [content writeToFile:configFilePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if (!success) {
+        [NSException raise:@"Failed to write cfg file" format:@"Failed to write cfg to %@: %@", configFilePath, error.localizedDescription];
+    }
 }
 
 #pragma mark - Private methods

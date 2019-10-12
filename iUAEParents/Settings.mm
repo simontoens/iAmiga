@@ -478,13 +478,14 @@ static volatile NSMutableDictionary<NSString *, id<SettingHandler>> *settingName
     return [KeyButtonConfiguration deserializeFromJSON:json];
 }
 
-- (void)registerKeyButtonSettingHandler:(id<SettingHandler>)settingHandler {
-    [settingNameToHandler setObject:settingHandler forKey:kKeyButtonConfigurationsKey];
-}
-
 - (void)setKeyButtonConfigurations:(NSArray *)keyButtonConfigurations {
     NSString *json = [KeyButtonConfiguration serializeToJSON:keyButtonConfigurations];
     [self setObject:json forKey:kKeyButtonConfigurationsKey];
+}
+
+- (void)registerKeyButtonSettingHandler:(id<SettingHandler>)settingHandler {
+    NSString *key = [self getInternalSettingKey:kKeyButtonConfigurationsKey];
+    [settingNameToHandler setObject:settingHandler forKey:key];
 }
 
 - (BOOL)boolForKey:(NSString *)settingName {
