@@ -35,7 +35,6 @@ static NSString *const kSaveStateAlertTitle = @"Save";
     @private
     ScrollToRowHandler *_scrollToRowHandler;
     Settings *_settings;
-    StateKeyButtonSettingHandler *_stateKeyButtonSettingHandler;
     StateFileManager *_stateFileManager;
     NSArray *_states;
     UIBarButtonItem *_saveButton;
@@ -97,6 +96,7 @@ static NSString *const kSaveStateAlertTitle = @"Save";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         State *state = [_states objectAtIndex:indexPath.row];
         [_stateFileManager deleteState:state];
+        [self unregisterKeyButtonSettingHandler]; // really only if current state is deleted?
         [self reloadStates];
         [tableView beginUpdates];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -170,6 +170,16 @@ static NSString *const kSaveStateAlertTitle = @"Save";
 
 #pragma mark - Private methods
 
+- (void)registerKeyButtonSettingHandler:(State *)state {
+    StateKeyButtonSettingHandler *h = [[[StateKeyButtonSettingHandler alloc]
+                                        initWithState:state stateFileManager:_stateFileManager] autorelease];
+    [_settings registerKeyButtonSettingHandler:h];
+}
+
+- (void)unregisterKeyButtonSettingHandler {
+    [_settings unregisterKeyButtonSettingHandler];
+}
+
 - (void)dismissKeyboard {
     [self.view endEditing:YES];
 }
@@ -200,13 +210,6 @@ static NSString *const kSaveStateAlertTitle = @"Save";
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
                                                 
-- (void)registerKeyButtonSettingHandler:(State *)state {
-    [_stateKeyButtonSettingHandler release];
-    _stateKeyButtonSettingHandler = [[StateKeyButtonSettingHandler alloc]
-                                     initWithState:state stateFileManager:_stateFileManager];
-    [_settings registerKeyButtonSettingHandler:_stateKeyButtonSettingHandler];
-}
-
 - (void)saveState {
     NSString *stateName = _stateNameTextField.text;
     State *state = [_stateFileManager newState:stateName];
@@ -215,20 +218,14 @@ static NSString *const kSaveStateAlertTitle = @"Save";
         _selectedStateScreenshot.image = state.image;
     }
     
-    if (_settings.keyButtonsEnabled) {
-        NSArray<KeyButtonConfiguration *> *keyButtonConfig = nil;
-        if (_stateKeyButtonSettingHandler) {
-            // copy from previous state
-            NSString *json = _stateKeyButtonSettingHandler.value;
-            keyButtonConfig = [KeyButtonConfiguration deserializeFromJSON:json];
-        } else {
-            // global key button setting managed by settings
-            keyButtonConfig = _settings.keyButtonConfigurations;
-        }
-        [self registerKeyButtonSettingHandler:state];
-        if (keyButtonConfig) {
-            [_stateKeyButtonSettingHandler saveSettingValue:[KeyButtonConfiguration serializeToJSON:keyButtonConfig]];
-        }
+    // get current key button config, either set globally or specific to the current state
+    NSArray<KeyButtonConfiguration *> *keyButtonConfig = _settings.keyButtonConfigurations;
+    [self registerKeyButtonSettingHandler:state];
+    if (keyButtonConfig) {
+        // this ensures that the current key button config is now saved in the state specific
+        // config file
+        // should this be encapsulated in the settings class instead?
+        _settings.keyButtonConfigurations = keyButtonConfig;
     }
     
     [_stateFileManager saveState:state];

@@ -73,9 +73,14 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
 - (void)clearAllSettingHandlers;
 
 /**
- * Register a settingHandler for the KeyButtons settings.
+ * Register a SettingHandler for the KeyButtons settings.
  */
 - (void)registerKeyButtonSettingHandler:(id<SettingHandler>)settingHandler;
+
+/**
+ * Remove the registered SettingHandler for the KeyButtons settings.
+ */
+- (void)unregisterKeyButtonSettingHandler;
 
 - (void)initializespecificsettings;
 - (void)setFloppyConfigurations:(NSArray *)adfPaths;

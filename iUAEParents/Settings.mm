@@ -488,6 +488,11 @@ static volatile NSMutableDictionary<NSString *, id<SettingHandler>> *settingName
     [settingNameToHandler setObject:settingHandler forKey:key];
 }
 
+- (void)unregisterKeyButtonSettingHandler {
+    NSString *key = [self getInternalSettingKey:kKeyButtonConfigurationsKey];
+    [settingNameToHandler removeObjectForKey:key];
+}
+
 - (BOOL)boolForKey:(NSString *)settingName {
     NSString *key = [self getInternalSettingKey:settingName];
     id<SettingHandler> handler = [settingNameToHandler objectForKey:key];
