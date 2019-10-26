@@ -135,9 +135,17 @@ static NSString *const kSaveStateAlertTitle = @"Save";
 - (IBAction)onSave {
     NSString *stateName = _stateNameTextField.text;
     if (![_stateFileManager isValidStateName:stateName]) {
-        [self showAlertWithTitle:kSaveStateAlertTitle message:[NSString stringWithFormat:@"The state name '%@' is invalid", stateName] hasCancelButton:NO hasDelegate:NO];
+        [self showAlertWithTitle:kSaveStateAlertTitle
+                         message:[NSString stringWithFormat:@"The state name '%@' is invalid", stateName]
+                     hasOkButton:YES
+                 hasCancelButton:NO
+             withOkActionHandler:nil];
     } else if ([_stateFileManager stateFileExistsForStateName:stateName]) {
-        [self showAlertWithTitle:kSaveStateAlertTitle message:[NSString stringWithFormat:@"State '%@' exists, overwrite?", stateName] hasCancelButton:YES hasDelegate:YES];
+        [self showAlertWithTitle:kSaveStateAlertTitle
+                         message:[NSString stringWithFormat:@"State '%@' exists, overwrite?", stateName]
+                     hasOkButton:YES
+                 hasCancelButton:YES
+             withOkActionHandler:^void(){ [self saveState]; }];
     } else {
         [self saveState];
     }
@@ -148,23 +156,17 @@ static NSString *const kSaveStateAlertTitle = @"Save";
     State *stateToRestore = [_stateFileManager loadState:stateName];
     if (stateToRestore) {
         [self dismissKeyboard];
-        [self showAlertWithTitle:@"Restore" message:[NSString stringWithFormat:@"Really restore state '%@'?", stateToRestore.name] hasCancelButton:YES hasDelegate:YES];
+        [self showAlertWithTitle:@"Restore"
+                         message:[NSString stringWithFormat:@"Really restore state '%@'?", stateToRestore.name]
+                     hasOkButton:YES
+                 hasCancelButton:YES
+             withOkActionHandler:^void() { [self restoreState]; }];
     } else {
-        [self showAlertWithTitle:@"Restore" message:[NSString stringWithFormat:@"State '%@' does not exist", stateName] hasCancelButton:NO hasDelegate:NO];
-    }
-}
-
-#pragma mark - AlertView delegate method
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([alertView.title isEqualToString:kSaveStateAlertTitle]) {
-        if (buttonIndex == 0) { // Overwrite existing state confirmation
-            [self saveState];
-        }
-    } else { // restore
-        if (buttonIndex == 0) { // Restore state confirmation
-            [self restoreState];
-        }
+        [self showAlertWithTitle:@"Restore"
+                         message:[NSString stringWithFormat:@"State '%@' does not exist", stateName]
+                     hasOkButton:YES
+                 hasCancelButton:NO
+             withOkActionHandler:nil];
     }
 }
 
@@ -297,12 +299,31 @@ static NSString *const kSaveStateAlertTitle = @"Save";
     _states = [[_stateFileManager loadStates] retain];
 }
     
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message hasCancelButton:(BOOL)hasCancelButton hasDelegate:(BOOL)hasDelegate {
-    [[[[UIAlertView alloc] initWithTitle:title
-                                 message:message
-                                delegate:hasDelegate ? self : nil
-                       cancelButtonTitle:@"OK"
-                       otherButtonTitles:(hasCancelButton ? @"Cancel" : nil), nil] autorelease] show];
+- (void)showAlertWithTitle:(NSString *)title
+                   message:(NSString *)message
+               hasOkButton:(BOOL)hasOkButton
+           hasCancelButton:(BOOL)hasCancelButton
+       withOkActionHandler:(void (^)())okHandler
+{
+    UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:title
+                                            message:message
+                                     preferredStyle:UIAlertControllerStyleAlert];
+    if (hasOkButton) {
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertViewStyleDefault
+                                                         handler:^(UIAlertAction *action) { okHandler();}];
+        [alert addAction:okAction];
+    }
+    
+    if (hasCancelButton) {
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                               style:UIAlertViewStyleDefault
+                                                             handler:nil];
+        [alert addAction:cancelAction];
+    }
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)configureForDevice {
