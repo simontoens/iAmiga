@@ -82,6 +82,12 @@ static NSString *const kJoyStyleFourButton = @"FourButton";
  */
 - (void)unregisterKeyButtonSettingHandler;
 
+/**
+ * Returns YES if any (one or more) registered SettingHandler instances exist,
+ * NO otherwise.
+ */
+- (BOOL)hasSettingHandlers;
+
 - (void)initializespecificsettings;
 - (void)setFloppyConfigurations:(NSArray *)adfPaths;
 - (void)setFloppyConfiguration:(NSString *)adfPath;

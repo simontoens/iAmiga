@@ -493,6 +493,10 @@ static volatile NSMutableDictionary<NSString *, id<SettingHandler>> *settingName
     [settingNameToHandler removeObjectForKey:key];
 }
 
+- (BOOL)hasSettingHandlers {
+    return [settingNameToHandler count] > 0;
+}
+
 - (BOOL)boolForKey:(NSString *)settingName {
     NSString *key = [self getInternalSettingKey:settingName];
     id<SettingHandler> handler = [settingNameToHandler objectForKey:key];

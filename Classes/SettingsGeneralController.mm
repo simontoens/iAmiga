@@ -46,7 +46,7 @@ static const NSUInteger kHardDrivesSection = 4;
 @end
 
 @interface AdfSelectionContext : NSObject <FileSelectionContext>
-@property (nonatomic, assign) int driveNumber;
+@property (nonatomic, assign) NSInteger driveNumber;
 @end
 @implementation AdfSelectionContext : NSObject
 - (NSArray *)extensions {
@@ -233,7 +233,7 @@ static const NSUInteger kHardDrivesSection = 4;
     }
     else if (indexPath.section == kDiskDrivesSection)
     {
-        int driveNumber = indexPath.row;
+        NSInteger driveNumber = indexPath.row;
         if (driveNumber == 1)
         {
             return @[_df1EnabledSetting];
@@ -260,7 +260,7 @@ static const NSUInteger kHardDrivesSection = 4;
     {
         if (indexPath.section == kDiskDrivesSection)
         {
-            int driveNumber = indexPath.row;
+            NSInteger driveNumber = indexPath.row;
             [self onAdfChanged:kNoDiskAdfPath drive:driveNumber];
             [_diskDriveService ejectDiskFromDrive:driveNumber];
         }
@@ -424,20 +424,46 @@ static const NSUInteger kHardDrivesSection = 4;
 }
 
 - (void)showResetConfirmation {
-    [[[[UIAlertView alloc] initWithTitle:@"Reset"
-                                 message:@"Really reset the emulator?"
-                                delegate:self
-                       cancelButtonTitle:@"OK"
-                       otherButtonTitles:@"Cancel", nil] autorelease] show];
+    UIAlertController *alert =
+        [UIAlertController alertControllerWithTitle:@"Reset"
+                                            message:@"Really reset the emulator?"
+                                     preferredStyle:UIAlertControllerStyleAlert];
+
+    if ([_settings hasSettingHandlers]) {
+        UIAlertAction *ra = [UIAlertAction actionWithTitle:@"OK - reset state config"
+                                                     style:UIAlertViewStyleDefault
+                                                   handler:^(UIAlertAction *action) {
+                                                       [self resetAndClearStateConfig:YES];
+                                                   }];
+        [alert addAction:ra];
+        UIAlertAction *rs = [UIAlertAction actionWithTitle:@"OK - keep state config"
+                                                     style:UIAlertViewStyleDefault
+                                                   handler:^(UIAlertAction *action) {
+                                                       [self resetAndClearStateConfig:NO];
+                                                   }];
+        [alert addAction:rs];
+    } else {
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
+                                                     style:UIAlertViewStyleDefault
+                                                   handler:^(UIAlertAction *action) {
+                                                       [self resetAndClearStateConfig:YES];
+                                                   }];
+        [alert addAction:ok];
+    }
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                     style:UIAlertViewStyleDefault
+                                                   handler:nil];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0)
-    {
-        [_resetDelegate didSelectReset:[self getDriveState]];
-        [CoreSettings onReset];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+- (void)resetAndClearStateConfig:(BOOL)clearStateConfig {
+    [_resetDelegate didSelectReset:[self getDriveState]];
+    [CoreSettings onReset];
+    if (clearStateConfig) {
+        [_settings clearAllSettingHandlers];
     }
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (DriveState *)getDriveState {

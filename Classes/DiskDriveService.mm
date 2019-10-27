@@ -34,7 +34,7 @@
     return nil;
 }
 
-- (void)insertDisk:(NSString *)adfPath intoDrive:(int)driveNumber {
+- (void)insertDisk:(NSString *)adfPath intoDrive:(NSUInteger)driveNumber {
     if (driveNumber < NUM_DRIVES)
     {
         [adfPath getCString:changed_df[driveNumber] maxLength:256 encoding:[NSString defaultCStringEncoding]];
