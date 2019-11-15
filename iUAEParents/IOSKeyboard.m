@@ -355,7 +355,7 @@
 {
     /* Get String */
     UITextField *textfield = [sender object];
-    NSMutableString *inputstring = [[textfield text] mutableCopy];
+    NSString *inputstring = textfield.text;
     NSUInteger length = inputstring.length;
     
     //Backspace Pressed: Little Hack: Length is always 1 because one character is autoplaced there (expect when deleted by backspace)
