@@ -51,7 +51,7 @@
 -(IBAction)enableMenuBar:(id)sender;
 -(IBAction)togglePinstatus:(id)sender;
 - (IBAction)restart:(id)sender;
-- (void)initializeKeyboard:(UITextField *)p_dummy_textfield dummytextf:(UITextField *)p_dummy_textfield_f dummytexts:(UITextField *)p_dummy_textfield_s;
+- (void)initializeKeyboard;
 - (void)initializeJoypad:(InputControllerView *)joyController;
 - (void)checkForPaused:(NSTimer*)timer;
 @end

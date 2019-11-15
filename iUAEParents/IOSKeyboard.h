@@ -22,7 +22,7 @@
 
 @interface IOSKeyboard : NSObject <UITextFieldDelegate>
 - (id)init __unavailable;
-- (id)initWithDummyFields:(UITextField *)dummyfield fieldf:(UITextField *)fieldf fieldspecial:(UITextField *)fieldspecial;
+- (id)initAndCreateDummyFields:(UIView *)parent;
 - (void)toggleKeyboard;
 @property (nonatomic, assign) id<IOSKeyboardDelegate> delegate;
 

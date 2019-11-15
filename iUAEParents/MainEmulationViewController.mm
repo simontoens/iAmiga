@@ -270,11 +270,11 @@ extern void togglemouse (void);
     _joyController.clickedscreen = false;
 }
 
-- (void)initializeKeyboard:(UITextField *)p_dummy_textfield dummytextf:(UITextField *)p_dummy_textfield_f dummytexts:(UITextField *)p_dummy_textfield_s {
+- (void)initializeKeyboard {
     
     keyboardactive = FALSE;
     
-    ioskeyboard = [[IOSKeyboard alloc] initWithDummyFields:p_dummy_textfield fieldf:p_dummy_textfield_f fieldspecial:p_dummy_textfield_s];
+    ioskeyboard = [[IOSKeyboard alloc] initAndCreateDummyFields:self.view];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidHide:)

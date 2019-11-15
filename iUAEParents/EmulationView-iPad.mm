@@ -41,7 +41,7 @@ bool keyboardactive;
     [webView setOpaque:NO];
     webView.delegate = self;
     
-    [super initializeKeyboard:dummy_textfield dummytextf:dummy_textfield_f dummytexts: dummy_textfield_s];
+    [super initializeKeyboard];
     
     //Uncomment for debug mode
     //[_lblDebug setHidden:true];
@@ -99,15 +99,15 @@ bool keyboardactive;
 - (IBAction)keyboardDidHide:(id)sender
 //Keyboards dismissed by other Means than Fullscreenpanel
 {
-    //Simulate Button press in Fullscreenpanel if Keyboard was closed by Keyboardclosebutton in Keyboard
-    if(keyboardactive == TRUE //Keyboard was closed by regular button in Fullscreenpanel
-            && dummy_textfield.isFirstResponder == FALSE //Fkeypanel was deactivated this triggered the event
-            && dummy_textfield_f.isFirstResponder == FALSE //Fkeypanel was activated this triggered the event
-            && dummy_textfield_s.isFirstResponder == FALSE //Special Keyboard view was activated this triggered the event
-       )
-    {
-        [self.btnKeyboard sendActionsForControlEvents:UIControlEventTouchUpInside];
-    }
+//    //Simulate Button press in Fullscreenpanel if Keyboard was closed by Keyboardclosebutton in Keyboard
+//    if(keyboardactive == TRUE //Keyboard was closed by regular button in Fullscreenpanel
+//            && dummy_textfield.isFirstResponder == FALSE //Fkeypanel was deactivated this triggered the event
+//            && dummy_textfield_f.isFirstResponder == FALSE //Fkeypanel was activated this triggered the event
+//            && dummy_textfield_s.isFirstResponder == FALSE //Special Keyboard view was activated this triggered the event
+//       )
+//    {
+//        [self.btnKeyboard sendActionsForControlEvents:UIControlEventTouchUpInside];
+//    }
 }
 
 @end

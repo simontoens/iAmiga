@@ -72,9 +72,8 @@
     UIButton *sKey_btnd;
     UIButton *exit_btnd;
     
-    UITextField        *dummy_textfield; // dummy text field used to display the keyboard
+    UITextField *dummy_textfield; // dummy text field used to display the keyboard
     UITextField *dummy_textfield_f; //dummy textfield used to display the keyboard with function keys
- 
     UITextField *dummy_textfield_s;
     
     PKCustomKeyboard *specialkeyboardipad;
@@ -655,7 +654,25 @@
     /*[button setBackgroundColor:[UIColor whiteColor]];*/
 }
 
-- (id) initWithDummyFields:(UITextField *)dummyfield fieldf:(UITextField *)fieldf fieldspecial:(UITextField *)fieldspecial {
+- (id)initAndCreateDummyFields:(UIView *)parent {
+    UITextField *f1 = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 10, 10)] autorelease];
+    f1.hidden = YES;
+    [parent addSubview:f1];
+    
+    UITextField *f2 = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 10, 10)] autorelease];
+    f2.hidden = YES;
+    [parent addSubview:f2];
+    
+    UITextField *f3 = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 10, 10)] autorelease];
+    f3.hidden = YES;
+    [parent addSubview:f3];
+
+    return [self initWithDummyFields:f1 fieldf:f2 fieldspecial:f3];
+}
+
+- (id)initWithDummyFields:(UITextField *)dummyfield
+                   fieldf:(UITextField *)fieldf
+             fieldspecial:(UITextField *)fieldspecial {
     
     self = [super init];
     
@@ -668,9 +685,9 @@
     fkeyselected = FALSE;
     skeyselected = FALSE;
     
-    dummy_textfield = dummyfield;
-    dummy_textfield_f = fieldf;
-    dummy_textfield_s = fieldspecial;
+    dummy_textfield = [dummyfield retain];
+    dummy_textfield_f = [fieldf retain];
+    dummy_textfield_s = [fieldspecial retain];
     
     [dummy_textfield setInputAccessoryView:[self createkeyboardToolBar:@"Custom"]];
     [dummy_textfield_f setInputAccessoryView:[self createFKeyToolbar]];
@@ -709,6 +726,13 @@
     }
     
     return self;
+}
+
+- (void)dealloc {
+    [dummy_textfield release];
+    [dummy_textfield_f release];
+    [dummy_textfield_s release];
+    [super dealloc];
 }
 
 -(UIView *) createFKeyToolbar {

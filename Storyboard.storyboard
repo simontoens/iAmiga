@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EnC-f2-lWs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="EnC-f2-lWs">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,41 +23,6 @@
                         <subviews>
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qW-dZ-P7e" userLabel="Mouse handler" customClass="TouchHandlerViewClassic">
                                 <rect key="frame" x="20" y="70" width="1024" height="768"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="44g-VP-zUI">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="15"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gQf-EM-UOL">
-                                        <rect key="frame" x="0.0" y="15" width="0.0" height="0.0"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" id="swQ-yM-PIK"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YZd-03-fs2">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="15"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" id="Quv-yc-erv"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                    </textField>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="44g-VP-zUI" firstAttribute="leading" secondItem="YZd-03-fs2" secondAttribute="leading" id="0uA-28-xhb"/>
-                                    <constraint firstItem="gQf-EM-UOL" firstAttribute="baseline" secondItem="44g-VP-zUI" secondAttribute="baseline" id="2Kx-jq-O8l"/>
-                                    <constraint firstItem="YZd-03-fs2" firstAttribute="top" secondItem="7qW-dZ-P7e" secondAttribute="top" id="6cI-2u-3Ra"/>
-                                    <constraint firstItem="44g-VP-zUI" firstAttribute="bottom" secondItem="YZd-03-fs2" secondAttribute="bottom" id="AG8-ZX-pve"/>
-                                    <constraint firstItem="gQf-EM-UOL" firstAttribute="leading" secondItem="44g-VP-zUI" secondAttribute="leading" id="DxJ-8U-3Gv"/>
-                                    <constraint firstItem="gQf-EM-UOL" firstAttribute="trailing" secondItem="44g-VP-zUI" secondAttribute="trailing" id="EaK-gG-5c7"/>
-                                    <constraint firstItem="gQf-EM-UOL" firstAttribute="baseline" secondItem="YZd-03-fs2" secondAttribute="baseline" id="EvL-Hb-vjw"/>
-                                    <constraint firstItem="YZd-03-fs2" firstAttribute="bottom" secondItem="gQf-EM-UOL" secondAttribute="bottom" id="Z3j-Je-xa9"/>
-                                    <constraint firstItem="44g-VP-zUI" firstAttribute="trailing" secondItem="YZd-03-fs2" secondAttribute="trailing" id="jOR-5p-cJ7"/>
-                                    <constraint firstItem="YZd-03-fs2" firstAttribute="leading" secondItem="7qW-dZ-P7e" secondAttribute="leading" id="ykH-eW-il0"/>
-                                </constraints>
                             </view>
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8JE-eY-9II" userLabel="Joypad handler" customClass="InputControllerView">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="718"/>
@@ -152,9 +117,6 @@
                         <outlet property="btnJoypad" destination="OKz-YY-FT1" id="rpe-Cl-A49"/>
                         <outlet property="btnKeyboard" destination="DiM-PN-uJz" id="gz1-dg-BOh"/>
                         <outlet property="btnPin" destination="Smw-zP-eVy" id="wCb-Yt-YV1"/>
-                        <outlet property="dummy_textfield" destination="44g-VP-zUI" id="SVa-uy-Jrx"/>
-                        <outlet property="dummy_textfield_f" destination="gQf-EM-UOL" id="7RP-Cx-avv"/>
-                        <outlet property="dummy_textfield_s" destination="YZd-03-fs2" id="4ME-rd-vfg"/>
                         <outlet property="joyController" destination="8JE-eY-9II" id="ES4-LO-OCB"/>
                         <outlet property="menuBar" destination="mqn-Rz-0og" id="Qyb-pu-TaZ"/>
                         <outlet property="menuBarEnabler" destination="H3t-Pq-UNY" id="RnJ-Ob-SK1"/>
@@ -1925,29 +1887,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q75-C4-15m" id="ss1-vf-ttM">
                                             <rect key="frame" x="0.0" y="-0.5" width="1024" height="0.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GhM-oB-GAN">
-                                                    <rect key="frame" x="492" y="7" width="0.0" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rKR-cD-hRN">
-                                                    <rect key="frame" x="492" y="7" width="0.0" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YpF-Qy-RoA">
-                                                    <rect key="frame" x="492" y="7" width="0.0" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <gestureRecognizers/>
                                     </tableViewCell>
@@ -1965,9 +1904,6 @@
                         <outlet property="CellKey" destination="CnB-nr-cfe" id="eL2-1h-Pl6"/>
                         <outlet property="JoypadDetailLabel" destination="06K-R0-CAp" id="xGB-SD-BTf"/>
                         <outlet property="KeyDetailLabel" destination="qmb-g6-y1F" id="6t9-EJ-SCt"/>
-                        <outlet property="dummy_textfield" destination="GhM-oB-GAN" id="QB9-6t-GyG"/>
-                        <outlet property="dummy_textfield_f" destination="rKR-cD-hRN" id="16P-mD-Djg"/>
-                        <outlet property="dummy_textfield_s" destination="YpF-Qy-RoA" id="xoS-dR-l35"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9C3-jq-gDl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2948,24 +2884,6 @@
                                     <action selector="onButtonViewSlider" destination="YBQ-Kv-zg0" eventType="valueChanged" id="nWA-H3-Mjs"/>
                                 </connections>
                             </slider>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q1p-bf-rSh" userLabel="dummy1">
-                                <rect key="frame" x="920" y="71" width="0.0" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ub5-rM-9Jy" userLabel="dummy2">
-                                <rect key="frame" x="943" y="71" width="0.0" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F7w-Yx-ur7" userLabel="dummy3">
-                                <rect key="frame" x="967" y="71" width="0.0" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKA-At-0GO" userLabel="Add">
                                 <rect key="frame" x="925" y="28" width="22" height="22"/>
                                 <connections>
@@ -3007,9 +2925,6 @@
                     <connections>
                         <outlet property="buttonViewSizeSlider" destination="ZwY-Rm-9tN" id="afS-2n-8zo"/>
                         <outlet property="configureKeyButton" destination="BI0-2B-gpo" id="wLf-RS-Adu"/>
-                        <outlet property="dummyTextField1" destination="Q1p-bf-rSh" id="eGy-yL-TA8"/>
-                        <outlet property="dummyTextField2" destination="Ub5-rM-9Jy" id="2wf-3G-Gha"/>
-                        <outlet property="dummyTextField3" destination="F7w-Yx-ur7" id="rdL-kw-qEK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ljs-VL-kfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3088,18 +3003,18 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Ram-Selected.png" width="25" height="17"/>
-        <image name="Ram_Unselected.png" width="25" height="17"/>
+        <image name="Ram-Selected.png" width="18.947368621826172" height="12.884210586547852"/>
+        <image name="Ram_Unselected.png" width="18.75" height="12.75"/>
         <image name="controller_selected" width="25" height="25"/>
-        <image name="controller_selected.png" width="25" height="25"/>
-        <image name="controller_unselected.png" width="25" height="25"/>
-        <image name="gear_selected.png" width="25" height="25"/>
-        <image name="gear_unselected.png" width="25" height="25"/>
-        <image name="keyboard.png" width="46" height="32"/>
-        <image name="keyboard_unselected.png" width="25" height="25"/>
-        <image name="monitor_selected.png" width="25" height="22"/>
-        <image name="monitor_unselected.png" width="25" height="22"/>
-        <image name="sticky_unselected.png" width="25" height="25"/>
+        <image name="controller_selected.png" width="20" height="20"/>
+        <image name="controller_unselected.png" width="20" height="20"/>
+        <image name="gear_selected.png" width="20" height="20"/>
+        <image name="gear_unselected.png" width="20" height="20"/>
+        <image name="keyboard.png" width="36.799999237060547" height="25.600000381469727"/>
+        <image name="keyboard_unselected.png" width="20" height="20"/>
+        <image name="monitor_selected.png" width="20" height="17.600000381469727"/>
+        <image name="monitor_unselected.png" width="20" height="17.600000381469727"/>
+        <image name="sticky_unselected.png" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yz1-cx-vwd"/>

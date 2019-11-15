@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _keyboard = [[IOSKeyboard alloc] initWithDummyFields:_dummyTextField1 fieldf:_dummyTextField2 fieldspecial:_dummyTextField3];
+    _keyboard = [[IOSKeyboard alloc] initAndCreateDummyFields:self.view];
     _keyboard.delegate = self;
     _viewConfigurationToView = [[NSMutableDictionary alloc] init];
     [self configureButtonViews];

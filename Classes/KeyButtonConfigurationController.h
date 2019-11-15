@@ -27,8 +27,4 @@
 @property (nonatomic, assign) IBOutlet UIButton *configureKeyButton;
 @property (nonatomic, assign) IBOutlet UISlider *buttonViewSizeSlider;
 
-@property (nonatomic, assign) IBOutlet UITextField *dummyTextField1;
-@property (nonatomic, assign) IBOutlet UITextField *dummyTextField2;
-@property (nonatomic, assign) IBOutlet UITextField *dummyTextField3;
-
 @end

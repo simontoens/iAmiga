@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    ioskeyboard = [[IOSKeyboard alloc] initWithDummyFields:_dummy_textfield fieldf:_dummy_textfield_f fieldspecial:_dummy_textfield_s];
+    ioskeyboard = [[IOSKeyboard alloc] initAndCreateDummyFields:self.view];
     ioskeyboard.delegate = self;
     
     settings = [[Settings alloc] init];

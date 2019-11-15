@@ -28,9 +28,6 @@
     UIButton *closeButton;
     UIButton *restartButton;
     UIWebView *webView;
-    IBOutlet UITextField        *dummy_textfield; // dummy text field used to display the keyboard
-    IBOutlet UITextField *dummy_textfield_f; //dummy textfield used to display the keyboard with function keys
-    IBOutlet UITextField *dummy_textfield_s; //dummy textfield for special key like right shift numlock etc .....
 }
 
 -(IBAction)toggleControls:(id)sender;

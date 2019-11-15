@@ -31,9 +31,6 @@
 - (IBAction)associateKey:(id)sender;
 - (IBAction)associateJoypad:(id)sender;
 
-@property (readwrite, retain) IBOutlet UITextField *dummy_textfield; // dummy text field used to display the keyboard
-@property (readwrite, retain) IBOutlet UITextField  *dummy_textfield_f; //dummy textfield used to display the keyboard with function keys
-@property (readwrite, retain) IBOutlet UITextField *dummy_textfield_s; //dummy textfield for special key like right shift numlock etc .....
 @property (nonatomic, assign) id<SelectKeyDelegate>	delegate;
 @property (retain, nonatomic) IBOutlet UILabel *KeyDetailLabel;
 @property (retain, nonatomic) IBOutlet UILabel *JoypadDetailLabel;
