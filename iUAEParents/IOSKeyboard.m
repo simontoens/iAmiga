@@ -48,6 +48,55 @@
 #define TAGLEFT 3
 #define TAGRIGHT 4
 
+@interface IOSKeyboard ()
+- (void) sendkey:(int)asciicode keyName:(NSString *) keyName;
+@end
+
+@interface TextFieldWithCursorDetection : UITextField {
+    @private
+    IOSKeyboard *_keyboard;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame withKeyboard:(IOSKeyboard *)keyboard;
+
+@end
+
+@implementation TextFieldWithCursorDetection
+
+- (instancetype)initWithFrame:(CGRect)frame withKeyboard:(IOSKeyboard *)keyboard {
+    if (self = [super initWithFrame:frame]) {
+        _keyboard = keyboard; // not retained because circular
+    }
+    return self;
+}
+
+- (NSArray *) keyCommands {
+    // https://stackoverflow.com/questions/7980447/how-can-i-respond-to-external-keyboard-arrow-keys
+    
+    UIKeyCommand *upArrow = [UIKeyCommand keyCommandWithInput: UIKeyInputUpArrow modifierFlags: 0 action: @selector(upArrow:)];
+    UIKeyCommand *downArrow = [UIKeyCommand keyCommandWithInput: UIKeyInputDownArrow modifierFlags: 0 action: @selector(downArrow:)];
+    UIKeyCommand *leftArrow = [UIKeyCommand keyCommandWithInput: UIKeyInputLeftArrow modifierFlags: 0 action: @selector(leftArrow:)];
+    UIKeyCommand *rightArrow = [UIKeyCommand keyCommandWithInput: UIKeyInputRightArrow modifierFlags: 0 action: @selector(rightArrow:)];
+    return [[NSArray alloc] initWithObjects: upArrow, downArrow, leftArrow, rightArrow, nil];
+}
+
+- (void)upArrow:(UIKeyCommand *) keyCommand {
+    [_keyboard sendkey:SDLK_UP keyName:@"UP"];
+}
+
+- (void)downArrow:(UIKeyCommand *) keyCommand {
+    [_keyboard sendkey:SDLK_DOWN keyName:@"DOWN"];
+}
+
+- (void)leftArrow:(UIKeyCommand *) keyCommand {
+    [_keyboard sendkey:SDLK_LEFT keyName:@"LEFT"];
+}
+
+- (void)rightArrow: (UIKeyCommand *) keyCommand {
+    [_keyboard sendkey:SDLK_RIGHT keyName:@"RIGHT"];
+}
+
+@end
 
 @implementation IOSKeyboard {
     
@@ -655,7 +704,9 @@
 }
 
 - (id)initAndCreateDummyFields:(UIView *)parent {
-    UITextField *f1 = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 10, 10)] autorelease];
+    UITextField *f1 = [[[TextFieldWithCursorDetection alloc]
+                        initWithFrame:CGRectMake(0, 0, 10, 10)
+                         withKeyboard:self] autorelease];
     f1.hidden = YES;
     [parent addSubview:f1];
     
