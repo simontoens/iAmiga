@@ -69,12 +69,12 @@ bool bConnectionToServerJustEstablished = false;
     {
         [self showMessage:@"Use device as Remote Controller" withMessage:@"Tab screen to use device as remote controller"];
         
-        dispatch_time_t waittime = dispatch_time(DISPATCH_TIME_NOW, 2.00 * NSEC_PER_SEC);
+        dispatch_time_t waittime = dispatch_time(DISPATCH_TIME_NOW, 6.00 * NSEC_PER_SEC);
         
-        dispatch_after(waittime, dispatch_get_main_queue(),
-                       ^void{
-                           [self configureContinue:mainEmuViewCtrl];
-                       });
+//        dispatch_after(waittime, dispatch_get_main_queue(),
+//                       ^void{
+//                           [self configureContinue:mainEmuViewCtrl];
+//                       });
     }
 }
 
@@ -362,12 +362,13 @@ MCNearbyServiceAdvertiser *advertiser=nil;
     {
         localPeerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
     }
+    
     advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:localPeerID
                                       discoveryInfo:nil
                                         serviceType:XXServiceType];
     advertiser.delegate = self;
     [advertiser startAdvertisingPeer];
-    //[self showMessage: @"server" withMessage: @"started on this device"];
+    [self showMessage: @"server" withMessage: @"started on this device"];
 }
 
 
