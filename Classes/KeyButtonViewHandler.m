@@ -161,7 +161,9 @@
 
 - (void)removeExistingKeyButtonViews {
     for (UIView *view in _keyButtonViews) {
-        [view removeFromSuperview];
+        if([view isKindOfClass:[KeyButtonView class]]){
+            [view removeFromSuperview];
+        }
     }
     [_keyButtonViews removeAllObjects];
 }
