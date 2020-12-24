@@ -74,8 +74,6 @@
 		<string>_svc-iuae._tcp</string>
 		<string>_svc-iuae._udp</string>
 	</array>
-	<key>UIFileSharingEnabled</key>
-	<true/>
 	<key>UIMainStoryboardFile</key>
 	<string>Storyboard</string>
 	<key>UIMainStoryboardFile~ipad</key>
@@ -158,5 +156,9 @@
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>I don&apos;t know what the discovery is used for! The app seems to work without it???</string>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 </dict>
 </plist>
