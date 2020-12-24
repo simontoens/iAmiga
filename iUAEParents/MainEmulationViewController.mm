@@ -151,7 +151,7 @@ extern void uae_reset();
     SDL_Surface *surface = SDL_GetVideoSurface();
     UIView *display = (UIView *)surface->userdata;
     
-    [display performBlock:^(void) {
+    [display performCodeBlock:^(void) {
         // main thread
         [display addSubview:_icadeController];
         [_icadeController becomeFirstResponder];

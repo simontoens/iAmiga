@@ -80,7 +80,7 @@ extern int mainMenu_AddVerticalStretchValue;
     SDLKey *keyCopy = (SDLKey *)malloc(sizeof(SDLKey) * count);
     memcpy(keyCopy, keys, sizeof(SDLKey) * count);
     
-    [self performBlock:^(void) {
+    [self performCodeBlock:^(void) {
         for (int i=0; i < count; i++) {
             SDL_Event evt;
             evt.type = keyState;
