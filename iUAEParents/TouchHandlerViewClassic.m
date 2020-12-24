@@ -88,6 +88,7 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     self.multipleTouchEnabled = YES;
 }
 
@@ -101,7 +102,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSSet *touchtype = [event allTouches];
-    int touchCounts = [touchtype count];
+    int touchCounts = (int) [touchtype count];
     
     UITouch *touch = [touches anyObject];
     
@@ -130,9 +131,9 @@
         CGFloat relx = (locationInView.x - previousMouseLocation.x) / x_ratio;
         CGFloat rely = (locationInView.y - previousMouseLocation.y) / y_ratio;
         
-        if (fabsf(relx) < 1.0f)
+        if (fabs(relx) < 1.0f)
             relx = 0.f;
-        if (fabsf(rely) < 1.0f)
+        if (fabs(rely) < 1.0f)
             rely = 0.f;
         
         if (relx != 0.0f || rely != 0.0f)

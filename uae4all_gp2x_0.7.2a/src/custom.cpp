@@ -1170,47 +1170,47 @@ typedef int sprbuf_res_t, cclockres_t, hwres_t, bplres_t;
 
 //newer code starts here mithrendal
 /* handle very rarely needed playfield collision (CLXDAT bit 0) */
-static void do_playfield_collisions (void)
-{
-    int bplres = GET_RES (bplcon0); //bplcon0_res;;
-    hwres_t ddf_left = thisline_decision.plfleft * 2 << bplres;
-    hwres_t hw_diwlast = coord_window_to_diw_x (thisline_decision.diwlastword);
-    hwres_t hw_diwfirst = coord_window_to_diw_x (thisline_decision.diwfirstword);
-    int i, collided, minpos, maxpos;
-    int planes = /*(currprefs.chipset_mask & CSMASK_AGA) ? 8 :*/ 6;
-    
-    collided = 0;
-    minpos = thisline_decision.plfleft * 2;
-    if (minpos < hw_diwfirst)
-        minpos = hw_diwfirst;
-    maxpos = thisline_decision.plfright * 2;
-    if (maxpos > hw_diwlast)
-        maxpos = hw_diwlast;
-    for (i = minpos; i < maxpos && !collided; i+= 32) {
-        int offs = ((i << bplres) - ddf_left) >> 3;
-        int j;
-        uae_u32 total = 0xffffffff;
-        for (j = 0; j < planes; j++) {
-            int ena = (clxcon_bpl_enable >> j) & 1;
-            int match = (clxcon_bpl_match >> j) & 1;
-            uae_u32 t = 0xffffffff;
-            if (ena) {
-                if (j < thisline_decision.nr_planes) {
-                    t = *(uae_u32 *)(line_data[next_lineno] + offs + 2 * j * MAX_WORDS_PER_LINE);
-                    t ^= (match & 1) - 1;
-                } else {
-                    t = (match & 1) - 1;
-                }
-            }
-            total &= t;
-        }
-        if (total) {
-            collided = 1;
-        }
-    }
-    if (collided)
-        clxdat |= 1;
-}
+//static void do_playfield_collisions (void)
+//{
+//    int bplres = GET_RES (bplcon0); //bplcon0_res;;
+//    hwres_t ddf_left = thisline_decision.plfleft * 2 << bplres;
+//    hwres_t hw_diwlast = coord_window_to_diw_x (thisline_decision.diwlastword);
+//    hwres_t hw_diwfirst = coord_window_to_diw_x (thisline_decision.diwfirstword);
+//    int i, collided, minpos, maxpos;
+//    int planes = /*(currprefs.chipset_mask & CSMASK_AGA) ? 8 :*/ 6;
+//
+//    collided = 0;
+//    minpos = thisline_decision.plfleft * 2;
+//    if (minpos < hw_diwfirst)
+//        minpos = hw_diwfirst;
+//    maxpos = thisline_decision.plfright * 2;
+//    if (maxpos > hw_diwlast)
+//        maxpos = hw_diwlast;
+//    for (i = minpos; i < maxpos && !collided; i+= 32) {
+//        int offs = ((i << bplres) - ddf_left) >> 3;
+//        int j;
+//        uae_u32 total = 0xffffffff;
+//        for (j = 0; j < planes; j++) {
+//            int ena = (clxcon_bpl_enable >> j) & 1;
+//            int match = (clxcon_bpl_match >> j) & 1;
+//            uae_u32 t = 0xffffffff;
+//            if (ena) {
+//                if (j < thisline_decision.nr_planes) {
+//                    t = *(uae_u32 *)(line_data[next_lineno] + offs + 2 * j * MAX_WORDS_PER_LINE);
+//                    t ^= (match & 1) - 1;
+//                } else {
+//                    t = (match & 1) - 1;
+//                }
+//            }
+//            total &= t;
+//        }
+//        if (total) {
+//            collided = 1;
+//        }
+//    }
+//    if (collided)
+//        clxdat |= 1;
+//}
 
 
 /* Sprite-to-sprite collisions are taken care of in record_sprite.  This one does
@@ -1506,7 +1506,7 @@ static __inline__ void finish_decisions (void)
     struct draw_info *dip_old;
     struct decision *dp;
     int changed;
-    int hpos = current_hpos ();
+    int hpos = (int) current_hpos ();
 	
     if (framecnt != 0)
 		return;
@@ -1908,7 +1908,7 @@ static _INLINE_ void start_copper (void)
     cop_state.ignore_next = 0;
     cop_state.state = COP_read1;
     cop_state.vpos = vpos;
-    cop_state.hpos = current_hpos () & ~1;
+    cop_state.hpos = (int) current_hpos () & ~1;
 	
     if (dmaen (DMA_COPPER)) {
 		copper_enabled_thisline = 1;
@@ -2268,9 +2268,9 @@ static _INLINE_ void ADKCON (uae_u16 v)
     update_adkmasks ();
 }
 
-static _INLINE_ void BEAMCON0 (uae_u16 v)
-{
-}
+//static _INLINE_ void BEAMCON0 (uae_u16 v)
+//{
+//}
 
 static _INLINE_ void BPLPTH (int hpos, uae_u16 v, int num)
 {
@@ -3180,7 +3180,7 @@ void blitter_done_notify (void)
     if (cop_state.state != COP_bltwait)
 		return;
 	
-    cop_state.hpos = current_hpos () & ~1;
+    cop_state.hpos = (int) current_hpos () & ~1;
     cop_state.vpos = vpos;
     cop_state.state = COP_wait;
     compute_spcflag_copper ();
@@ -3188,7 +3188,7 @@ void blitter_done_notify (void)
 
 void do_copper (void)
 {
-    int hpos = current_hpos ();
+    int hpos = (int) current_hpos ();
     update_copper (hpos);
 }
 
@@ -3700,7 +3700,7 @@ void customreset (void)
         for(i = 0 ; i < 32 ; i++)
         {
             vv = current_colors.color_uae_regs_ecs[i];
-            current_colors.color_uae_regs_ecs[i] = (unsigned)-1;
+            current_colors.color_uae_regs_ecs[i] = (uae_u16)-1;
             record_color_change (0, i, vv);
             remembered_color_entry = -1;
             current_colors.color_uae_regs_ecs[i] = vv;
@@ -3799,7 +3799,7 @@ void custom_init (void)
     calltrap (deftrap (timehack_helper));
     dw (RTS);
 	
-    org (pos);
+    org ((uae_u32) pos);
 #endif
 	
     gen_custom_tables ();
@@ -3842,7 +3842,7 @@ static __inline__ uae_u32 REGPARAM2 custom_wget_1 (uaecptr addr)
 		case 0x004: v = VPOSR (); break;
 		case 0x006: v = VHPOSR (); break;
 			
-		case 0x008: v = DSKDATR (current_hpos ()); break;
+		case 0x008: v = DSKDATR ((int) current_hpos ()); break;
 			
 		case 0x00A: v = JOY0DAT (); break;
 		case 0x00C: v = JOY1DAT (); break;
@@ -3852,7 +3852,7 @@ static __inline__ uae_u32 REGPARAM2 custom_wget_1 (uaecptr addr)
 		case 0x012: v = POT0DAT (); break;
 		case 0x016: v = POTGOR (); break;
 		case 0x018: v = 0; break;
-		case 0x01A: v = DSKBYTR (current_hpos ()); break;
+		case 0x01A: v = DSKBYTR ((int) current_hpos ()); break;
 		case 0x01C: v = INTENAR (); break;
 		case 0x01E: v = INTREQR ();
         
@@ -3896,7 +3896,7 @@ uae_u32 REGPARAM2 custom_wget (uaecptr addr)
 #ifdef DEBUG_CUSTOM
 	//  dbg("custom_wget");
 #endif
-    sync_copper_with_cpu (current_hpos (), 1, addr);
+    sync_copper_with_cpu ((int) current_hpos (), 1, (uint) addr);
     return custom_wget_1 (addr);
 }
 
@@ -4056,23 +4056,23 @@ void REGPARAM2 custom_wput_1 (int hpos, uaecptr addr, uae_u32 value)
 			break;
 		case 0x120: case 0x124: case 0x128: case 0x12C:
 		case 0x130: case 0x134: case 0x138: case 0x13C:
-			SPRxPTH (hpos, value, (addr - 0x120) / 4);
+			SPRxPTH (hpos, value, (int) (addr - 0x120) / 4);
 			break;
 		case 0x122: case 0x126: case 0x12A: case 0x12E:
 		case 0x132: case 0x136: case 0x13A: case 0x13E:
-			SPRxPTL (hpos, value, (addr - 0x122) / 4);
+			SPRxPTL (hpos, value, (int) (addr - 0x122) / 4);
 			break;
 		case 0x140: case 0x148: case 0x150: case 0x158:
 		case 0x160: case 0x168: case 0x170: case 0x178:
-			SPRxPOS (hpos, value, (addr - 0x140) / 8);
+			SPRxPOS (hpos, value, (int) (addr - 0x140) / 8);
 			break;
 		case 0x142: case 0x14A: case 0x152: case 0x15A:
 		case 0x162: case 0x16A: case 0x172: case 0x17A:
-			SPRxCTL (hpos, value, (addr - 0x142) / 8);
+			SPRxCTL (hpos, value, (int) (addr - 0x142) / 8);
 			break;
 		case 0x144: case 0x14C: case 0x154: case 0x15C:
 		case 0x164: case 0x16C: case 0x174: case 0x17C:
-			SPRxDATA (hpos, value, (addr - 0x144) / 8);
+			SPRxDATA (hpos, value, (int) (addr - 0x144) / 8);
 			break;
 		case 0x146: case 0x14E: case 0x156: case 0x15E:
 		case 0x166: case 0x16E: case 0x176: case 0x17E:
@@ -4100,10 +4100,10 @@ void REGPARAM2 custom_wput (uaecptr addr, uae_u32 value)
 #ifdef DEBUG_CUSTOM
     dbgf("custom_wput 0x%X 0x%X\n",addr,value);
 #endif
-    int hpos = current_hpos ();
+    int hpos = (int) current_hpos ();
     SMEM_WRITE;
 	
-    sync_copper_with_cpu (hpos, 1, addr);
+    sync_copper_with_cpu (hpos, 1, (uint) addr);
     custom_wput_1 (hpos, addr, value);
 }
 
@@ -4436,7 +4436,7 @@ uae_u8 *save_custom (int *len)
     SW (fmode);			/* 1FC FMODE */
     SW (0xffff);		/* 1FE */
 
-    *len = dst - dstbak;
+    *len = (int) (dst - dstbak);
     return dstbak;
 }
 
@@ -4457,7 +4457,7 @@ uae_u8 *save_custom_agacolors (int *len)
     dstbak = dst = (uae_u8 *)malloc (256*4);
     for (i = 0; i < 256; i++)
 	SL (0); //current_colors.color_regs_aga[i]);
-    *len = dst - dstbak;
+    *len = (int)(dst - dstbak);
     return dstbak;
 }
 
@@ -4495,7 +4495,7 @@ uae_u8 *save_custom_sprite(int *len, int num)
     SW (sprdata[num][3]);
     SW (sprdatb[num][3]);
     SB (spr[num].armed ? 1 : 0);
-    *len = dst - dstbak;
+    *len = (int)(dst - dstbak);
     return dstbak;
 }
 

@@ -91,17 +91,17 @@ void build_blitfilltable(void)
     }
 }
 
-static __inline__ uae_u8 * blit_xlateptr(uaecptr bltpt, int bytecount)
-{
-    if (!chipmem_bank.check(bltpt,bytecount)) return NULL;
-    return chipmem_bank.xlateaddr(bltpt);
-}
+//static __inline__ uae_u8 * blit_xlateptr(uaecptr bltpt, int bytecount)
+//{
+//    if (!chipmem_bank.check(bltpt,bytecount)) return NULL;
+//    return chipmem_bank.xlateaddr(bltpt);
+//}
 
-static __inline__ uae_u8 * blit_xlateptr_desc(uaecptr bltpt, int bytecount)
-{
-    if (!chipmem_bank.check(bltpt-bytecount, bytecount)) return NULL;
-    return chipmem_bank.xlateaddr(bltpt);
-}
+//static __inline__ uae_u8 * blit_xlateptr_desc(uaecptr bltpt, int bytecount)
+//{
+//    if (!chipmem_bank.check(bltpt-bytecount, bytecount)) return NULL;
+//    return chipmem_bank.xlateaddr(bltpt);
+//}
 
 #ifdef DEBUG_BLITTER
 static _INLINE_ void print_bltinfo(struct bltinfo *_GCCRES_ b)
@@ -453,8 +453,8 @@ static _INLINE_ void blitter_line(void)
 
 static __inline__ void blitter_nxline(void)
 {
-    bltcpt = bltcnxlpt;
-    bltdpt = bltdnxlpt;
+    bltcpt = (uae_u32) bltcnxlpt;
+    bltdpt = (uae_u32) bltdnxlpt;
     blineb = (blineb << 1) | (blineb >> 15);
     if (--blt_info.vblitsize == 0) {
 		bltstate = BLT_done;
@@ -668,7 +668,7 @@ int blitnasty (void)
 		return 0;
     if (!dmaen(DMA_BLITTER))
 		return 0;
-    cycles = (get_cycles () - blit_first_cycle) / CYCLE_UNIT;
+    cycles = (int) ((get_cycles () - blit_first_cycle) / CYCLE_UNIT);
     ccnt = 0;
 #ifdef DEBUG_BLITTER
     dbgf("\t blit_last_cycle=0x%X, cycles=0x%X\n",blit_last_cycle,cycles);

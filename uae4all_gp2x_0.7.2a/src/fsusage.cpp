@@ -116,7 +116,7 @@ safe_read
 #ifdef EINTR
   do
     {
-      n_chars = read (desc, ptr, len);
+      n_chars = (int) read (desc, ptr, len);
     }
   while (n_chars < 0 && errno == EINTR);
 #else

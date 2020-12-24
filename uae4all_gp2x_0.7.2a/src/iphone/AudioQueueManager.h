@@ -74,7 +74,7 @@ private:
 	int						_bytesPerQueueBuffer;
 	int						_sampleFrameCount;	// number of samples in a buffer
 	float					_sampleFrequency;
-	volatile int			_samplesInQueue;
+    _Atomic(int32_t)	    _samplesInQueue;
 	pthread_t				_soundThread;
 	SoundBuffer				_soundQBuffer;
 	CFRunLoopRef			_runLoop;

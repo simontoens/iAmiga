@@ -303,7 +303,7 @@ static int drive_insert (drive * drv, int dnum, const char *fname)
 		drv->filetype = ADF_NORMAL;
 		
 		uae4all_fseek (drv->diskfile, 0, SEEK_END);
-		i = uae4all_ftell (drv->diskfile);
+		i = (int) uae4all_ftell (drv->diskfile);
 		uae4all_fseek (drv->diskfile, 0, SEEK_SET);
 		
 		/* High-density disk? */
@@ -1665,7 +1665,7 @@ uae_u8 *save_disk(int num,int *len)
     }
     
     dst = (uae_u8 *)(((uintptr_t)dst)+strlen((char *)dst) + 1);
-    *len = dst - dstbak;
+    *len = (int) (dst - dstbak);
     return dstbak;
 }
 
@@ -1698,7 +1698,7 @@ uae_u8 *save_floppy(int *len)
     save_u8 (dskdmaen);		/* dma status */
     save_u16 (word >> 16);	/* current fifo (high word) */
 
-    *len = dst - dstbak;
+    *len = (int) (dst - dstbak);
     return dstbak;
 }
 

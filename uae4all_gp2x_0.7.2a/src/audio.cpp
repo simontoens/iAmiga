@@ -367,7 +367,7 @@ static audio_handler_func audio3_table[8] UAE4ALL_ALIGN = {
 static __inline__ void audio_handler (int nr)
 {
     struct audio_channel_data *cdp = audio_channel + nr;
-	int evtime = audio_channel_evtime[nr];
+	int evtime = (int) audio_channel_evtime[nr];
 	audio_channel_evtime[nr] = MAX_EV;
 	
     switch (audio_channel_state[nr]) {
@@ -587,7 +587,7 @@ void aud3_handler (void) {
     if (audio_channel_state[NCHAN] == 0) { \
 		audio_channel_state[NCHAN] = 1; \
 		cdp->pt = cdp->lc; \
-		cdp->wper = cdp->per; \
+        cdp->wper = (int) cdp->per; \
 		cdp->wlen = cdp->len; \
 		cdp->data_written = 2; \
 		audio_channel_evtime[NCHAN] = eventtab[ev_hsync].evtime - get_cycles (); \
@@ -596,7 +596,7 @@ void aud3_handler (void) {
 
 void audio_channel_enable_dma(int n_channel)
 {
-	audio_channel_enable_dma_1(n_channel)
+    audio_channel_enable_dma_1(n_channel);
 }
 
 #define audio_channel_disable_dma_1(NCHAN) \
@@ -1091,7 +1091,7 @@ void check_dma_audio(void)
 	{
 		struct audio_channel_data *cdp;
 		int chan_ena;
-		CHECK_DMA_AUDIO(i)
+        CHECK_DMA_AUDIO((int)i)
 	}
 #endif
 }
@@ -1191,11 +1191,11 @@ uae_u8 *restore_audio (uae_u8 *src, int i)
     acd->wlen = restore_u16 ();
     backper = restore_u16 ();
     p = restore_u16 ();
-    acd->wper = p ? p * CYCLE_UNIT : PERIOD_MAX;
+    acd->wper = (int) (p ? p * CYCLE_UNIT : PERIOD_MAX);
     acd->lc = restore_u32 ();
     acd->pt = restore_u32 ();
     audio_channel_evtime[i] = restore_u32 ();
-    AUDxPER(i,backper ? backper * CYCLE_UNIT : PERIOD_MAX);
+    AUDxPER(i,backper ? backper * CYCLE_UNIT : (int) PERIOD_MAX);
     audio_channel[i].dmaen = (dmacon & 0x200) && (dmacon & (1 << i));
     AUDxDAT(i,0);
 
@@ -1224,7 +1224,7 @@ uae_u8 *save_audio (int *len, int i)
     save_u32 (acd->lc);
     save_u32 (acd->pt);
     save_u32 (audio_channel_evtime[i]);
-    *len = dst - dstbak;
+    *len = (int)(dst - dstbak);
     return dstbak;
 }
 

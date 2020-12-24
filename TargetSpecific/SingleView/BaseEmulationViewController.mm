@@ -153,7 +153,7 @@ static CGRect CreateIntegralScaledView(CGRect aFrame, BOOL top) {
 	
 	if (_integralSize) {
 		CGRect aFrame;
-		if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+		if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
 			aFrame = CGRectMake(0, 0, frameSize.width, frameSize.height);
 		} else {
 			aFrame = self.view.frame;
@@ -162,7 +162,7 @@ static CGRect CreateIntegralScaledView(CGRect aFrame, BOOL top) {
 	}
 	
 	// full-screen, landscape mode
-	if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+	if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
 		
 		
         int height = self.view.frame.size.height - self.displayTop;

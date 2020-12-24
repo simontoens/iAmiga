@@ -50,7 +50,7 @@
     
     UITableViewCell *cell;
     
-    if ([_settings keyConfigurationforButton:BTN_A forController:indexPath.row + 1])
+    if ([_settings keyConfigurationforButton:BTN_A forController:(int) (indexPath.row + 1)])
     {
         cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"
                                                forIndexPath:indexPath];
@@ -67,7 +67,7 @@
 
 - (UITableViewCell *)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     //NSString *configurationname = [configurations objectAtIndex:indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"Controller %d", indexPath.row + 1];
+    cell.textLabel.text = [NSString stringWithFormat:@"Controller %ld", indexPath.row + 1];
 
     return cell;
 }
@@ -104,7 +104,7 @@
         
         UITableViewCell *sCell = (UITableViewCell *) sender;
         NSInteger cNumber = [[self.tableView indexPathForCell:sCell] row] + 1;
-        [_settings setCNumber:cNumber];
+        [_settings setCNumber:(int) cNumber];
         
     }
 }

@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 #import "MainEmulationViewController.h"
 #import "IOSKeyboard.h"
 #import "InputControllerView.h"
@@ -29,7 +30,7 @@
     UIButton *closeButton;
     TouchHandlerViewClassic *mouseHandler;
     UIButton *restartButton;
-    UIWebView *webView;
+    WKWebView *webView;
     IBOutlet UITextField        *dummy_textfield; // dummy text field used to display the keyboard
     IBOutlet UITextField *dummy_textfield_f; //dummy textfield used to display the keyboard with
     IBOutlet UITextField *dummy_textfield_s; //dummy textfield for special key like right shift numlock etc .....
@@ -37,7 +38,7 @@
 }
 
 @property (readwrite, retain) IBOutlet UIButton *btnKeyboard;
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) IBOutlet WKWebView *webView;
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;
 @property (nonatomic, retain) IBOutlet TouchHandlerViewClassic *mouseHandler;
 @property (nonatomic, retain) IBOutlet UIButton *restartButton;

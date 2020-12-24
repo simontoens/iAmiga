@@ -100,7 +100,7 @@ static void m68k_run (void)
 		cycles >>= 8;
         
 		last_currcycle = currcycle;
-		m68k_emulate(cycles);
+		m68k_emulate((int) cycles);
         
 		cycles = (M68KCONTEXT.cycles_counter - cycles_actual) << 8;
         // In m68k_emulate, calls to cia_wait() may occur and some cycles are added to currcycle.
@@ -111,7 +111,7 @@ static void m68k_run (void)
             last_currcycle = currcycle;
             
             if (mispcflags)
-                if (do_specialties (cycles)) // Perhaps some cycles in do_specialties are done...
+                if (do_specialties ((int) cycles)) // Perhaps some cycles in do_specialties are done...
                     return;
         }
         else
@@ -124,7 +124,7 @@ static void m68k_run (void)
             
 			do_cycles(cycles);
 			if (mispcflags)
-				if (do_specialties (cycles)) // Perhaps some cycles in do_specialties are done...
+				if (do_specialties ((int) cycles)) // Perhaps some cycles in do_specialties are done...
 					return;
             
 			cuentalo++;
@@ -239,7 +239,7 @@ uae_u8 *save_cpu (int *len)
     save_u32 (_68k_areg(7));
     save_u16 (_68k_sreg);				/* SR/CCR */
     save_u32 (M68KCONTEXT.execinfo&0x0080 ? CPUMODE_HALT : 0);	/* flags */
-    *len = dst - dstbak;
+    *len = (int) (dst - dstbak);
     return dstbak;
 }
 

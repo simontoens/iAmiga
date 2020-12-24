@@ -1430,9 +1430,9 @@ OPCODE(0x027C)
     
 	if (!flag_S)
 #ifdef OPCODES_M68000
-        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,20)
+        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,(int) 20)
 #else
-        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,12)
+        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX, (int) 12)
 #endif
         
 #ifdef OPCODES_M68020
@@ -2153,9 +2153,9 @@ OPCODE(0x0A7C)
     
     if (!flag_S)
 #ifdef OPCODES_M68000
-        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,20)
+        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,(int) 20)
 #else
-        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,12)
+        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,(int) 12)
 #endif
         
 #ifdef OPCODES_M68020
@@ -3658,7 +3658,7 @@ OPCODE(0x0C3A)
     u32 src, dst;
     
     FETCH_BYTE(src);
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_BYTE_F(adr, dst)
     res = dst - src;
@@ -3675,7 +3675,7 @@ OPCODE(0x0C3B)
     u32 src, dst;
     
     FETCH_BYTE(src);
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_BYTE_F(adr, dst)
     res = dst - src;
@@ -3899,7 +3899,7 @@ OPCODE(0x0C7A)
     u32 src, dst;
     
     FETCH_WORD(src);
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_WORD_F(adr, dst)
     res = dst - src;
@@ -3916,7 +3916,7 @@ OPCODE(0x0C7B)
     u32 src, dst;
     
     FETCH_WORD(src);
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_WORD_F(adr, dst)
     res = dst - src;
@@ -4148,7 +4148,7 @@ OPCODE(0x0CBA)
     u32 src, dst;
     
     FETCH_LONG(src);
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_LONG_F(adr, dst)
     res = dst - src;
@@ -4165,7 +4165,7 @@ OPCODE(0x0CBB)
     u32 src, dst;
     
     FETCH_LONG(src);
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_LONG_F(adr, dst)
     res = dst - src;
@@ -4375,7 +4375,7 @@ OPCODE(0x083A)
     
 	FETCH_BYTE(src);
 	src = 1 << (src & 7);
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_NotZ = res & src;
@@ -4394,7 +4394,7 @@ OPCODE(0x083B)
     
 	FETCH_BYTE(src);
 	src = 1 << (src & 7);
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_NotZ = res & src;
@@ -5213,7 +5213,7 @@ OPCODE(0x013A)
     
 	src = DREGu8((Opcode >> 9) & 7);
 	src = 1 << (src & 7);
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_NotZ = res & src;
@@ -5232,7 +5232,7 @@ OPCODE(0x013B)
     
 	src = DREGu8((Opcode >> 9) & 7);
 	src = 1 << (src & 7);
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_NotZ = res & src;
@@ -7916,7 +7916,7 @@ OPCODE(0x103A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -7936,7 +7936,7 @@ OPCODE(0x10BA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -7957,7 +7957,7 @@ OPCODE(0x10FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -7979,7 +7979,7 @@ OPCODE(0x113A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8001,7 +8001,7 @@ OPCODE(0x117A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8023,7 +8023,7 @@ OPCODE(0x11BA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8045,7 +8045,7 @@ OPCODE(0x11FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8066,7 +8066,7 @@ OPCODE(0x13FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8087,7 +8087,7 @@ OPCODE(0x1EFA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8109,7 +8109,7 @@ OPCODE(0x1F3A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8131,7 +8131,7 @@ OPCODE(0x103B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8151,7 +8151,7 @@ OPCODE(0x10BB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8172,7 +8172,7 @@ OPCODE(0x10FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8194,7 +8194,7 @@ OPCODE(0x113B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8216,7 +8216,7 @@ OPCODE(0x117B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8238,7 +8238,7 @@ OPCODE(0x11BB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8260,7 +8260,7 @@ OPCODE(0x11FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8281,7 +8281,7 @@ OPCODE(0x13FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8302,7 +8302,7 @@ OPCODE(0x1EFB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -8324,7 +8324,7 @@ OPCODE(0x1F3B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, res)
 	flag_C = 0;
@@ -10836,7 +10836,7 @@ OPCODE(0x203A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -10856,7 +10856,7 @@ OPCODE(0x20BA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -10877,7 +10877,7 @@ OPCODE(0x20FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -10899,7 +10899,7 @@ OPCODE(0x213A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -10921,7 +10921,7 @@ OPCODE(0x217A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -10943,7 +10943,7 @@ OPCODE(0x21BA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -10965,7 +10965,7 @@ OPCODE(0x21FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -10986,7 +10986,7 @@ OPCODE(0x23FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11007,7 +11007,7 @@ OPCODE(0x2EFA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11029,7 +11029,7 @@ OPCODE(0x2F3A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11051,7 +11051,7 @@ OPCODE(0x203B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11071,7 +11071,7 @@ OPCODE(0x20BB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11092,7 +11092,7 @@ OPCODE(0x20FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11114,7 +11114,7 @@ OPCODE(0x213B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11136,7 +11136,7 @@ OPCODE(0x217B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11158,7 +11158,7 @@ OPCODE(0x21BB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11180,7 +11180,7 @@ OPCODE(0x21FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11201,7 +11201,7 @@ OPCODE(0x23FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11222,7 +11222,7 @@ OPCODE(0x2EFB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -11244,7 +11244,7 @@ OPCODE(0x2F3B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, res)
 	flag_C = 0;
@@ -12028,7 +12028,7 @@ OPCODE(0x207A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_LONG_F(adr, res)
 	AREG((Opcode >> 9) & 7) = res;
@@ -12044,7 +12044,7 @@ OPCODE(0x207B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_LONG_F(adr, res)
 	AREG((Opcode >> 9) & 7) = res;
@@ -13971,7 +13971,7 @@ OPCODE(0x303A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -13991,7 +13991,7 @@ OPCODE(0x30BA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14012,7 +14012,7 @@ OPCODE(0x30FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14034,7 +14034,7 @@ OPCODE(0x313A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14056,7 +14056,7 @@ OPCODE(0x317A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14078,7 +14078,7 @@ OPCODE(0x31BA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14100,7 +14100,7 @@ OPCODE(0x31FA)
 {
 	u32 adr, res;
 	
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14121,7 +14121,7 @@ OPCODE(0x33FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14142,7 +14142,7 @@ OPCODE(0x3EFA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14164,7 +14164,7 @@ OPCODE(0x3F3A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14186,7 +14186,7 @@ OPCODE(0x303B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14206,7 +14206,7 @@ OPCODE(0x30BB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14227,7 +14227,7 @@ OPCODE(0x30FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14249,7 +14249,7 @@ OPCODE(0x313B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14271,7 +14271,7 @@ OPCODE(0x317B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14293,7 +14293,7 @@ OPCODE(0x31BB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14315,7 +14315,7 @@ OPCODE(0x31FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14336,7 +14336,7 @@ OPCODE(0x33FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14357,7 +14357,7 @@ OPCODE(0x3EFB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -14379,7 +14379,7 @@ OPCODE(0x3F3B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	flag_C = 0;
@@ -15163,7 +15163,7 @@ OPCODE(0x307A)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_WORD_F(adr, res)
 	AREG((Opcode >> 9) & 7) = res;
@@ -15179,7 +15179,7 @@ OPCODE(0x307B)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_WORD_F(adr, res)
 	AREG((Opcode >> 9) & 7) = res;
@@ -17994,7 +17994,7 @@ OPCODE(0x44FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, res)
 	SET_CCR(res)
@@ -18010,7 +18010,7 @@ OPCODE(0x44FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, res)
 	SET_CCR(res)
@@ -18074,9 +18074,9 @@ OPCODE(0x46C0)
     
     if (!flag_S)
 #ifdef OPCODES_M68000
-        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,12)
+        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,(int) 12)
 #else
-        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX,8)
+        EXECUTE_EXCEPTION(M68K_PRIVILEGE_VIOLATION_EX, (int) 8)
 #endif
         
 #ifdef OPCODES_M68020
@@ -18327,7 +18327,7 @@ OPCODE(0x46FA)
         int oldM = flag_M;
 #endif
     int oldS = flag_S;
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_WORD_F(adr, res)
     SET_SR(res)
@@ -18358,7 +18358,7 @@ OPCODE(0x46FB)
         int oldM = flag_M;
 #endif
     int oldS = flag_S;
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_WORD_F(adr, res)
     SET_SR(res)
@@ -18806,7 +18806,7 @@ OPCODE(0x487A)
 {
 	u32 adr;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	PUSH_32_F(adr)
 #ifdef OPCODES_M68000
@@ -18821,7 +18821,7 @@ OPCODE(0x487B)
 {
 	u32 adr;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	PUSH_32_F(adr)
 #ifdef OPCODES_M68000
@@ -19495,7 +19495,7 @@ OPCODE(0x4A3A)
 {
     u32 adr, res;
     
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_BYTE_F(adr, res)
     flag_C = 0;
@@ -19510,7 +19510,7 @@ OPCODE(0x4A3B)
 {
     u32 adr, res;
     
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_BYTE_F(adr, res)
     flag_C = 0;
@@ -19740,7 +19740,7 @@ OPCODE(0x4A7A)
 {
     u32 adr, res;
     
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_WORD_F(adr, res)
     flag_C = 0;
@@ -19755,7 +19755,7 @@ OPCODE(0x4A7B)
 {
     u32 adr, res;
     
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_WORD_F(adr, res)
     flag_C = 0;
@@ -19985,7 +19985,7 @@ OPCODE(0x4ABA)
 {
     u32 adr, res;
     
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_LONG_F(adr, res)
     flag_C = 0;
@@ -20000,7 +20000,7 @@ OPCODE(0x4ABB)
 {
     u32 adr, res;
     
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_LONG_F(adr, res)
     flag_C = 0;
@@ -20252,7 +20252,7 @@ OPCODE(0x4AE7)
 // ILLEGAL
 OPCODE(0x4AFC)
 {
-    u32 oldPC=GET_PC;
+    u32 oldPC=(int) GET_PC;
     SET_PC(oldPC-2)
     execute_exception(M68K_ILLEGAL_INSTRUCTION_EX);
 #ifdef OPCODES_M68000
@@ -20265,7 +20265,7 @@ OPCODE(0x4AFC)
 // ILLEGAL A000-AFFF
 OPCODE(0xA000)
 {
-    u32 oldPC=GET_PC;
+    u32 oldPC=(int) GET_PC;
     SET_PC(oldPC-2)
     execute_exception(M68K_1010_EX);
 #ifdef OPCODES_M68000
@@ -20412,7 +20412,7 @@ OPCODE(0x4C3A)
     u32 src;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_LONG_F(adr, src)
     MULL(src, res);
@@ -20427,7 +20427,7 @@ OPCODE(0x4C3B)
     u32 src;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_LONG_F(adr, src)
     MULL(src, res);
@@ -20618,7 +20618,7 @@ OPCODE(0x4C7A)
     u32 src;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_LONG_F(adr, src)
     if (src == 0)
@@ -20639,7 +20639,7 @@ OPCODE(0x4C7B)
     u32 src;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_LONG_F(adr, src)
     if (src == 0)
@@ -20859,7 +20859,7 @@ OPCODE(0x4CBA)
 	s32 *psrc;
     
 	FETCH_WORD(res);
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	psrc = &DREGs32(0);
 	dst = adr;
@@ -20889,7 +20889,7 @@ OPCODE(0x4CBB)
 	s32 *psrc;
     
 	FETCH_WORD(res);
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	psrc = &DREGs32(0);
 	dst = adr;
@@ -21132,7 +21132,7 @@ OPCODE(0x4CFA)
 	u32 *psrc;
     
 	FETCH_WORD(res);
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	psrc = &DREGu32(0);
 	dst = adr;
@@ -21163,7 +21163,7 @@ OPCODE(0x4CFB)
 	u32 *psrc;
     
 	FETCH_WORD(res);
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	psrc = &DREGu32(0);
 	dst = adr;
@@ -21579,7 +21579,7 @@ OPCODE(0x4E90)
 	{
 		u32 oldPC;
         
-		oldPC = (uintptr_t)(PC) - BasePC;
+		oldPC = (u32)((uintptr_t)(PC) - BasePC);
 		PUSH_32_F(oldPC)
 	}
 	SET_PC(adr)
@@ -21605,7 +21605,7 @@ OPCODE(0x4EA8)
 	{
 		u32 oldPC;
         
-		oldPC = (uintptr_t)(PC) - BasePC;
+		oldPC = (u32)((uintptr_t)(PC) - BasePC);
         PUSH_32_F(oldPC)
 	}
 	SET_PC(adr)
@@ -21631,7 +21631,7 @@ OPCODE(0x4EB0)
 	{
 		u32 oldPC;
         
-		oldPC = (uintptr_t)(PC) - BasePC;
+		oldPC = (u32)((uintptr_t)(PC) - BasePC);
 		PUSH_32_F(oldPC)
 	}
 	SET_PC(adr)
@@ -21656,7 +21656,7 @@ OPCODE(0x4EB8)
 	{
 		u32 oldPC;
         
-		oldPC = (uintptr_t)(PC) - BasePC;
+		oldPC = (u32)((uintptr_t)(PC) - BasePC);
 		PUSH_32_F(oldPC)
 	}
 	SET_PC(adr)
@@ -21681,7 +21681,7 @@ OPCODE(0x4EB9)
 	{
 		u32 oldPC;
         
-		oldPC = (uintptr_t)(PC) - BasePC;
+		oldPC = (u32)((uintptr_t)(PC) - BasePC);
 		PUSH_32_F(oldPC)
 	}
 	SET_PC(adr)
@@ -21697,7 +21697,7 @@ OPCODE(0x4EBA)
 {
 	u32 adr;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 #ifdef OPCODES_M68000
     CHECK_BRANCH_EXCEPTION(adr,18);
@@ -21707,7 +21707,7 @@ OPCODE(0x4EBA)
 	{
 		u32 oldPC;
         
-		oldPC = (uintptr_t)(PC) - BasePC;
+		oldPC = (u32)((uintptr_t)(PC) - BasePC);
 		PUSH_32_F(oldPC)
 	}
 	SET_PC(adr)
@@ -21723,7 +21723,7 @@ OPCODE(0x4EBB)
 {
 	u32 adr;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 #ifdef OPCODES_M68000
     CHECK_BRANCH_EXCEPTION(adr,22);
@@ -21733,7 +21733,7 @@ OPCODE(0x4EBB)
 	{
 		u32 oldPC;
         
-		oldPC = (uintptr_t)(PC) - BasePC;
+		oldPC = (u32)((uintptr_t)(PC) - BasePC);
 		PUSH_32_F(oldPC)
 	}
 	SET_PC(adr)
@@ -21846,7 +21846,7 @@ OPCODE(0x4EFA)
 {
 	u32 adr;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 #ifdef OPCODES_M68000
     CHECK_BRANCH_EXCEPTION(adr,10);
@@ -21866,7 +21866,7 @@ OPCODE(0x4EFB)
 {
 	u32 adr;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 #ifdef OPCODES_M68000
     CHECK_BRANCH_EXCEPTION(adr,14);
@@ -22026,7 +22026,7 @@ OPCODE(0x413A)
     u32 adr;
     s32 src, dst;
     
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     READ_LONG_F(adr, src)
     dst = DREGs32((Opcode >> 9) & 7);
@@ -22044,7 +22044,7 @@ OPCODE(0x413B)
     u32 adr;
     s32 src, dst;
     
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     READ_LONG_F(adr, src)
     dst = DREGs32((Opcode >> 9) & 7);
@@ -22146,7 +22146,7 @@ OPCODE(0x00FA)
     s32 src1, src2, dst;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     
     CMP2_CHK2_EXECUTE(s8, 2)
@@ -22160,7 +22160,7 @@ OPCODE(0x00FB)
     u32 src1, src2, dst;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     
     CMP2_CHK2_EXECUTE(s8, 1)
@@ -22241,7 +22241,7 @@ OPCODE(0x02FA)
     s32 src1, src2, dst;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     
     CMP2_CHK2_EXECUTE(s16, 2)
@@ -22255,7 +22255,7 @@ OPCODE(0x02FB)
     s32 src1, src2, dst;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     
     CMP2_CHK2_EXECUTE(s16, 1)
@@ -22336,7 +22336,7 @@ OPCODE(0x04FA)
     s32 src1, src2, dst;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     
     CMP2_CHK2_EXECUTE(s32, 2)
@@ -22350,7 +22350,7 @@ OPCODE(0x04FB)
     s32 src1, src2, dst;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     
     CMP2_CHK2_EXECUTE(s32, 1)
@@ -22535,7 +22535,7 @@ OPCODE(0x41BA)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -22557,7 +22557,7 @@ OPCODE(0x41BB)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -22719,7 +22719,7 @@ OPCODE(0x41FA)
 {
 	u32 adr, res;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	res = adr;
 	AREG((Opcode >> 9) & 7) = res;
@@ -22735,7 +22735,7 @@ OPCODE(0x41FB)
 {
 	u32 adr, res;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	res = adr;
 	AREG((Opcode >> 9) & 7) = res;
@@ -26678,7 +26678,7 @@ OPCODE(0x51C8)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -26714,7 +26714,7 @@ OPCODE(0x52C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -26760,7 +26760,7 @@ OPCODE(0x53C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -26806,7 +26806,7 @@ OPCODE(0x54C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -26852,7 +26852,7 @@ OPCODE(0x55C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -26898,7 +26898,7 @@ OPCODE(0x56C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -26944,7 +26944,7 @@ OPCODE(0x57C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -26990,7 +26990,7 @@ OPCODE(0x58C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -27036,7 +27036,7 @@ OPCODE(0x59C8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -27082,7 +27082,7 @@ OPCODE(0x5AC8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -27128,7 +27128,7 @@ OPCODE(0x5BC8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -27174,7 +27174,7 @@ OPCODE(0x5CC8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -27220,7 +27220,7 @@ OPCODE(0x5DC8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -27266,7 +27266,7 @@ OPCODE(0x5EC8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -27312,7 +27312,7 @@ OPCODE(0x5FC8)
         {
             u32 newPC;
             
-            newPC = (uintptr_t)(PC) - BasePC;
+            newPC = (u32)((uintptr_t)(PC) - BasePC);
             newPC += GET_SWORD;
 #ifdef OPCODES_M68000
             CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -28995,7 +28995,7 @@ OPCODE(0x6200)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29024,7 +29024,7 @@ OPCODE(0x6300)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29053,7 +29053,7 @@ OPCODE(0x6400)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29082,7 +29082,7 @@ OPCODE(0x6500)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29111,7 +29111,7 @@ OPCODE(0x6600)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29140,7 +29140,7 @@ OPCODE(0x6700)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29169,7 +29169,7 @@ OPCODE(0x6800)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29198,7 +29198,7 @@ OPCODE(0x6900)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29227,7 +29227,7 @@ OPCODE(0x6A00)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29256,7 +29256,7 @@ OPCODE(0x6B00)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29285,7 +29285,7 @@ OPCODE(0x6C00)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29314,7 +29314,7 @@ OPCODE(0x6D00)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29343,7 +29343,7 @@ OPCODE(0x6E00)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29372,7 +29372,7 @@ OPCODE(0x6F00)
 	{
 		u32 newPC;
         
-		newPC = (uintptr_t)(PC) - BasePC;
+		newPC = (u32)((uintptr_t)(PC) - BasePC);
 		newPC += GET_SWORD;
 #ifdef OPCODES_M68000
         CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29402,7 +29402,7 @@ OPCODE(0x62FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29419,7 +29419,7 @@ OPCODE(0x63FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29436,7 +29436,7 @@ OPCODE(0x64FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29453,7 +29453,7 @@ OPCODE(0x65FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29470,7 +29470,7 @@ OPCODE(0x66FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29487,7 +29487,7 @@ OPCODE(0x67FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29504,7 +29504,7 @@ OPCODE(0x68FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29521,7 +29521,7 @@ OPCODE(0x69FF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29538,7 +29538,7 @@ OPCODE(0x6AFF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29555,7 +29555,7 @@ OPCODE(0x6BFF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29572,7 +29572,7 @@ OPCODE(0x6CFF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29589,7 +29589,7 @@ OPCODE(0x6DFF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29606,7 +29606,7 @@ OPCODE(0x6EFF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29623,7 +29623,7 @@ OPCODE(0x6FFF)
     {
         u32 newPC;
         
-        newPC = (uintptr_t)(PC) - BasePC;
+        newPC = (u32)((uintptr_t)(PC) - BasePC);
         newPC += GET_SLONG;
         CHECK_BRANCH_EXCEPTION(newPC,6);
         SET_PC(newPC);
@@ -29637,7 +29637,7 @@ OPCODE(0x6FFF)
 // BRA
 OPCODE(0x6001)
 {
-	u32 newPC = (uintptr_t)(PC) - BasePC;
+	u32 newPC = (u32)((uintptr_t)(PC) - BasePC);
 	s8 offs=Opcode;
 	newPC += offs;
 #ifdef OPCODES_M68000
@@ -29658,7 +29658,7 @@ OPCODE(0x6000)
 {
 	u32 newPC;
     
-	newPC = (uintptr_t)(PC) - BasePC;
+	newPC = (u32)((uintptr_t)(PC) - BasePC);
 	newPC += GET_SWORD;
 #ifdef OPCODES_M68000
     CHECK_BRANCH_EXCEPTION(newPC,10);
@@ -29679,7 +29679,7 @@ OPCODE(0x60FF)
 {
     u32 newPC;
     
-    newPC = (uintptr_t)(PC) - BasePC;
+    newPC = (u32)((uintptr_t)(PC) - BasePC);
     newPC += GET_SLONG;
     CHECK_BRANCH_EXCEPTION(newPC,6);
     SET_PC(newPC);
@@ -29693,7 +29693,7 @@ OPCODE(0x6101)
 	u32 oldPC;
 	s8 offs;
     
-	oldPC = (uintptr_t)(PC) - BasePC;
+	oldPC = (u32)((uintptr_t)(PC) - BasePC);
 	PUSH_32_F(oldPC)
 	offs = Opcode;
 	oldPC += offs;
@@ -29715,7 +29715,7 @@ OPCODE(0x6100)
 {
 	u32 oldPC, newPC;
     
-	newPC = (uintptr_t)(PC) - BasePC;
+	newPC = (u32)((uintptr_t)(PC) - BasePC);
 	oldPC = newPC + 2;
 	PUSH_32_F(oldPC)
 	newPC += GET_SWORD;
@@ -29738,7 +29738,7 @@ OPCODE(0x61FF)
 {
     u32 oldPC, newPC;
     
-    newPC = (uintptr_t)(PC) - BasePC;
+    newPC = (u32)((uintptr_t)(PC) - BasePC);
     oldPC = newPC + 4;
     PUSH_32_F(oldPC)
     newPC += GET_SLONG;
@@ -29949,7 +29949,7 @@ OPCODE(0x803A)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, src)
 	res = DREGu8((Opcode >> 9) & 7);
@@ -29972,7 +29972,7 @@ OPCODE(0x803B)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, src)
 	res = DREGu8((Opcode >> 9) & 7);
@@ -30241,7 +30241,7 @@ OPCODE(0x807A)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -30264,7 +30264,7 @@ OPCODE(0x807B)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -30533,7 +30533,7 @@ OPCODE(0x80BA)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, src)
 	res = DREGu32((Opcode >> 9) & 7);
@@ -30556,7 +30556,7 @@ OPCODE(0x80BB)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, src)
 	res = DREGu32((Opcode >> 9) & 7);
@@ -31971,7 +31971,7 @@ OPCODE(0x80FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	if (src == 0)
@@ -32019,7 +32019,7 @@ OPCODE(0x80FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	if (src == 0)
@@ -32684,7 +32684,7 @@ OPCODE(0x81FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_WORD_F(adr, src)
 	if (src == 0)
@@ -32744,7 +32744,7 @@ OPCODE(0x81FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_WORD_F(adr, src)
 	if (src == 0)
@@ -33167,7 +33167,7 @@ OPCODE(0x903A)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, src)
 	dst = DREGu8((Opcode >> 9) & 7);
@@ -33189,7 +33189,7 @@ OPCODE(0x903B)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, src)
 	dst = DREGu8((Opcode >> 9) & 7);
@@ -33466,7 +33466,7 @@ OPCODE(0x907A)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	dst = DREGu16((Opcode >> 9) & 7);
@@ -33488,7 +33488,7 @@ OPCODE(0x907B)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	dst = DREGu16((Opcode >> 9) & 7);
@@ -33774,7 +33774,7 @@ OPCODE(0x90BA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, src)
 	dst = DREGu32((Opcode >> 9) & 7);
@@ -33797,7 +33797,7 @@ OPCODE(0x90BB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, src)
 	dst = DREGu32((Opcode >> 9) & 7);
@@ -34998,7 +34998,7 @@ OPCODE(0x90FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_WORD_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -35017,7 +35017,7 @@ OPCODE(0x90FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_WORD_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -35255,7 +35255,7 @@ OPCODE(0x91FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_LONG_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -35274,7 +35274,7 @@ OPCODE(0x91FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_LONG_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -35525,7 +35525,7 @@ OPCODE(0xB03A)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, src)
 	dst = DREGu8((Opcode >> 9) & 7);
@@ -35546,7 +35546,7 @@ OPCODE(0xB03B)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, src)
 	dst = DREGu8((Opcode >> 9) & 7);
@@ -35810,7 +35810,7 @@ OPCODE(0xB07A)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	dst = DREGu16((Opcode >> 9) & 7);
@@ -35831,7 +35831,7 @@ OPCODE(0xB07B)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	dst = DREGu16((Opcode >> 9) & 7);
@@ -36104,7 +36104,7 @@ OPCODE(0xB0BA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, src)
 	dst = DREGu32((Opcode >> 9) & 7);
@@ -36126,7 +36126,7 @@ OPCODE(0xB0BB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, src)
 	dst = DREGu32((Opcode >> 9) & 7);
@@ -37358,7 +37358,7 @@ OPCODE(0xB0FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_WORD_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -37380,7 +37380,7 @@ OPCODE(0xB0FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_WORD_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -37657,7 +37657,7 @@ OPCODE(0xB1FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_LONG_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -37679,7 +37679,7 @@ OPCODE(0xB1FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_LONG_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -37944,7 +37944,7 @@ OPCODE(0xC03A)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, src)
 	res = DREGu8((Opcode >> 9) & 7);
@@ -37967,7 +37967,7 @@ OPCODE(0xC03B)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, src)
 	res = DREGu8((Opcode >> 9) & 7);
@@ -38236,7 +38236,7 @@ OPCODE(0xC07A)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -38259,7 +38259,7 @@ OPCODE(0xC07B)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -38528,7 +38528,7 @@ OPCODE(0xC0BA)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, src)
 	res = DREGu32((Opcode >> 9) & 7);
@@ -38551,7 +38551,7 @@ OPCODE(0xC0BB)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, src)
 	res = DREGu32((Opcode >> 9) & 7);
@@ -39575,7 +39575,7 @@ OPCODE(0xC0FA)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -39597,7 +39597,7 @@ OPCODE(0xC0FB)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	res = DREGu16((Opcode >> 9) & 7);
@@ -39854,7 +39854,7 @@ OPCODE(0xC1FA)
 	u32 adr, res;
 	u32 src;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_WORD_F(adr, src)
 	res = (s32)DREGs16((Opcode >> 9) & 7);
@@ -39876,7 +39876,7 @@ OPCODE(0xC1FB)
 	u32 adr, res;
 	u32 src;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_WORD_F(adr, src)
 	res = (s32)DREGs16((Opcode >> 9) & 7);
@@ -40201,7 +40201,7 @@ OPCODE(0xD03A)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_BYTE_F(adr, src)
 	dst = DREGu8((Opcode >> 9) & 7);
@@ -40223,7 +40223,7 @@ OPCODE(0xD03B)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_BYTE_F(adr, src)
 	dst = DREGu8((Opcode >> 9) & 7);
@@ -40500,7 +40500,7 @@ OPCODE(0xD07A)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_WORD_F(adr, src)
 	dst = DREGu16((Opcode >> 9) & 7);
@@ -40522,7 +40522,7 @@ OPCODE(0xD07B)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_WORD_F(adr, src)
 	dst = DREGu16((Opcode >> 9) & 7);
@@ -40808,7 +40808,7 @@ OPCODE(0xD0BA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READ_LONG_F(adr, src)
 	dst = DREGu32((Opcode >> 9) & 7);
@@ -40831,7 +40831,7 @@ OPCODE(0xD0BB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READ_LONG_F(adr, src)
 	dst = DREGu32((Opcode >> 9) & 7);
@@ -42032,7 +42032,7 @@ OPCODE(0xD0FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_WORD_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -42051,7 +42051,7 @@ OPCODE(0xD0FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_WORD_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -42289,7 +42289,7 @@ OPCODE(0xD1FA)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+	adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
 	PC++;
 	READSX_LONG_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -42308,7 +42308,7 @@ OPCODE(0xD1FB)
 	u32 adr, res;
 	u32 src, dst;
     
-	adr = (uintptr_t)(PC) - BasePC;
+	adr = (int) ((uintptr_t)(PC) - BasePC);
 	DECODE_EXT_WORD(&adr);
 	READSX_LONG_F(adr, src)
 	dst = AREGu32((Opcode >> 9) & 7);
@@ -45786,7 +45786,7 @@ OPCODE(0xE8FA)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &dst, &offset, width, &bf0, &bf1);
@@ -45804,7 +45804,7 @@ OPCODE(0xE8FB)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &dst, &offset, width, &bf0, &bf1);
@@ -45927,7 +45927,7 @@ OPCODE(0xE9FA)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &dst, &offset, width, &bf0, &bf1);
@@ -45946,7 +45946,7 @@ OPCODE(0xE9FB)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &dst, &offset, width, &bf0, &bf1);
@@ -46200,7 +46200,7 @@ OPCODE(0xEBFA)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &dst, &offset, width, &bf0, &bf1);
@@ -46221,7 +46221,7 @@ OPCODE(0xEBFB)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &dst, &offset, width, &bf0, &bf1);
@@ -46465,7 +46465,7 @@ OPCODE(0xEDFA)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = GET_SWORD + ((uintptr_t)(PC) - BasePC);
+    adr = (int) (GET_SWORD + ((uintptr_t)(PC) - BasePC));
     PC++;
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &src, &offset, width, &bf0, &bf1);
@@ -46484,7 +46484,7 @@ OPCODE(0xEDFB)
     u32 bf0, bf1;
     
     FETCH_WORD(res)
-    adr = (uintptr_t)(PC) - BasePC;
+    adr = (int) ((uintptr_t)(PC) - BasePC);
     DECODE_EXT_WORD(&adr);
     BF_GET_PARM(res, offset, width)
     BF_MEM_GET(&adr, &src, &offset, width, &bf0, &bf1);

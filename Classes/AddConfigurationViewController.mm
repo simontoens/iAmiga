@@ -49,11 +49,23 @@
 -(IBAction)addConfiguration:(id)sender {
     if([configurations containsObject:_name.text] || [_name.text isEqual:@"None"])
     {
-        [[UIAlertView alloc] initWithTitle:@"Configuration Exists"
-                                   message:@"Configuration Already exists enter a new Name"
-                                  delegate:nil
-                         cancelButtonTitle:@"OK"
-                         otherButtonTitles:nil];
+        UIAlertController * alert = [UIAlertController
+                        alertControllerWithTitle:@"Configuration Exists"
+                                         message:@"Configuration Already exists enter a new Name"
+                                  preferredStyle:UIAlertControllerStyleAlert];
+
+
+
+        UIAlertAction* okButton = [UIAlertAction
+                            actionWithTitle:@"OK"
+                                      style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action) {
+                                        //Handle your yes please button action here
+                                    }];
+
+        [alert addAction:okButton];
+
+        [self presentViewController:alert animated:YES completion:nil];
     }
     else
     {

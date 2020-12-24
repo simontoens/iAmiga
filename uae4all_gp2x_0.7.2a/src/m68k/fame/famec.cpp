@@ -224,7 +224,7 @@ return (A);
 #define M68K_PPL (m68kcontext.sr >> 8) & 7
 
 #define GET_PC                  \
-(uintptr_t) PC - (uintptr_t) BasePC;
+(u32) ((uintptr_t) PC - (uintptr_t) BasePC)
 
 #define SET_PC(A)               \
 BasePC = Fetch[((A) >> M68K_FETCHSFT) & M68K_FETCHMASK];    \
@@ -859,7 +859,7 @@ static FAMEC_EXTRA_INLINE s32 interrupt_chk__(M68K_CONTEXT &m68kcontext)
 void process_exception(unsigned int vect)
 {
     u32 newPC;
-    u32 oldPC = (uintptr_t)(PC) - BasePC;
+    u32 oldPC = (int) ((uintptr_t)(PC) - BasePC);
     u32 oldSR = GET_SR;
     
     // TomB 02.12.2013: 68000 reference manual says, trace-flag is always cleared
@@ -880,8 +880,8 @@ void process_exception(unsigned int vect)
         /* 68010, 68020 & 68030. 68040 code has not been ported from WinUAE */
         if ((vect == 2) || (vect == 3)) {
             int i;
-            u16 ssw = (flag_S ? 4 : 0) | (0/*last_instructionaccess_for_exception_3*/ ? 2 : 1);
-            ssw |= 0/*last_writeaccess_for_exception_3*/ ? 0 : 0x40;
+            u16 ssw = (flag_S ? 4 : 0) | (1);
+            ssw |= 0x40;
             ssw |= 0x20;
             for (i = 0 ; i < 36; i++) {
                 PUSH_16_F(0);

@@ -69,7 +69,7 @@
 		NSLog(@"External display");
 		UIScreen *secondary = [[UIScreen screens] objectAtIndex:1];
 		UIScreenMode *bestMode = [secondary.availableModes objectAtIndex:0];
-		int modes = [secondary.availableModes count];
+		int modes = (int) [secondary.availableModes count];
 		if (modes > 1) {
 			UIScreenMode *current;
 			for (current in secondary.availableModes) {

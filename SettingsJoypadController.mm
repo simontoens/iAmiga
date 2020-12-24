@@ -74,7 +74,7 @@
         controller.delegate = self;
         context = cellsender;
         
-        NSString *strbuttonconnected = [settings keyConfigurationNameforButton:context.tag];
+        NSString *strbuttonconnected = [settings keyConfigurationNameforButton:(int) context.tag];
         
         NSString *joypaddetailtext = [strbuttonconnected isEqualToString:@"Joypad"] ? @"Joypad" : @"";
         NSString *keydetailtext = [strbuttonconnected isEqualToString:@"Joypad"] ? @"" : strbuttonconnected;
@@ -86,16 +86,16 @@
 }
 
 - (void)didSelectJoypad {
-    [settings setKeyconfiguration:@"Joypad" Button:context.tag];
-    [settings setKeyconfigurationname:@"Joypad" Button:context.tag];
+    [settings setKeyconfiguration:@"Joypad" Button:(int) context.tag];
+    [settings setKeyconfigurationname:@"Joypad" Button:(int) context.tag];
 }
 
 - (void)didSelectKey:(int)asciicode keyName:(NSString *)keyName {
     
     
     NSString *strConfigValue = [NSString stringWithFormat: @"KEY_%d", asciicode];
-    [settings setKeyconfiguration:strConfigValue Button:context.tag];
-    [settings setKeyconfigurationname:keyName Button:context.tag];
+    [settings setKeyconfiguration:strConfigValue Button:(int) context.tag];
+    [settings setKeyconfigurationname:keyName Button:(int) context.tag];
 }
 
 - (void)didSelectPort:(int)pNumber {

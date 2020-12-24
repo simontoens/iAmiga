@@ -30,7 +30,7 @@ char * make_hard_dir_cfg_line (char *dst) {
 	int i;
 	
 	if (uae4all_hard_dir[0] != '\0') {
-		for (i = strlen(uae4all_hard_dir); i > 0; i--)
+		for (i = (int)strlen(uae4all_hard_dir); i > 0; i--)
 			if ((uae4all_hard_dir[i] == '/')||(uae4all_hard_dir[i] == '\\'))
 				break;
 		if (i > 0) {

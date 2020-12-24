@@ -54,7 +54,7 @@ unsigned savedisk_get_changes_file(void *mem, unsigned size, void *patch, char *
 			unsigned i=(ret/sizeof(unsigned));
 			unsigned o=pos*SAVEDISK_SLOT;
 			dest[i++]=pos;
-			unsigned n=fread((void *)&dest[i],1,SAVEDISK_SLOT,f);
+			unsigned n = (int) fread((void *)&dest[i],1,SAVEDISK_SLOT,f);
 			if (!n)
 				break;
 			if (memcmp((void *)&src[o],(void *)&dest[i],n))

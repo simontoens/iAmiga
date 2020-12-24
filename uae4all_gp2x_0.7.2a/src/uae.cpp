@@ -235,5 +235,5 @@ void uae::real_main () {
 
 void uae::set_joystickactive(void)
 {
-    set_joystickactive();
+    //set_joystickactive();
 }

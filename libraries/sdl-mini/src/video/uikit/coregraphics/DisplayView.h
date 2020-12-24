@@ -35,7 +35,7 @@
 #ifdef __cplusplus
 extern "C" 
 #endif
-void UpdateScreen();
+void UpdateScreen(void);
 
 @end
 

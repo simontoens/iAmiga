@@ -108,12 +108,12 @@ extern int mainMenu_stretchscreen;
     int effectIndex;
     if (_selectEffectController)
     {
-        effectIndex = _selectEffectController.selectedEffectIndex;
+        effectIndex = (int) _selectEffectController.selectedEffectIndex;
         _settings.selectedEffectIndex = effectIndex;
     }
     else
     {
-        effectIndex = _settings.selectedEffectIndex;
+        effectIndex = (int) _settings.selectedEffectIndex;
     }
     [self populateEffectLabel:effectIndex];
 }

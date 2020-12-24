@@ -1017,6 +1017,6 @@ uae_u8 *save_cia (int num, int *len)
 	/* Save extra state with CIAB.  */
 	save_u8 (div10 / CYCLE_UNIT);
     }
-    *len = dst - dstbak;
+    *len = (int) (dst - dstbak);
     return dstbak;
 }

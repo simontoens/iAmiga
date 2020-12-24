@@ -751,7 +751,7 @@ static int decode_cloanto_rom (uae_u8 *mem, int size, int real_size)
         }
         
         p = (uae_u8 *)xmalloc (524288);
-        keysize = fread (p, 1, 524288, keyf);
+        keysize = (int) fread (p, 1, 524288, keyf);
         if (keysize == 0 || p == 0) {
 #ifdef ANDROIDSDL
             __android_log_print(ANDROID_LOG_ERROR, "UAE",  "Error reading keyfile \"%s\"\n", romkeyfile );
@@ -798,14 +798,14 @@ static int read_kickstart (FILE *f, uae_u8 *mem, int size, int dochecksum, int *
     
     if (cloanto_rom)
         *cloanto_rom = 0;
-    i = uae4all_rom_fread (buffer, 1, 11, f);
+    i = (int) uae4all_rom_fread (buffer, 1, 11, f);
     if (strncmp ((char *) buffer, "AMIROMTYPE1", 11) != 0) {
         uae4all_rom_fseek (f, 0, SEEK_SET);
     } else {
         cr = 1;
     }
     
-    i = uae4all_rom_fread (mem, 1, size, f);
+    i = (int) uae4all_rom_fread (mem, 1, size, f);
     if (i == 8192) {
         a1000_bootrom = (uae_u8*)xmalloc (8192);
         memcpy (a1000_bootrom, kickmemory, 8192);
@@ -998,7 +998,7 @@ static void allocate_memory (void)
         if(res != Z_OK)
         {
             // decompression failed - treat data literaly
-            allocated_chipmem=compressed_size;
+            allocated_chipmem= (uae_u32) compressed_size;
             fseek (savestate_file, chip_filepos, SEEK_SET);
             fread (chipmemory, 1, allocated_chipmem, savestate_file);
         }
@@ -1210,11 +1210,11 @@ void map_banks (addrbank *bank, int start, int size, int realsize)
         int real_left = 0;
         for (bnr = start; bnr < start + size; bnr++) {
             if (!real_left) {
-                realstart = bnr + hioffs;
+                realstart = (uae_u32) (bnr + hioffs);
                 real_left = realsize >> 16;
             }
             put_mem_bank ((bnr + hioffs) << 16, bank);
-            map_zone(bnr+hioffs,bank,realstart);
+            map_zone((uae_u32) (bnr+hioffs),bank,realstart);
             real_left--;
         }
     }
@@ -1308,7 +1308,7 @@ uae_u8 *save_rom (int first, int *len)
         for (i = 0; i < mem_size; i++)
             *dst++ = byteget (mem_start + i);
     }
-    *len = dst - dstbak;
+    *len = (int) (dst - dstbak);
     return dstbak;
 }
 

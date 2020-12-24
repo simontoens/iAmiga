@@ -35,13 +35,6 @@
 
 @end
 
-@interface NSString(URLEncoding)
-
-- (NSString *) encodeForURL;
-- (NSString *) decodeFromURL;
-
-@end
-
 @interface NSString(StuartsExtra)
 - (NSString *) reversed;
 @end

@@ -69,7 +69,7 @@ bool bConnectionToServerJustEstablished = false;
     {
         [self showMessage:@"Use device as Remote Controller" withMessage:@"Tab screen to use device as remote controller"];
         
-        dispatch_time_t waittime = dispatch_time(DISPATCH_TIME_NOW, 6.00 * NSEC_PER_SEC);
+//        dispatch_time_t waittime = dispatch_time(DISPATCH_TIME_NOW, 6.00 * NSEC_PER_SEC);
         
 //        dispatch_after(waittime, dispatch_get_main_queue(),
 //                       ^void{
@@ -197,19 +197,19 @@ withDiscoveryInfo:(NSDictionary<NSString *,
     
     if([dID isEqualToString:kVirtualPad])
     {
-        for(kmNumber = 1;kmNumber <= [_dMap count];kmNumber++)
-        {
-            if([[_settings keyConfigurationforButton:VSWITCH forController:kmNumber] isEqualToString:@"YES"])
+//        for(kmNumber = 1;kmNumber <= [_dMap count];kmNumber++)
+//        {
+            if([[_settings keyConfigurationforButton:VSWITCH forController:(int)kmNumber] isEqualToString:@"YES"])
             {
                 //Mapping reserved for OnScreenJoypad found load this setting an return
-                [_settings setCNumber:kmNumber];
+                [_settings setCNumber:(int) kmNumber];
                 return;
             }
             
             //No Mapping found for OnScreenJoypad. Use first Keymap
             [_settings setCNumber:1];
             return;
-        }
+//        }
         
     }
     
@@ -222,14 +222,14 @@ withDiscoveryInfo:(NSDictionary<NSString *,
             if(_dMap[kmNumber] == [NSNull null])
             {
                 _dMap[kmNumber] = [[NSString stringWithString:dID] retain];
-                [self showMessage:@"New Controller Mapped" withMessage:[NSString stringWithFormat:@"Using Keymap %d for this device", kmNumber+1]];
+                [self showMessage:@"New Controller Mapped" withMessage:[NSString stringWithFormat:@"Using Keymap %ld for this device", (long) kmNumber+1]];
                 break;
             }
         }
     }
     
     kmNumber++;
-    [_settings setCNumber:kmNumber];
+    [_settings setCNumber:(int) kmNumber];
 }
 
 - (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController
