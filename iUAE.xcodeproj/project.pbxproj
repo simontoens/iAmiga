@@ -163,6 +163,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		5288FDD7259251EF00CAA4E0 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5288FDD6259251EF00CAA4E0 /* NetworkExtension.framework */; };
 		7E079CC11A81594B00EC0DE4 /* AddConfigurationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E079CC01A81594B00EC0DE4 /* AddConfigurationViewController.mm */; };
 		7E0E9594198ACF4C0082F80F /* iOSKeyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0E9593198ACF4C0082F80F /* iOSKeyboard.png */; };
 		7E10738B1A34E85E000D7269 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E10738A1A34E85E000D7269 /* Storyboard.storyboard */; };
@@ -1530,6 +1531,9 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = iUAEParents/main.mm; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iUAE_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iUAE_Prefix.pch; sourceTree = "<group>"; };
+		5256B0AC2595085400AAD668 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		5288FDD5259251EF00CAA4E0 /* iUAE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iUAE.entitlements; sourceTree = "<group>"; };
+		5288FDD6259251EF00CAA4E0 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		7E079CBF1A81594B00EC0DE4 /* AddConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddConfigurationViewController.h; path = Classes/AddConfigurationViewController.h; sourceTree = SOURCE_ROOT; };
 		7E079CC01A81594B00EC0DE4 /* AddConfigurationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AddConfigurationViewController.mm; path = Classes/AddConfigurationViewController.mm; sourceTree = SOURCE_ROOT; };
 		7E0E9593198ACF4C0082F80F /* iOSKeyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iOSKeyboard.png; sourceTree = "<group>"; };
@@ -2208,6 +2212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC5372C1DA144C9002C3793 /* AVFoundation.framework in Frameworks */,
+				5288FDD7259251EF00CAA4E0 /* NetworkExtension.framework in Frameworks */,
 				7E5A77021D00370E009BF491 /* ExternalAccessory.framework in Frameworks */,
 				E937D8A71CB58BC9008DCC27 /* CoreMotion.framework in Frameworks */,
 				9064AD551C7D09FA004CAE28 /* MultipeerConnectivity.framework in Frameworks */,
@@ -2379,6 +2384,7 @@
 		053368AD13B1BD740012D55A /* SingleView */ = {
 			isa = PBXGroup;
 			children = (
+				5256B0AC2595085400AAD668 /* Info.plist */,
 				7E10738A1A34E85E000D7269 /* Storyboard.storyboard */,
 				053368B013B1BDD60012D55A /* SingleWindowAppDelegate.h */,
 				7EA5AC5A18AAC5920072820E /* BaseNavigationController.h */,
@@ -2952,6 +2958,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				5288FDD5259251EF00CAA4E0 /* iUAE.entitlements */,
 				E937D8A81CB58C4F008DCC27 /* VPadMotionController.h */,
 				E937D8A91CB58C50008DCC27 /* VPadMotionController.mm */,
 				9064AD601C7F7982004CAE28 /* MultiPeerConnectivityController.h */,
@@ -5609,6 +5616,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = iUAE.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = WAJ9STR6KN;
@@ -5653,6 +5661,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = iUAE.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = WAJ9STR6KN;
@@ -5703,6 +5712,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = iUAE.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = WAJ9STR6KN;

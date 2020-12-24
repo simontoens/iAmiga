@@ -69,24 +69,22 @@ bool bConnectionToServerJustEstablished = false;
     {
         [self showMessage:@"Use device as Remote Controller" withMessage:@"Tab screen to use device as remote controller"];
         
-//        dispatch_time_t waittime = dispatch_time(DISPATCH_TIME_NOW, 6.00 * NSEC_PER_SEC);
+        dispatch_time_t waittime = dispatch_time(DISPATCH_TIME_NOW, 2.00 * NSEC_PER_SEC);
         
-//        dispatch_after(waittime, dispatch_get_main_queue(),
-//                       ^void{
-//                           [self configureContinue:mainEmuViewCtrl];
-//                       });
+        dispatch_after(waittime, dispatch_get_main_queue(),
+                       ^void{
+                           [self configureContinue:mainEmuViewCtrl];
+                       });
     }
 }
 
 
 -(void)configureContinue:(MainEmulationViewController *) mainEmuViewCtrl {
 /*Continue Configuration after Waiting time */
-    
     mainMenu_servermode = mainMenu_servermode == kConnectionIsOff ? kServeAsHostForIncomingJoypadSignals : mainMenu_servermode;
     
     if(mainMenu_servermode == kServeAsHostForIncomingJoypadSignals)
     {
-        
         if(lastServerMode == kServeAsController)
         {
             [session disconnect]; // close client session
@@ -126,6 +124,7 @@ bool bConnectionToServerJustEstablished = false;
                 if( mainMenu_servermode == kServeAsController)
                     [self showMessage: @"use existing connection" withMessage: @"use existing connection for device controller"];
             }
+            
             bConnectionToServerJustEstablished = false;
             [self activateJoyPad];
         }
@@ -367,8 +366,10 @@ MCNearbyServiceAdvertiser *advertiser=nil;
                                       discoveryInfo:nil
                                         serviceType:XXServiceType];
     advertiser.delegate = self;
+    
     [advertiser startAdvertisingPeer];
-    [self showMessage: @"server" withMessage: @"started on this device"];
+    
+    //[self showMessage: @"server" withMessage: @"started on this device"];
 }
 
 
@@ -380,6 +381,10 @@ MCNearbyServiceAdvertiser *advertiser=nil;
     advertiser = nil;
     //[self showMessage: @"server" withMessage: @"stopped on this device"];
     
+}
+
+-(void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didNotStartAdvertisingPeer:(NSError *)error{
+    NSLog(@"DEBUG: Failed to start NearbyServiceAdvertiser -- %@", error.localizedDescription);
 }
 
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser
