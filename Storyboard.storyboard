@@ -601,7 +601,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f2Q-d6-qne" userLabel="DF2Switch">
-                                                    <rect key="frame" x="935" y="6" width="51" height="31"/>
+                                                    <rect key="frame" x="935" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="toogleDF2Enabled" destination="fDF-e7-E6W" eventType="touchUpInside" id="8wD-5c-Svb"/>
                                                     </connections>
@@ -2118,7 +2118,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="BPY-y1-2VJ">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
                             <tableViewSection headerTitle="Memory" id="1Vd-RZ-dRr" userLabel="Memory">
@@ -3117,9 +3117,6 @@
         <image name="monitor_selected.png" width="20" height="17.600000381469727"/>
         <image name="monitor_unselected.png" width="20" height="17.600000381469727"/>
         <image name="sticky_unselected.png" width="20" height="20"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
