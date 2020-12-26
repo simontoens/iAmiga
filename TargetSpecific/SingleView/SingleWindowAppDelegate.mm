@@ -99,7 +99,7 @@
 		NSLog(@"External display");
 		UIScreen *secondary = [[UIScreen screens] objectAtIndex:1];
 		UIScreenMode *bestMode = [secondary.availableModes objectAtIndex:0];
-		int modes = [secondary.availableModes count];
+		int modes = (int) [secondary.availableModes count];
 		if (modes > 1) {
 			UIScreenMode *current;
 			for (current in secondary.availableModes) {
@@ -121,8 +121,7 @@
 	}
 }
 
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
     BOOL imported = NO;
     if ([self isAdf:url]) {
         AdfImporter *importer = [[[AdfImporter alloc] init] autorelease];

@@ -88,7 +88,7 @@ static void ersatz_doio (void)
 	    DISK_ersatz_read (tr, sec, dest);
 	    dest += 512;
 	    if (++sec == 11)
-		sec = 0, tr++;
+            static_cast<void>(sec = 0), tr++;
 	}
     }
 }
@@ -141,7 +141,7 @@ static void ersatz_init (void)
     put_long (request + 0x28, 0x4000);
     put_long (request + 0x2C, 0);
     put_long (request + 0x24, 0x200 * 4);
-    _68k_areg(1) = request;
+    _68k_areg(1) = (int) request;
     ersatz_doio ();
     /* kickstart disk loader */
     if (get_long(0x4000) == 0x4b49434b) {
@@ -155,7 +155,7 @@ static void ersatz_init (void)
 	put_long (request + 0x28, 0xF80000);
 	put_long (request + 0x2C, 0x200);
 	put_long (request + 0x24, 0x200 * 512);
-	_68k_areg(1) = request;
+	_68k_areg(1) = (int) request;
 	ersatz_doio ();
 
 	/* read rom image once ajain to mirror address space.
@@ -164,7 +164,7 @@ static void ersatz_init (void)
 	put_long (request + 0x28, 0xFC0000);
 	put_long (request + 0x2C, 0x200);
 	put_long (request + 0x24, 0x200 * 512);
-	_68k_areg(1) = request;
+	_68k_areg(1) = (int) request;
 	ersatz_doio ();
 
 	disk_eject (0);

@@ -640,7 +640,7 @@ static void expamem_map_filesys (void)
     a = here ();
     org (RTAREA_BASE+0xFFFC);
     dl (filesys_start + 0x2000);
-    org (a);
+    org ((int) a);
 }
 
 static void expamem_init_filesys (void)
@@ -682,11 +682,11 @@ static void expamem_init_filesys (void)
 
     /* Call DiagEntry */
     do_put_mem_word ((uae_u16 *)(expamem + 0x1100), (0x4EF9)); /* JMP */
-    do_put_mem_long ((uae_u32 *)(expamem + 0x1102), (ROM_filesys_diagentry));
+    do_put_mem_long ((uae_u32 *)(expamem + 0x1102), ((int) ROM_filesys_diagentry));
 
     /* What comes next is a plain bootblock */
     do_put_mem_word ((uae_u16 *)(expamem + 0x1106), (0x4EF9)); /* JMP */
-    do_put_mem_long ((uae_u32 *)(expamem + 0x1108), (EXPANSION_bootcode));
+    do_put_mem_long ((uae_u32 *)(expamem + 0x1108), ((int) EXPANSION_bootcode));
     
     memcpy (filesysory, expamem, 0x3000);
 }
@@ -1010,7 +1010,7 @@ uae_u8 *save_expansion (int *len)
 #else
     save_u32 (z3fastmem_start);
 #endif
-    *len = dst - dstbak;
+    *len = (int) (dst - dstbak);
     return dstbak;
 }
 

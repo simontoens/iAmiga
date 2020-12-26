@@ -27,6 +27,7 @@
   WRITE_16((unsigned char*)(buff) + 2, (n) >> 16); \
 } while(0)
 
+#ifdef _ZLIB_H
 extern int ZEXPORT unzRepair(file, fileOut, fileOutTmp, nRecovered, bytesRecovered)
 const char* file;
 const char* fileOut;
@@ -38,6 +39,7 @@ uLong* bytesRecovered;
   FILE* fpZip = fopen(file, "rb");
   FILE* fpOut = fopen(fileOut, "wb");
   FILE* fpOutCD = fopen(fileOutTmp, "wb");
+
   if (fpZip != NULL &&  fpOut != NULL) {
     int entries = 0;
     uLong totalBytes = 0;
@@ -279,3 +281,4 @@ uLong* bytesRecovered;
   }
   return err;
 }
+#endif

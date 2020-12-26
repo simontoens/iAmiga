@@ -52,7 +52,7 @@ struct tagRingQ {
 	}
 	
 	inline int count() {
-		int count = in - out;
+		int count = (int) (in - out);
 		if (count < 0)
 			count = size + count;
 		return count;

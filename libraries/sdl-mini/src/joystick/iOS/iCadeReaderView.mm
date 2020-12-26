@@ -225,7 +225,7 @@ static const char *OFF_STATES = "eczqtrfnmpgv";
     const char *p = strchr(ON_STATES, ch);
     bool stateChanged = false;
     if (p) {
-        int index = p-ON_STATES;
+        int index = (int) (p-ON_STATES);
         tiState |= (1 << index);
         _iCadeState = (iCadeState)tiState;
         stateChanged = true;
@@ -237,7 +237,7 @@ static const char *OFF_STATES = "eczqtrfnmpgv";
     } else {
         p = strchr(OFF_STATES, ch);
         if (p) {
-            int index = p-OFF_STATES;
+            int index = (int) (p-OFF_STATES);
             tiState &= ~(1 << index);
             _iCadeState = (iCadeState)tiState;
             stateChanged = true;
@@ -266,12 +266,12 @@ static const char *OFF_STATES = "eczqtrfnmpgv";
     // This space intentionally left blank to complete protocol. Woot.
 }
 
-static void HardwareKeyboardStatusChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
-{
-    NSLog(@"Darwin notification NAME = %@",name);
-    
-    NSNotificationCenter *notCenter = [NSNotificationCenter defaultCenter];
-    
-    [notCenter postNotificationName:@"HardwareKeyboardStatusChanged" object:(__bridge id)object userInfo:(__bridge id)userInfo];
-}
+//static void HardwareKeyboardStatusChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+//{
+//    NSLog(@"Darwin notification NAME = %@",name);
+//    
+//    NSNotificationCenter *notCenter = [NSNotificationCenter defaultCenter];
+//    
+//    [notCenter postNotificationName:@"HardwareKeyboardStatusChanged" object:(__bridge id)object userInfo:(__bridge id)userInfo];
+//}
 @end

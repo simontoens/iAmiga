@@ -281,9 +281,9 @@ static NSString *const kSaveStateAlertTitle = @"Save";
 }
 
 - (void)initNavigationBarButtons {
-    _saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonSystemItemSave target:self action:@selector(onSave)];
-    _restoreButton = [[UIBarButtonItem alloc] initWithTitle:@"Restore" style:UIBarButtonSystemItemRewind target:self action:@selector(onRestore)];
-    self.navigationItem.rightBarButtonItems = @[_saveButton, _restoreButton];
+    _saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(onSave)];
+    _restoreButton = [[UIBarButtonItem alloc] initWithTitle:@"Restore" style:UIBarButtonItemStylePlain target:self action:@selector(onRestore)];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:_saveButton,_restoreButton, nil];
 }
 
 - (void)updateButtonState {

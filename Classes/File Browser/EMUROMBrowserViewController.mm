@@ -81,8 +81,8 @@
     _roms = [sections retain];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationPortrait;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

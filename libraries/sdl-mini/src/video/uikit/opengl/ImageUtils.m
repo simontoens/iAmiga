@@ -21,8 +21,8 @@ char*  esLoadPNG ( const char *fileName, kRETexturePixelFormat desiredFormat, in
 	
 	CGImageRef CGImage = image.CGImage;
     
-    *width = CGImageGetWidth(CGImage);
-    *height = CGImageGetHeight(CGImage);
+    *width = (int) CGImageGetWidth(CGImage);
+    *height = (int) CGImageGetHeight(CGImage);
 	CGFloat POTWide = *width, POTHigh = *height;
 	
 	CGImageAlphaInfo info = CGImageGetAlphaInfo(CGImage);

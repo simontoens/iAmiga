@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-const char *getDebugFileName();
+const char *getDebugFileName(void);
 
 #ifdef __cplusplus
 }

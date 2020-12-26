@@ -63,7 +63,7 @@ CGContextRef				context;
 		CFRelease(rgbColorSpace);
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView:)];
-        _displayLink.frameInterval = 2.0;
+        _displayLink.preferredFramesPerSecond = 2.0;
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
     return self;

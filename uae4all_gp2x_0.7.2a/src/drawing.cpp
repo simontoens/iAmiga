@@ -523,14 +523,14 @@ static __inline__ void fill_line (void)
     dbgf("fill_line -> nints=%i, nrem=%i, val=%i\n",nints,nrem,val);
 #endif
     for (; nints > 0; nints -= 8, start += 8) {
-		*start = val;
-		*(start+1) = val;
-		*(start+2) = val;
-		*(start+3) = val;
-		*(start+4) = val;
-		*(start+5) = val;
-		*(start+6) = val;
-		*(start+7) = val;
+		*start = (int) val;
+		*(start+1) = (int) val;
+		*(start+2) = (int) val;
+		*(start+3) = (int) val;
+		*(start+4) = (int) val;
+		*(start+5) = (int) val;
+		*(start+6) = (int) val;
+		*(start+7) = (int) val;
     }
 	
 	/*gno: no reminders
@@ -1844,7 +1844,7 @@ static _INLINE_ void do_color_changes (line_draw_func worker_border, line_draw_f
 	
     for (i = dip_for_drawing->first_color_change; i <= dip_for_drawing->last_color_change; i++) {
 		int regno = curr_color_changes[i].regno;
-		unsigned int value = curr_color_changes[i].value;
+		unsigned int value = (uint) curr_color_changes[i].value;
 		int nextpos, nextpos_in_range;
 		if (i == dip_for_drawing->last_color_change)
 			nextpos = max_diwlastword;
@@ -2051,19 +2051,19 @@ static _INLINE_ void write_tdnumber (int x, int y, int num)
 		numptr++;
     }
 }
-static _INLINE_ void write_tdletter (int x, int y, char ch)
-{
-    int j;
-    uae_u8 *numptr;
-	
-    numptr = (uae_u8 *)(letters + (ch-65) * TD_NUM_WIDTH + 26 * TD_NUM_WIDTH * y);
-  
-	for (j = 0; j < TD_NUM_WIDTH; j++) {
-	putpixel (x + j, *numptr == 'x' ? xcolors[0xfff] : xcolors[0x000]);
-	numptr++;
-    }
-
-}
+//static _INLINE_ void write_tdletter (int x, int y, char ch)
+//{
+//    int j;
+//    uae_u8 *numptr;
+//
+//    numptr = (uae_u8 *)(letters + (ch-65) * TD_NUM_WIDTH + 26 * TD_NUM_WIDTH * y);
+//
+//	for (j = 0; j < TD_NUM_WIDTH; j++) {
+//	putpixel (x + j, *numptr == 'x' ? xcolors[0xfff] : xcolors[0x000]);
+//	numptr++;
+//    }
+//
+//}
 
 static _INLINE_ void draw_status_line (int line)
 {
@@ -2121,7 +2121,7 @@ static _INLINE_ void draw_status_line (int line)
                     break;
             }
         }
-        c = xcolors[on ? on_rgb : off_rgb];
+        c = (int) xcolors[on ? on_rgb : off_rgb];
         
         for (j = 0; j < TD_LED_WIDTH; j++)
             putpixel (x + j, c);
@@ -2163,25 +2163,25 @@ void check_all_prefs(void)
 	}
 }
 
-static void fps_counter_upd(void)
-{
-	struct timeval tv;
-	static int thissec, fcount;
-	
-	gettimeofday(&tv, 0);
-	if (tv.tv_sec != thissec)
-	{
-		thissec = tv.tv_sec;
-		fps_counter = fcount;
-		fcount = 0;
-		fps_counter_changed = 1;
-	}
-	else
-	{
-		fps_counter_changed = 0;
-	}
-	fcount++;
-}
+//static void fps_counter_upd(void)
+//{
+//	struct timeval tv;
+//	static int thissec, fcount;
+//
+//	gettimeofday(&tv, 0);
+//	if (tv.tv_sec != thissec)
+//	{
+//		thissec = tv.tv_sec;
+//		fps_counter = fcount;
+//		fcount = 0;
+//		fps_counter_changed = 1;
+//	}
+//	else
+//	{
+//		fps_counter_changed = 0;
+//	}
+//	fcount++;
+//}
 
 static _INLINE_ void finish_drawing_frame (void)
 {

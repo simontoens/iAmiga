@@ -37,9 +37,9 @@ extern "C" {
 #define LANSTICK 2
 #define RANSTICK 3
 
-static NSString *const kdigStick = @"digStick";
-static NSString *const klanalogStick = @"lanalogStick";
-static NSString *const kranalogStick = @"ranalogStick";
+//static NSString *const kdigStick = @"digStick";
+//static NSString *const klanalogStick = @"lanalogStick";
+//static NSString *const kranalogStick = @"ranalogStick";
 
 
 @implementation MFIControllerReaderView {
@@ -190,7 +190,7 @@ static NSString *const kranalogStick = @"ranalogStick";
 
 - (void)controllerDisconnected:(NSNotification *) btDevice {
     
-    int devCount = [[GCController controllers] count];
+    int devCount = (int) [[GCController controllers] count];
     if(devCount >= _devCount) return;
 
     NSString *devID = [NSString stringWithFormat:@"%p", btDevice];
@@ -199,7 +199,7 @@ static NSString *const kranalogStick = @"ranalogStick";
 
 - (void)controllerDiscovered:(NSNotification *)connectedNotification {
     
-    int devCount = [[GCController controllers] count];
+    int devCount = (int) [[GCController controllers] count];
     _devCount = devCount;
      
     GCController *controller = GCController.controllers[_devCount-1];
@@ -246,7 +246,7 @@ static NSString *const kranalogStick = @"ranalogStick";
         }
     };
     
-    GCControllerDirectionPad *dpad = controller.gamepad.dpad;
+    GCControllerDirectionPad *dpad = controller.extendedGamepad.dpad;
     dpad.valueChangedHandler = ^ (GCControllerDirectionPad *directionpad,
                                   float xValue, float yValue) {
         NSLog(@"Changed xValue on dPad = %f yValue = %f" ,xValue, yValue);

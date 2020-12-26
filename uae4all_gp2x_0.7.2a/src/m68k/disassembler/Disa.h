@@ -17,7 +17,7 @@ extern char *DisaText; // Text buffer to write in
 extern unsigned short (CPU_CALL *DisaWord)(unsigned int a);
 int DisaGetEa(char *t,int ea,int size);
 
-int DisaGet();
+int DisaGet(void);
 
 #ifdef __cplusplus
 } // End of extern "C"

@@ -89,19 +89,19 @@ void sound_default_evtime(void) {
 
 unsigned get_chipmem_size() {
     Settings *settings = [[[Settings alloc] init] autorelease];
-    return settings.CMem * 1024;
+    return (int) settings.CMem * 1024;
 }
 
 unsigned get_fastmem_size() {
     Settings *settings = [[[Settings alloc] init] autorelease];
-    return settings.FMem * 1024 * 1024;
+    return (int) settings.FMem * 1024 * 1024;
 }
 
 char* get_rom_path() {
     
     
     Settings *settings = [[[Settings alloc] init] autorelease];
-    EMUBrowser *browser = [[[EMUBrowser alloc] init] autorelease];
+    //EMUBrowser *browser = [[[EMUBrowser alloc] init] autorelease];
     NSString *romPath = settings.romPath;
     
 

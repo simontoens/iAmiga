@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 extern SDL_Surface* SDL_SetVideoMode(int, int, int, int);
-extern SDL_Surface* SDL_GetVideoSurface();
+extern SDL_Surface* SDL_GetVideoSurface(void);
 extern void SDL_UpdateRect(SDL_Surface*, int, int, int, int);
 extern void SDL_Flip(SDL_Surface*);
 

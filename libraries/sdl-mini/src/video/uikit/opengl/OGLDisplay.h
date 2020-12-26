@@ -45,7 +45,7 @@
 #ifdef __cplusplus
 extern "C" 
 #endif
-void UpdateOGLScreen();
+void UpdateOGLScreen(void);
 
 @end
 
@@ -57,4 +57,4 @@ UIView<DisplayViewSurface>* CreateOGLDisplayView(int width, int height);
 #ifdef __cplusplus
 extern "C"
 #endif
-UIView* GetSharedOGLDisplayView();
+UIView* GetSharedOGLDisplayView(void);

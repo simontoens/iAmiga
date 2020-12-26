@@ -45,21 +45,12 @@
 
 @implementation NSString(URLEncoding)
 
-- (NSString *)encodeForURL {
-	NSString *reserved = @":/?#[]@!$&'()*+;=";
-    return [NSMakeCollectable(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self, NULL, (CFStringRef)reserved, kCFStringEncodingUTF8)) autorelease];
-}
-
-- (NSString *) decodeFromURL {
-	return [NSMakeCollectable(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault, (CFStringRef)self, CFSTR(""), kCFStringEncodingUTF8)) autorelease];
-}
-
 @end
 
 @implementation NSString(StuartsExtra)
 
 - (NSString *)reversed {
-	int len = [self length];
+	int len = (int) [self length];
 	char buf[len + 1];
 	buf[len] = '\0';
 	const char* src = [self cStringUsingEncoding:[NSString defaultCStringEncoding]];

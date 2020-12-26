@@ -39,7 +39,6 @@ bool keyboardactive;
     
     [webView setBackgroundColor:[UIColor clearColor]];
     [webView setOpaque:NO];
-    webView.delegate = self;
     
     [super initializeKeyboard];
     
@@ -88,12 +87,12 @@ bool keyboardactive;
     [super dealloc];
 }
 
-- (void)viewDidUnload {
+- (void)didReceiveMemoryWarning {
     [self setCloseButton:nil];
     [self setMouseHandler:nil];
     [self setWebView:nil];
     [self setRestartButton:nil];
-    [super viewDidUnload];
+    [super didReceiveMemoryWarning];
 }
 
 - (IBAction)keyboardDidHide:(id)sender {

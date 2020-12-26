@@ -336,7 +336,7 @@ static int MakeRegList(char *list,int mask,int ea)
   }
 
   // Knock off trailing '/'
-  len=strlen(list);
+  len=(int) strlen(list);
   if (len>0) if (list[len-1]=='/') list[len-1]=0;
   return 0;
 }

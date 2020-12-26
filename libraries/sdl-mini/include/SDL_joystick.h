@@ -26,11 +26,11 @@ extern "C" {
 struct _SDL_Joystick;
 typedef struct _SDL_Joystick SDL_Joystick;
 
-extern int SDL_NumJoysticks();
+extern int SDL_NumJoysticks(void);
 extern const char * SDL_JoystickName(int device_index);
 extern SDL_Joystick* SDL_JoystickOpen(int);
 extern int SDL_JoystickNumButtons(SDL_Joystick*);
-extern void SDL_JoystickUpdate();
+extern void SDL_JoystickUpdate(void);
 extern void SDL_JoystickSetActive(SDL_Joystick * joystick);
     
 /**
