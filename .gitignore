@@ -29,6 +29,7 @@ disks/*
 rgetSpecific/DotC/Info-DotC.plist
 
 disks/
+drives/
 Packages/
 iUAE/
 roms/
