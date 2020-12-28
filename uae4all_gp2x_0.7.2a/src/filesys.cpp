@@ -200,7 +200,7 @@ char *get_filesys_unit (struct uaedev_mount_info *mountinfo, int nr,
     *secspertrack = uip->hf.secspertrack;
     *surfaces = uip->hf.surfaces;
     *reserved = uip->hf.reservedblocks;
-    *size = uip->hf.size;
+    *size = (int) uip->hf.size;
     *cylinders = uip->hf.nrcyls;
     *blocksize = uip->hf.blocksize;
     return 0;
@@ -257,7 +257,7 @@ static char *set_filesys_unit_1 (struct uaedev_mount_info *mountinfo, int nr,
 	ui->hf.surfaces = surfaces;
 	ui->hf.reservedblocks = reserved;
 	ui->hf.nrcyls = (secspertrack * surfaces
-			 ? (ui->hf.size / blocksize) / (secspertrack * surfaces)
+			 ? (int) ((ui->hf.size / blocksize) / (secspertrack * surfaces))
 			 : 0);
 	ui->hf.blocksize = blocksize;
     }
@@ -576,7 +576,7 @@ typedef struct _unit {
 
 typedef uae_u8 *dpacket;
 #define PUT_PCK_RES1(p,v) do { do_put_mem_long ((uae_u32 *)((p) + dp_Res1), (v)); } while (0)
-#define PUT_PCK_RES2(p,v) do { do_put_mem_long ((uae_u32 *)((p) + dp_Res2), (v)); } while (0)
+#define PUT_PCK_RES2(p,v) do { do_put_mem_long ((uae_u32 *)((p) + dp_Res2), ((int) v)); } while (0)
 #define GET_PCK_TYPE(p) ((uae_s32)(do_get_mem_long ((uae_u32 *)((p) + dp_Type))))
 #define GET_PCK_RES1(p) ((uae_s32)(do_get_mem_long ((uae_u32 *)((p) + dp_Res1))))
 #define GET_PCK_RES2(p) ((uae_s32)(do_get_mem_long ((uae_u32 *)((p) + dp_Res2))))
@@ -734,7 +734,7 @@ static void recycle_aino (Unit *unit, a_inode *new_aino)
 
 static void update_child_names (Unit *unit, a_inode *a, a_inode *parent)
 {
-    int l0 = strlen (parent->nname) + 2;
+    int l0 = (int) strlen (parent->nname) + 2;
 
     while (a != 0) {
 	char *name_start;
@@ -1038,7 +1038,7 @@ static a_inode *create_child_aino (Unit *unit, a_inode *base, char *rel, int isd
 static a_inode *lookup_child_aino (Unit *unit, a_inode *base, char *rel, uae_u32 *err)
 {
    a_inode *c = base->child;
-   int l0 = strlen (rel);
+   int l0 = (int) strlen (rel);
    
    if (base->dir == 0) {
       *err = ERROR_OBJECT_WRONG_TYPE;
@@ -1046,7 +1046,7 @@ static a_inode *lookup_child_aino (Unit *unit, a_inode *base, char *rel, uae_u32
    }
    
    while (c != 0) {
-      int l1 = strlen (c->aname);
+      int l1 = (int) strlen (c->aname);
       if (l0 <= l1 && same_aname (rel, c->aname + l1 - l0)
       && (l0 == l1 || c->aname[l1-l0-1] == '/'))
          break;
@@ -1064,11 +1064,11 @@ static a_inode *lookup_child_aino (Unit *unit, a_inode *base, char *rel, uae_u32
 static a_inode *lookup_child_aino_for_exnext (Unit *unit, a_inode *base, char *rel, uae_u32 *err)
 {
     a_inode *c = base->child;
-    int l0 = strlen (rel);
+    int l0 = (int) strlen (rel);
 
     *err = 0;
     while (c != 0) {
-	int l1 = strlen (c->nname);
+	int l1 = (int) strlen (c->nname);
 	/* Note: using strcmp here.  */
 	if (l0 <= l1 && strcmp (rel, c->nname + l1 - l0) == 0
 	    && (l0 == l1 || c->nname[l1-l0-1] == FSDB_DIR_SEPARATOR))
@@ -1264,7 +1264,7 @@ static uae_u32 startup_handler (void)
     put_long (unit->volume + 24, 0);
     put_long (unit->volume + 28, 0); /* lock list */
     put_long (unit->volume + 40, (unit->volume + 44) >> 2); /* Name */
-    namelen = strlen (unit->ui.volname);
+    namelen = (int) strlen (unit->ui.volname);
     put_byte (unit->volume + 44, namelen);
     for (i = 0; i < namelen; i++)
 	put_byte (unit->volume + 45 + i, unit->ui.volname[i]);
@@ -1291,6 +1291,7 @@ do_info (Unit *unit, dpacket packet, uaecptr info)
     if (get_fs_usage (unit->ui.rootdir, 0, &fsu) != 0) {
 	PUT_PCK_RES1 (packet, DOS_FALSE);
 	PUT_PCK_RES2 (packet, dos_errno ());
+            
 	return;
     }
 
@@ -1305,7 +1306,7 @@ do_info (Unit *unit, dpacket packet, uaecptr info)
     put_long (info + 24, DISK_TYPE); /* disk type */
     put_long (info + 28, unit->volume >> 2); /* volume node */
     put_long (info + 32, 0); /* inuse */
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
@@ -1372,27 +1373,27 @@ static Key *new_key (Unit *unit)
     return k;
 }
 
-static void
-dumplock (Unit *unit, uaecptr lock)
-{
-    a_inode *a;
-    TRACE(("LOCK: 0x%lx", lock));
-    if (!lock) {
-	TRACE(("\n"));
-	return;
-    }
-    TRACE(("{ next=0x%lx, mode=%ld, handler=0x%lx, volume=0x%lx, aino %lx ",
-	   get_long (lock) << 2, get_long (lock+8),
-	   get_long (lock+12), get_long (lock+16),
-	   get_long (lock + 4)));
-    a = lookup_aino (unit, get_long (lock + 4));
-    if (a == 0) {
-	TRACE(("not found!"));
-    } else {
-	TRACE(("%s", a->nname));
-    }
-    TRACE((" }\n"));
-}
+//static void
+//dumplock (Unit *unit, uaecptr lock)
+//{
+//    a_inode *a;
+//    TRACE(("LOCK: 0x%lx", lock));
+//    if (!lock) {
+//	TRACE(("\n"));
+//	return;
+//    }
+//    TRACE(("{ next=0x%lx, mode=%ld, handler=0x%lx, volume=0x%lx, aino %lx ",
+//	   get_long (lock) << 2, get_long (lock+8),
+//	   get_long (lock+12), get_long (lock+16),
+//	   get_long (lock + 4)));
+//    a = lookup_aino (unit, get_long (lock + 4));
+//    if (a == 0) {
+//	TRACE(("not found!"));
+//    } else {
+//	TRACE(("%s", a->nname));
+//    }
+//    TRACE((" }\n"));
+//}
 
 static a_inode *find_aino (Unit *unit, uaecptr lock, const char *name, uae_u32 *err)
 {
@@ -1494,7 +1495,7 @@ action_lock (Unit *unit, dpacket packet)
     else
 	a->elock = 1;
     de_recycle_aino (unit, a);
-    PUT_PCK_RES1 (packet, make_lock (unit, a->uniq, mode) >> 2);
+    PUT_PCK_RES1 (packet, (int) make_lock (unit, a->uniq, mode) >> 2);
 }
 
 static void action_free_lock (Unit *unit, dpacket packet)
@@ -1517,7 +1518,7 @@ static void action_free_lock (Unit *unit, dpacket packet)
     recycle_aino (unit, a);
     free_lock(unit, lock);
 
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
@@ -1548,7 +1549,7 @@ action_dup_lock (Unit *unit, dpacket packet)
     }
     a->shlock++;
     de_recycle_aino (unit, a);
-    PUT_PCK_RES1 (packet, make_lock (unit, a->uniq, -2) >> 2);
+    PUT_PCK_RES1 (packet, (int) make_lock (unit, a->uniq, -2) >> 2);
 }
 
 /* convert time_t to/from AmigaDOS time */
@@ -1694,15 +1695,15 @@ get_fileinfo (Unit *unit, dpacket packet, uaecptr info, a_inode *aino)
 	x = aino->aname;
     }
     TRACE(("name=\"%s\"\n", x));
-    n = strlen (x);
+    n = (int) strlen (x);
     if (n > 106)
 	n = 106;
     i = 8;
     put_byte (info + i, n); i++;
     while (n--)
-	put_byte (info + i, *x), i++, x++;
+        static_cast<void>(put_byte (info + i, *x)), static_cast<void>(i++), x++;
     while (i < 108)
-	put_byte (info + i, 0), i++;
+        static_cast<void>(put_byte (info + i, 0)), i++;
 
     put_long (info + 116, aino->amigaos_mode);
     put_long (info + 124, statbuf.st_size);
@@ -1723,16 +1724,16 @@ get_fileinfo (Unit *unit, dpacket packet, uaecptr info, a_inode *aino)
 	x = aino->comment;
 	if (! x)
 	    x = "";
-	n = strlen (x);
+	n = (int) strlen (x);
 	if (n > 78)
 	    n = 78;
 	put_byte (info + i, n); i++;
 	while (n--)
-	    put_byte (info + i, *x), i++, x++;
+        static_cast<void>(put_byte (info + i, *x)), static_cast<void>(i++), x++;
 	while (i < 224)
-	    put_byte (info + i, 0), i++;
+        static_cast<void>(put_byte (info + i, 0)), i++;
     }
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void action_examine_object (Unit *unit, dpacket packet)
@@ -1972,7 +1973,7 @@ static void do_find (Unit *unit, dpacket packet, int mode, int create, int fallb
    else
       aino->shlock++;
    de_recycle_aino (unit, aino);
-   PUT_PCK_RES1 (packet, DOS_TRUE);
+   PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
@@ -2028,7 +2029,7 @@ action_fh_from_lock (Unit *unit, dpacket packet)
     /* Is this right?  I don't completely understand how this works.  Do I
        also need to free_lock() my lock, since nobody else is going to? */
     de_recycle_aino (unit, aino);
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
     /* PUT_PCK_RES2 (packet, k->uniq); - this shouldn't be necessary, try without it */
 }
 
@@ -2075,7 +2076,7 @@ action_end (Unit *unit, dpacket packet)
 	recycle_aino (unit, k->aino);
 	free_key (unit, k);
     }
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
     PUT_PCK_RES2 (packet, 0);
 }
 
@@ -2105,7 +2106,7 @@ action_read (Unit *unit, dpacket packet)
 			possible_loadseg();
 	}
 #endif
-    if (valid_address (addr, size)) {
+    if (valid_address (addr, (int) size)) {
 		uae_u8 *realpt;
 		realpt = get_real_address (addr);
 		
@@ -2117,7 +2118,7 @@ action_read (Unit *unit, dpacket packet)
 		if (((uintptr_t)realpt & 1) > 0)
 			swab_memory ((unsigned char *)((uintptr_t)realpt & ~1), 2);
 		
-		actual = read(k->fd, (char *)realpt, size);
+		actual = (int) read(k->fd, (char *)realpt, size);
 		
 	    /* If realpt is at odd address, we also have to swab the
 	     * word in which the last byte has been written.
@@ -2147,7 +2148,7 @@ action_read (Unit *unit, dpacket packet)
 			PUT_PCK_RES2 (packet, ERROR_NO_FREE_STORE);
 			return;
 		}
-		actual = read(k->fd, buf, size);
+		actual = (int) read(k->fd, buf, size);
 		
 		if (actual < 0) {
 			PUT_PCK_RES1 (packet, 0);
@@ -2197,7 +2198,7 @@ action_write (Unit *unit, dpacket packet)
 	for (i = 0; i < size; i++)
 		buf[i] = get_byte(addr + i);
 	
-	PUT_PCK_RES1 (packet, write(k->fd, buf, size));
+	PUT_PCK_RES1 (packet, (int) write(k->fd, buf, size));
 	if (GET_PCK_RES1 (packet) != size)
 		PUT_PCK_RES2 (packet, dos_errno ());
 	if (GET_PCK_RES1 (packet) >= 0)
@@ -2233,12 +2234,12 @@ action_seek (Unit *unit, dpacket packet)
 	long filesize = lseek (k->fd, 0, SEEK_END);
 	lseek (k->fd, old, SEEK_SET);
 
-	if (whence == SEEK_CUR) temppos = old + pos;
-	if (whence == SEEK_SET) temppos = pos;
-	if (whence == SEEK_END) temppos = filesize + pos;
+	if (whence == (int) SEEK_CUR) temppos = (int) (old + pos);
+	if (whence == (int) SEEK_SET) temppos = (int) pos;
+	if (whence == (int) SEEK_END) temppos = (int) (filesize + pos);
 	if (filesize < temppos) {
 	    res = -1;
-	    PUT_PCK_RES1 (packet,res);
+	    PUT_PCK_RES1 (packet,(int) res);
 	    PUT_PCK_RES2 (packet, ERROR_SEEK_ERROR);
 	    return;
 	}
@@ -2247,10 +2248,10 @@ action_seek (Unit *unit, dpacket packet)
     res = lseek (k->fd, pos, whence);
 
     if (-1 == res) {
-	PUT_PCK_RES1 (packet, res);
+	PUT_PCK_RES1 (packet,(int) res);
 	PUT_PCK_RES2 (packet, ERROR_SEEK_ERROR);
     } else
-	PUT_PCK_RES1 (packet, old);
+	PUT_PCK_RES1 (packet, (int) old);
     k->file_pos = res;
 }
 
@@ -2283,7 +2284,7 @@ action_set_protect (Unit *unit, dpacket packet)
 	PUT_PCK_RES1 (packet, DOS_FALSE);
 	PUT_PCK_RES2 (packet, err);
     } else {
-	PUT_PCK_RES1 (packet, DOS_TRUE);
+	PUT_PCK_RES1 (packet, (int) DOS_TRUE);
     }
 }
 
@@ -2317,7 +2318,7 @@ static void action_set_comment (Unit * unit, dpacket packet)
 	    free (commented);
 	return;
     }
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
     PUT_PCK_RES2 (packet, 0);
     if (a->comment == 0 && commented == 0)
 	goto maybe_free_and_out;
@@ -2339,9 +2340,9 @@ action_same_lock (Unit *unit, dpacket packet)
     DUMPLOCK(unit, lock1); DUMPLOCK(unit, lock2);
 
     if (!lock1 || !lock2) {
-	PUT_PCK_RES1 (packet, lock1 == lock2 ? DOS_TRUE : DOS_FALSE);
+	PUT_PCK_RES1 (packet, lock1 == lock2 ? (int) DOS_TRUE : (int) DOS_FALSE);
     } else {
-	PUT_PCK_RES1 (packet, get_long (lock1 + 4) == get_long (lock2 + 4) ? DOS_TRUE : DOS_FALSE);
+	PUT_PCK_RES1 (packet, get_long (lock1 + 4) == get_long (lock2 + 4) ? (int) DOS_TRUE : (int) DOS_FALSE);
     }
 }
 
@@ -2378,7 +2379,7 @@ action_change_mode (Unit *unit, dpacket packet)
     if (type == CHANGE_LOCK)
 	uniq = get_long (object + 4);
     else {
-	Key *k = lookup_key (unit, object);
+	Key *k = lookup_key (unit, (uae_u32) object);
 	if (!k) {
 	    PUT_PCK_RES1 (packet, DOS_FALSE);
 	    PUT_PCK_RES2 (packet, ERROR_OBJECT_NOT_AROUND);
@@ -2386,7 +2387,7 @@ action_change_mode (Unit *unit, dpacket packet)
 	}
 	uniq = k->aino->uniq;
     }
-    a = lookup_aino (unit, uniq);
+    a = lookup_aino (unit, (uae_u32) uniq);
 
     if (! a)
 	err = ERROR_INVALID_LOCK;
@@ -2410,14 +2411,14 @@ action_change_mode (Unit *unit, dpacket packet)
 	return;
     } else {
 	de_recycle_aino (unit, a);
-	PUT_PCK_RES1 (packet, DOS_TRUE);
+	PUT_PCK_RES1 (packet, (int) DOS_TRUE);
     }
 }
 
 static void
 action_parent_common (Unit *unit, dpacket packet, unsigned long uniq)
 {
-    a_inode *olda = lookup_aino (unit, uniq);
+    a_inode *olda = lookup_aino (unit, (int) uniq);
     if (olda == 0) {
 	PUT_PCK_RES1 (packet, DOS_FALSE);
 	PUT_PCK_RES2 (packet, ERROR_INVALID_LOCK);
@@ -2436,7 +2437,7 @@ action_parent_common (Unit *unit, dpacket packet, unsigned long uniq)
     }
     olda->parent->shlock++;
     de_recycle_aino (unit, olda->parent);
-    PUT_PCK_RES1 (packet, make_lock (unit, olda->parent->uniq, -2) >> 2);
+    PUT_PCK_RES1 (packet, (int) make_lock (unit, olda->parent->uniq, -2) >> 2);
 }
 
 static void
@@ -2509,7 +2510,7 @@ action_create_dir (Unit *unit, dpacket packet)
     }
     aino->shlock = 1;
     de_recycle_aino (unit, aino);
-    PUT_PCK_RES1 (packet, make_lock (unit, aino->uniq, -2) >> 2);
+    PUT_PCK_RES1 (packet, (int) make_lock (unit, aino->uniq, -2) >> 2);
 }
 
 static void
@@ -2554,7 +2555,7 @@ action_set_file_size (Unit *unit, dpacket packet)
 
     k = lookup_key (unit, GET_PCK_ARG1 (packet));
     if (k == 0) {
-	PUT_PCK_RES1 (packet, DOS_TRUE);
+	PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 	PUT_PCK_RES2 (packet, ERROR_OBJECT_NOT_AROUND);
 	return;
     }
@@ -2585,7 +2586,7 @@ action_set_file_size (Unit *unit, dpacket packet)
 	return;
     }
 
-    PUT_PCK_RES1 (packet, offset);
+    PUT_PCK_RES1 (packet, (int) offset);
     PUT_PCK_RES2 (packet, 0);
 }
 
@@ -2642,7 +2643,7 @@ action_delete_object (Unit *unit, dpacket packet)
     } else {
     	delete_aino (unit, a);
     }
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
@@ -2667,12 +2668,12 @@ action_set_date (Unit *unit, dpacket packet)
 				      get_long (date + 8));
     a = find_aino (unit, lock, bstr (unit, name), &err);
     if (err == 0 && utime (a->nname, &ut) == -1)
-	err = dos_errno ();
+	err = (int) dos_errno ();
     if (err != 0) {
 	PUT_PCK_RES1 (packet, DOS_FALSE);
 	PUT_PCK_RES2 (packet, err);
     } else
-	PUT_PCK_RES1 (packet, DOS_TRUE);
+	PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
@@ -2706,7 +2707,7 @@ action_rename_object (Unit *unit, dpacket packet)
 	/* Renaming to the same name, but possibly different case.  */
 	if (strcmp (a1->aname, bstr_cut (unit, name2)) == 0) {
 	    /* Exact match -> do nothing.  */
-	    PUT_PCK_RES1 (packet, DOS_TRUE);
+	    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 	    return;
 	}
 	a2 = a2->parent;
@@ -2736,13 +2737,13 @@ action_rename_object (Unit *unit, dpacket packet)
     move_exkeys (unit, a1, a2);
     move_aino_children (unit, a1, a2);
     delete_aino (unit, a1);
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
 action_current_volume (Unit *unit, dpacket packet)
 {
-    PUT_PCK_RES1 (packet, unit->volume >> 2);
+    PUT_PCK_RES1 (packet, (int) unit->volume >> 2);
 }
 
 static void
@@ -2772,20 +2773,20 @@ action_rename_disk (Unit *unit, dpacket packet)
     for (i = 0; i < namelen; i++)
 	put_byte (unit->volume + 45 + i, unit->ui.volname[i]);
 
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
 action_is_filesystem (Unit *unit, dpacket packet)
 {
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 static void
 action_flush (Unit *unit, dpacket packet)
 {
     /* sync(); */ /* pretty drastic, eh */
-    PUT_PCK_RES1 (packet, DOS_TRUE);
+    PUT_PCK_RES1 (packet, (int) DOS_TRUE);
 }
 
 /* We don't want multiple interrupts to be active at the same time. I don't
@@ -2888,8 +2889,8 @@ static uae_u32 exter_int_helper (void)
 	uip[unit_no].self->cmds_acked = uip[unit_no].self->cmds_sent;
 	port = uip[unit_no].self->port;
 	if (port) {
-	    m68k_areg (regs, 0) = port;
-	    m68k_areg (regs, 1) = find_unit (port)->dummy_message;
+	    m68k_areg (regs, 0) = (uint) port;
+	    m68k_areg (regs, 1) = (uint) find_unit (port)->dummy_message;
 	    unit_no++;
 	    return 1;
 	}
@@ -3181,9 +3182,9 @@ static uae_u32 filesys_diagentry (void)
 
     filesys_configdev = m68k_areg (regs, 3);
 
-    do_put_mem_long ((uae_u32 *)(filesysory + 0x2100), EXPANSION_explibname);
+    do_put_mem_long ((uae_u32 *)(filesysory + 0x2100), (int) EXPANSION_explibname);
     do_put_mem_long ((uae_u32 *)(filesysory + 0x2104), filesys_configdev);
-    do_put_mem_long ((uae_u32 *)(filesysory + 0x2108), EXPANSION_doslibname);
+    do_put_mem_long ((uae_u32 *)(filesysory + 0x2108), (int) EXPANSION_doslibname);
     do_put_mem_long ((uae_u32 *)(filesysory + 0x210c), current_mountinfo->num_units);
 
     uae_sem_init (&singlethread_int_sem, 0, 1);
@@ -3238,7 +3239,7 @@ static uae_u32 filesys_diagentry (void)
     put_word (resaddr + 14, 0x7001); /* moveq.l #1,d0 */
     put_word (resaddr + 16, RTS);
 
-    m68k_areg (regs, 0) = residents;
+    m68k_areg (regs, 0) = (int) residents;
     return 1;
 }
 
@@ -3311,7 +3312,7 @@ static uae_u32 filesys_dev_remember (void)
     uaecptr devicenode = m68k_areg (regs, 3);
 
     current_mountinfo->ui[unit_no].startup = get_long (devicenode + 28);
-    return devicenode;
+    return (int) devicenode;
 }
 
 /* Fill in per-unit fields of a parampacket */
@@ -3411,7 +3412,7 @@ void filesys_install (void)
     calltrap (deftrap2 (exter_int_helper, 0, "exter_int_helper"));
     dw (RTS);
 
-    org (loop);
+    org ((int) loop);
 }
 
 void filesys_install_code (void)

@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 #import "MainEmulationViewController.h"
 #import "IOSKeyboard.h"
 #import "InputControllerView.h"
@@ -27,7 +28,7 @@
 
     UIButton *closeButton;
     UIButton *restartButton;
-    UIWebView *webView;
+    WKWebView *webView;
 }
 
 -(IBAction)toggleControls:(id)sender;
@@ -37,7 +38,7 @@
 @property (readwrite, retain) IBOutlet UIButton *btnKeyboard;
 @property (readwrite, retain) IBOutlet UIButton *btnJoypad;
 @property (readwrite, retain) IBOutlet UIButton *btnPin;
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) IBOutlet WKWebView *webView;
 @property (nonatomic, retain) IBOutlet UIButton *closeButton;
 @property (nonatomic, retain) IBOutlet TouchHandlerViewClassic *mouseHandler;
 @property (nonatomic, retain) IBOutlet UIButton *restartButton;

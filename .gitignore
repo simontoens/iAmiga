@@ -29,16 +29,9 @@ disks/*
 rgetSpecific/DotC/Info-DotC.plist
 
 disks/
+drives/
 Packages/
 iUAE/
 roms/
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-
-Submodules/SVProgressHUD/
-=======
 Submodules/
->>>>>>> 1.1.0b1
-=======
->>>>>>> dev

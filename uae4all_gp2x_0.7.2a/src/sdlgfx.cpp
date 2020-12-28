@@ -149,7 +149,7 @@ void uae4all_show_time(void)
 /* Uncomment for debugging output */
 /* #define DEBUG */
 
-static __inline__ RETSIGTYPE sigbrkhandler (int foo) {}
+//static __inline__ RETSIGTYPE sigbrkhandler (int foo) {}
 
 /* SDL variable for output surface */
 SDL_Surface *prSDLScreen = NULL;
@@ -248,20 +248,20 @@ static __inline__ int maskShift (unsigned long mask)
 	return n;
 }
 
-static int get_color (int r, int g, int b, xcolnr *cnp)
-{
-#ifdef DEBUG_GFX
-	dbg("Function: get_color");
-#endif
-	
-	*cnp = SDL_MapRGB(prSDLScreen->format, r, g, b);
-	arSDLColors[ncolors].r = r;
-	arSDLColors[ncolors].g = g;
-	arSDLColors[ncolors].b = b;
-	
-	ncolors++;
-	return 1;
-}
+//static int get_color (int r, int g, int b, xcolnr *cnp)
+//{
+//#ifdef DEBUG_GFX
+//	dbg("Function: get_color");
+//#endif
+//
+//	*cnp = SDL_MapRGB(prSDLScreen->format, r, g, b);
+//	arSDLColors[ncolors].r = r;
+//	arSDLColors[ncolors].g = g;
+//	arSDLColors[ncolors].b = b;
+//
+//	ncolors++;
+//	return 1;
+//}
 
 static int init_colors (void)
 {

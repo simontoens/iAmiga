@@ -20,6 +20,7 @@
 #include "AudioQueueManager.h"
 #include "RingQ.h"
 #include <libkern/OSAtomic.h>
+#import <stdatomic.h>
 
 const int kMinimumBufferSize = 1920;
 
@@ -132,7 +133,7 @@ short* CAudioQueueManager::getNextBuffer() {
 
 void CAudioQueueManager::queueBuffer(short* buffer) {
 	_soundQBuffer.EnqueueSoundBuffer(buffer);
-	OSAtomicAdd32(_sampleFrameCount, &_samplesInQueue);
+    atomic_fetch_add(&_samplesInQueue, _sampleFrameCount);
 }
 
 void CAudioQueueManager::pause() {
@@ -175,7 +176,7 @@ void CAudioQueueManager::_HandleOutputBuffer(AudioQueueBufferRef outBuffer) {
 			short* buffer = _soundQBuffer.DequeueSoundBuffer();
 			memcpy(buf, buffer, _bytesPerQueueBuffer);
 			_soundQBuffer.EnqueueFreeBuffer(buffer);
-			OSAtomicAdd32(-_sampleFrameCount, &_samplesInQueue);
+            atomic_fetch_add(&_samplesInQueue, -_sampleFrameCount);
 			buf += _bytesPerQueueBuffer;
 			bytesInBuffer += _bytesPerQueueBuffer;
 		}

@@ -197,7 +197,7 @@ static int  try_to_read_disk(int i,const char *name)
     mi_z_type f=mi_z_open(name,"rb");
     if (f)
     {
-	    int readed=mi_z_read(f,uae4all_disk_memory[i],MAX_DISK_LEN);
+	    int readed=(int) mi_z_read(f,uae4all_disk_memory[i],MAX_DISK_LEN);
 	    mi_z_close(f);
 	    if (readed>0)
  	    {
@@ -228,10 +228,10 @@ static char *get_namefile(unsigned num)
 {
 	unsigned crc=uae4all_disk_crc[num];
 #if defined(GP2X) || defined(IPHONE)
-	if (!launchDir)
-	{
-		getcwd(launchDir, 250);
-	}
+//	if (!launchDir)
+//	{
+//		getcwd(launchDir, 250);
+//	}
 	sprintf((char *)&__uae4all_write_namefile[0],"%s/saves/%.8X.ads",launchDir, crc);
 #else
 	sprintf((char *)&__uae4all_write_namefile[0],SAVE_PREFIX "%.8X.ads",crc);
@@ -262,7 +262,7 @@ static void uae4all_disk_real_write(int num)
 					if (f)
 					{
 						fseek(f,0,SEEK_END);
-						usado=ftell(f);
+						usado=(int) ftell(f);
 						fclose(f);
 						usado/=512;
 					}
@@ -317,7 +317,7 @@ static void uae4all_initsave(unsigned num)
 			int retc=uncompress((Bytef *)uae4all_extra_buffer,&sizeuncompressed,(const Bytef *)bc,n);
 			if (retc>=0)
 			{
-				savedisk_apply_changes(uae4all_disk_memory[num],uae4all_extra_buffer,sizeuncompressed);
+				savedisk_apply_changes(uae4all_disk_memory[num],uae4all_extra_buffer,(int) sizeuncompressed);
 			}
 			else
 			{
@@ -424,7 +424,7 @@ int uae4all_fseek( FILE *flujo, long desplto, int origen)
 	switch(origen)
 	{
 		case SEEK_SET:
-			uae4all_disk_pos[i]=desplto;
+			uae4all_disk_pos[i]=(int) desplto;
 			break;
 		case SEEK_CUR:
 			uae4all_disk_pos[i]+=desplto;
@@ -462,7 +462,7 @@ int uae4all_init_rom(const char *name)
 		bzero(uae4all_rom_memory,MAX_ROM_LEN);
 #endif
 		fseek(f,0,SEEK_END);
-		uae4all_rom_len=ftell(f);
+		uae4all_rom_len=(int) ftell(f);
 		fseek(f,0,SEEK_SET);
 		if (uae4all_rom_len>MAX_ROM_LEN)
 		    uae4all_rom_len=MAX_ROM_LEN;
@@ -514,7 +514,7 @@ int uae4all_rom_fseek( FILE *flujo, long desplto, int origen)
 	switch(origen)
 	{
 		case SEEK_SET:
-			uae4all_rom_pos=desplto;
+			uae4all_rom_pos=(int) desplto;
 			break;
 		case SEEK_CUR:
 			uae4all_rom_pos+=desplto;

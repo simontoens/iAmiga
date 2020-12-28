@@ -21,6 +21,8 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+#import <WebKit/WebKit.h>
+
 #import "MainEmulationViewController.h"
 #import "VirtualKeyboard.h"
 #import "IOSKeyboard.h"
@@ -80,9 +82,11 @@ extern void uae_reset();
     uae_reset();
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+-(void) webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     NSString *fn = [NSString stringWithFormat:@"setVersion('%@');", self.bundleVersion];
-    [webView stringByEvaluatingJavaScriptFromString:fn];
+    [webView evaluateJavaScript:fn completionHandler:^(id _Nullable, NSError * _Nullable error) {
+        //
+    }];
 }
 
 - (CGFloat)screenHeight {
@@ -147,7 +151,7 @@ extern void uae_reset();
     SDL_Surface *surface = SDL_GetVideoSurface();
     UIView *display = (UIView *)surface->userdata;
     
-    [display performBlock:^(void) {
+    [display performCodeBlock:^(void) {
         // main thread
         [display addSubview:_icadeController];
         [_icadeController becomeFirstResponder];
@@ -280,6 +284,10 @@ extern void togglemouse (void);
                                              selector:@selector(keyboardDidHide:)
                                                  name:UIKeyboardDidHideNotification
                                                object:nil];
+}
+
+- (IBAction)keyboardDidHide:(id)sender {
+    //
 }
 
 -(IBAction)enableMenuBar:(id)sender {

@@ -51,9 +51,10 @@
     
     [webView setBackgroundColor:[UIColor clearColor]];
     [webView setOpaque:NO];
-    webView.delegate = self;
+//    webView.navigationDelegate = self;
+//    webView.uiDelegate = self;
     
-    [super initializeKeyboard:dummy_textfield dummytextf:dummy_textfield_f dummytexts:dummy_textfield_s];
+    [super initializeKeyboard];
 }
 
 - (void)dealloc {
@@ -66,14 +67,14 @@
     [super dealloc];
 }
 
-- (void)viewDidUnload {
+- (void)didReceiveMemoryWarning {
     //[self setMenuButton:nil];
     [self setCloseButton:nil];
     //[self setMenuView:nil];
     [self setMouseHandler:nil];
     [self setWebView:nil];
     [self setRestartButton:nil];
-    [super viewDidUnload];
+    [super didReceiveMemoryWarning];
 }
 
 - (IBAction)keyboardDidHide:(id)sender

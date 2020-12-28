@@ -11,6 +11,6 @@
 
 @interface NSObject(Blocks)
 
-- (void)performBlock:(void (^)(void))block afterDelay:(NSTimeInterval)delayInSeconds;
+- (void)performCodeBlock:(void (^)(void))block afterDelay:(NSTimeInterval)delayInSeconds;
     
 @end

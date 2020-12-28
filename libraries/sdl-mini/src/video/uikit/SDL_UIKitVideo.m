@@ -14,13 +14,13 @@
 #include "../../events/SDL_events_c.h"
 
 #include "SDL_UIKitVideo.h"
-#include "SDL_uikitevents.h"
+#include "SDL_UIKitEvents.h"
 
 #define UIKITVID_DRIVER_NAME "uikit"
 
 /* Initialization/Query functions */
-static int UIKit_VideoInit(_THIS);
-static void UIKit_VideoQuit(_THIS);
+//static int UIKit_VideoInit(_THIS);
+//static void UIKit_VideoQuit(_THIS);
 
 BOOL SDL_UIKit_supports_multiple_displays = NO;
 

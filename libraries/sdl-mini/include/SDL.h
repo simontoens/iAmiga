@@ -33,18 +33,18 @@ extern "C" {
 #define SDL_INIT_EVERYTHING     0x0000FFFF
 
     
-extern Uint32 SDL_GetTicks();
+extern Uint32 SDL_GetTicks(void);
 extern void SDL_UnlockSurface(SDL_Surface*);
 extern void SDL_LockSurface(SDL_Surface*);
 extern void SDL_FreeSurface(SDL_Surface*);
 extern void SDL_FillRect(SDL_Surface*, void*, int);
 extern long int SDL_MapRGB(tagFormat*, int, int, int);
 extern int SDL_PollEvent(SDL_Event*);
-extern void SDL_VideoQuit();
+extern void SDL_VideoQuit(void);
 extern void SDL_PauseOpenGL(int);
 
 extern int SDL_Init(int);
-extern char* SDL_GetError();
+extern char* SDL_GetError(void);
 
 #define SDL_ENABLE 1
 #define SDL_DISABLE 0

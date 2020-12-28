@@ -26,10 +26,11 @@
 #import "SettingsGeneralController.h"
 
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import <WebKit/WebKit.h>
 
 @class VirtualKeyboard;
 
-@interface MainEmulationViewController : BaseEmulationViewController<ResetDelegate, UIWebViewDelegate, UINavigationControllerDelegate> {
+@interface MainEmulationViewController : BaseEmulationViewController<ResetDelegate, WKNavigationDelegate, UINavigationControllerDelegate> {
     VirtualKeyboard	*vKeyboard;
     bool keyboardactive;
     bool joyactive;

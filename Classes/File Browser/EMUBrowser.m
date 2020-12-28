@@ -45,9 +45,11 @@
 
 - (NSArray *)getFileInfosWithFileNameFilter:(NSArray *)fileNameFilters extensions:(NSArray *)extensions {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     NSArray *documentFileInfos = [self getFileInfosInDirectory:documentsDirectory fileNameFilter:fileNameFilters extensions:extensions];
+    
     NSArray *bundleFileInfos = [self getFileInfosInDirectory:[[NSBundle mainBundle] bundlePath] fileNameFilter:fileNameFilters extensions:extensions];
     
     NSMutableArray *fileInfos = [[[NSMutableArray alloc] initWithCapacity:[documentFileInfos count] + [bundleFileInfos count]] autorelease];
@@ -66,10 +68,14 @@
         if (fileNameFilters) {
             NSString *fileName = [relativeFilePath lastPathComponent];
             if ([fileNameFilters containsObject:fileName]) {
-                [fileInfos addObject:fileInfo];
+                if ([filePath rangeOfString:@".Trash"].location == NSNotFound) {
+                    [fileInfos addObject:fileInfo];
+                }
             }
         } else {
-            [fileInfos addObject:fileInfo];
+            if ([filePath rangeOfString:@".Trash"].location == NSNotFound) {
+                [fileInfos addObject:fileInfo];
+            }
         }
     }
     return fileInfos;

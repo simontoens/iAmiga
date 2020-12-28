@@ -178,7 +178,7 @@ void hardfile_install (void)
     ROM_hardfile_resid = ds ("UAE hardfile.device 0.2");
 
     /* initcode */
-    initcode = filesys_initcode;
+    initcode = (uae_u32) filesys_initcode;
 
     /* Open */
     openfunc = here ();
@@ -212,7 +212,7 @@ void hardfile_install (void)
     dl (openfunc); /* Open */
     dl (closefunc); /* Close */
     dl (expungefunc); /* Expunge */
-    dl (EXPANSION_nullfunc); /* Null */
+    dl ((uae_u32) EXPANSION_nullfunc); /* Null */
     dl (beginiofunc); /* BeginIO */
     dl (abortiofunc); /* AbortIO */
     dl (0xFFFFFFFFul); /* end of table */
@@ -224,7 +224,7 @@ void hardfile_install (void)
     dw (0x0300); /* NT_DEVICE */
     dw (0xC000); /* INITLONG */
     dw (0x000A); /* LN_NAME */
-    dl (ROM_hardfile_resname);
+    dl ((uae_u32) ROM_hardfile_resname);
     dw (0xE000); /* INITBYTE */
     dw (0x000E); /* LIB_FLAGS */
     dw (0x0600); /* LIBF_SUMUSED | LIBF_CHANGED */
@@ -236,7 +236,7 @@ void hardfile_install (void)
     dw (0x0000);
     dw (0xC000);
     dw (0x0018); /* LIB_IDSTRING */
-    dl (ROM_hardfile_resid);
+    dl ((uae_u32) ROM_hardfile_resid);
     dw (0x0000); /* end of table */
 
     ROM_hardfile_init = here ();

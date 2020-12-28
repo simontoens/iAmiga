@@ -386,6 +386,7 @@ extern MPCStateType mainMenu_servermode;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
 	[self configure];
 }
 

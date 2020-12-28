@@ -81,12 +81,10 @@ bool bConnectionToServerJustEstablished = false;
 
 -(void)configureContinue:(MainEmulationViewController *) mainEmuViewCtrl {
 /*Continue Configuration after Waiting time */
-    
     mainMenu_servermode = mainMenu_servermode == kConnectionIsOff ? kServeAsHostForIncomingJoypadSignals : mainMenu_servermode;
     
     if(mainMenu_servermode == kServeAsHostForIncomingJoypadSignals)
     {
-        
         if(lastServerMode == kServeAsController)
         {
             [session disconnect]; // close client session
@@ -126,6 +124,7 @@ bool bConnectionToServerJustEstablished = false;
                 if( mainMenu_servermode == kServeAsController)
                     [self showMessage: @"use existing connection" withMessage: @"use existing connection for device controller"];
             }
+            
             bConnectionToServerJustEstablished = false;
             [self activateJoyPad];
         }
@@ -197,19 +196,19 @@ withDiscoveryInfo:(NSDictionary<NSString *,
     
     if([dID isEqualToString:kVirtualPad])
     {
-        for(kmNumber = 1;kmNumber <= [_dMap count];kmNumber++)
-        {
-            if([[_settings keyConfigurationforButton:VSWITCH forController:kmNumber] isEqualToString:@"YES"])
+//        for(kmNumber = 1;kmNumber <= [_dMap count];kmNumber++)
+//        {
+            if([[_settings keyConfigurationforButton:VSWITCH forController:(int)kmNumber] isEqualToString:@"YES"])
             {
                 //Mapping reserved for OnScreenJoypad found load this setting an return
-                [_settings setCNumber:kmNumber];
+                [_settings setCNumber:(int) kmNumber];
                 return;
             }
             
             //No Mapping found for OnScreenJoypad. Use first Keymap
             [_settings setCNumber:1];
             return;
-        }
+//        }
         
     }
     
@@ -222,14 +221,14 @@ withDiscoveryInfo:(NSDictionary<NSString *,
             if(_dMap[kmNumber] == [NSNull null])
             {
                 _dMap[kmNumber] = [[NSString stringWithString:dID] retain];
-                [self showMessage:@"New Controller Mapped" withMessage:[NSString stringWithFormat:@"Using Keymap %d for this device", kmNumber+1]];
+                [self showMessage:@"New Controller Mapped" withMessage:[NSString stringWithFormat:@"Using Keymap %ld for this device", (long) kmNumber+1]];
                 break;
             }
         }
     }
     
     kmNumber++;
-    [_settings setCNumber:kmNumber];
+    [_settings setCNumber:(int) kmNumber];
 }
 
 - (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController
@@ -362,11 +361,14 @@ MCNearbyServiceAdvertiser *advertiser=nil;
     {
         localPeerID = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];
     }
+    
     advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:localPeerID
                                       discoveryInfo:nil
                                         serviceType:XXServiceType];
     advertiser.delegate = self;
+    
     [advertiser startAdvertisingPeer];
+    
     //[self showMessage: @"server" withMessage: @"started on this device"];
 }
 
@@ -379,6 +381,10 @@ MCNearbyServiceAdvertiser *advertiser=nil;
     advertiser = nil;
     //[self showMessage: @"server" withMessage: @"stopped on this device"];
     
+}
+
+-(void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didNotStartAdvertisingPeer:(NSError *)error{
+    NSLog(@"DEBUG: Failed to start NearbyServiceAdvertiser -- %@", error.localizedDescription);
 }
 
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser

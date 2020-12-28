@@ -74,76 +74,76 @@ int lasttrap;
 
 static void *extra_stack_list = NULL;
 
-static void *get_extra_stack (void)
-{
-    void *s = extra_stack_list;
-    if (s)
-	extra_stack_list = *(void **)s;
-    if (!s)
-	s = xmalloc (EXTRA_STACK_SIZE);
-    return s;
-}
+//static void *get_extra_stack (void)
+//{
+//    void *s = extra_stack_list;
+//    if (s)
+//	extra_stack_list = *(void **)s;
+//    if (!s)
+//	s = xmalloc (EXTRA_STACK_SIZE);
+//    return s;
+//}
 
-static void free_extra_stack (void *s)
-{
-    *(void **)s = extra_stack_list;
-    extra_stack_list = s;
-}
+//static void free_extra_stack (void *s)
+//{
+//    *(void **)s = extra_stack_list;
+//    extra_stack_list = s;
+//}
 
-static void stack_stub (void *s, TrapFunction f, uae_u32 *retval)
-{
-#ifdef CAN_DO_STACK_MAGIC
-    *retval = f ();
-    /*write_log ("returning from stack_stub\n");*/
-    longjmp (((jmp_buf *)s)[0], 1);
-#endif
-}
+//static void stack_stub (void *s, TrapFunction f, uae_u32 *retval)
+//{
+//#ifdef CAN_DO_STACK_MAGIC
+//    *retval = f ();
+//    /*write_log ("returning from stack_stub\n");*/
+//    longjmp (((jmp_buf *)s)[0], 1);
+//#endif
+//}
 
 static void *current_extra_stack = NULL;
 static uaecptr m68k_calladdr;
 
-static void do_stack_magic (TrapFunction f, void *s, int has_retval)
-{
-#ifdef CAN_DO_STACK_MAGIC
-    uaecptr a7;
-    jmp_buf *j = (jmp_buf *)s;
-    switch (setjmp (j[0])) {
-     case 0:
-	/* Returning directly */
-	current_extra_stack = s;
-	if (has_retval == -1) {
-	    /*write_log ("finishing m68k mode return\n");*/
-	    longjmp (j[1], 1);
-	}
-	/*write_log ("calling native function\n");*/
-	transfer_control (s, EXTRA_STACK_SIZE, stack_stub, f, has_retval);
-	/* not reached */
-	return;
-
-     case 1:
-	/*write_log ("native function complete\n");*/
-	/* Returning normally. */
-	if (stack_has_retval (s, EXTRA_STACK_SIZE))
-	    _68k_dreg (0) = get_retval_from_stack (s, EXTRA_STACK_SIZE);
-	free_extra_stack (s);
-	break;
-
-     case 2:
-	/* Returning to do a m68k call. We're now back on the main stack. */
-	a7 = _68k_areg(7) -= (sizeof (void *) + 7) & ~3;
-	/* Save stack to restore */
-	*((void **)get_real_address (a7 + 4)) = s;
-	/* Save special return address: this address contains a
-	 * calltrap that will longjmp to the right stack. */
-	put_long (_68k_areg (7), RTAREA_BASE + 0xFF00);
-	_68k_setpc (m68k_calladdr);
-	fill_prefetch_0 ();
-	/*write_log ("native function calls m68k\n");*/
-	break;
-    }
-    current_extra_stack = 0;
-#endif
-}
+//static void do_stack_magic (TrapFunction f, void *s, int has_retval)
+//{
+//#ifdef CAN_DO_STACK_MAGIC
+//    uaecptr a7;
+//    jmp_buf *j = (jmp_buf *)s;
+//    switch (setjmp (j[0])) {
+//     case 0:
+//	/* Returning directly */
+//	current_extra_stack = s;
+//	if (has_retval == -1) {
+//	    /*write_log ("finishing m68k mode return\n");*/
+//	    longjmp (j[1], 1);
+//	}
+//	/*write_log ("calling native function\n");*/
+//	transfer_control (s, EXTRA_STACK_SIZE, stack_stub, f, has_retval);
+//	/* not reached */
+//	return;
+//
+//     case 1:
+//	/*write_log ("native function complete\n");*/
+//	/* Returning normally. */
+//	if (stack_has_retval (s, EXTRA_STACK_SIZE))
+//	    _68k_dreg (0) = get_retval_from_stack (s, EXTRA_STACK_SIZE);
+//	free_extra_stack (s);
+//	break;
+//
+//     case 2:
+//	/* Returning to do a m68k call. We're now back on the main stack. */
+//	a7 = _68k_areg(7) -= (sizeof (void *) + 7) & ~3;
+//	/* Save stack to restore */
+//	*((void **)get_real_address (a7 + 4)) = s;
+//	/* Save special return address: this address contains a
+//	 * calltrap that will longjmp to the right stack. */
+//	put_long (_68k_areg (7), RTAREA_BASE + 0xFF00);
+//	_68k_setpc (m68k_calladdr);
+//	fill_prefetch_0 ();
+//	/*write_log ("native function calls m68k\n");*/
+//	break;
+//    }
+//    current_extra_stack = 0;
+//#endif
+//}
 
 static uae_u32 execute_fn_on_extra_stack (TrapFunction f, int has_retval)
 {
@@ -203,9 +203,9 @@ uae_u32 CallLib (uaecptr base, uae_s16 offset)
     int i;
     uaecptr olda6 = _68k_areg(6);
     uae_u32 retval;
-    _68k_areg(6) = base;
+    _68k_areg(6) = (uint) base;
     retval = call_m68k(base + offset, 1);
-    _68k_areg(6) = olda6;
+    _68k_areg(6) = (uint) olda6;
     return retval;
 }
 
@@ -285,7 +285,7 @@ void REGPARAM2 call_calltrap(int func)
 
     /* For monitoring only? */
     if (traps[func] == NULL) {
-	_68k_setpc(trapoldfunc[func]);
+	_68k_setpc((uint) trapoldfunc[func]);
 	return;
     }
 
@@ -326,9 +326,9 @@ uaecptr libemu_InstallFunctionFlags (TrapFunction f, uaecptr libbase, int offset
     calltrap (trnum = deftrap2 (f, flags, tracename));
     dw (RTS);
 
-    _68k_areg(1) = libbase;
+    _68k_areg(1) = (uint) libbase;
     _68k_areg(0) = offset;
-    _68k_dreg(0) = addr;
+    _68k_dreg(0) = (uint) addr;
     retval = CallLib (execbase, -420);
 
     trapoldfunc[trnum] = retval;
@@ -371,7 +371,7 @@ void dl (uae_u32 data)
 
 uae_u32 ds (const char *str)
 {
-    int len = strlen (str) + 1;
+    int len = (int) strlen (str) + 1;
 
     rt_straddr -= len;
     

@@ -29,8 +29,8 @@ void process_exception(unsigned int vect);
 
 void uae_chk_handler(unsigned vector)
 {
-	unsigned opcode=m68k_fetch(m68k_get_pc());
-	unsigned pc=m68k_get_pc();
+	unsigned opcode=m68k_fetch((int) m68k_get_pc());
+	unsigned pc=(int)m68k_get_pc();
     
 	if (cloanto_rom && (opcode & 0xF100) == 0x7100) {
 		_68k_dreg((opcode >> 9) & 7) = (uae_s8)(opcode & 0xFF);

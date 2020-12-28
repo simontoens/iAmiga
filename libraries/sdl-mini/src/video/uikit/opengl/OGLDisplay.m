@@ -217,7 +217,7 @@ const GLushort Indices[] = {
 	glEnableVertexAttribArray(_shaderEffect.textureCoord);
 	
     GLsizei stride = sizeof(Vertex);
-	const GLvoid *ofsCoords = offsetof(Vertex, Position);
+	const GLvoid *ofsCoords = (GLvoid*) offsetof(Vertex, Position);
 	const GLvoid *ofsTexCoords = (GLvoid*)offsetof(Vertex, TexCoords);	
     glVertexAttribPointer(_shaderEffect.position, 2, GL_FLOAT, GL_FALSE, stride, ofsCoords);
 	glVertexAttribPointer(_shaderEffect.textureCoord, 2, GL_FLOAT, GL_FALSE, stride, ofsTexCoords);	
@@ -261,7 +261,8 @@ const GLushort Indices[] = {
 	glEnableVertexAttribArray(_shaderEffect.textureCoord);
 	
     GLsizei stride = sizeof(Vertex);
-	const GLvoid *ofsCoords = offsetof(Vertex, Position);
+	const GLvoid *ofsCoords = (GLvoid*) offsetof(Vertex, Position);
+    
 	const GLvoid *ofsTexCoords = (GLvoid*)offsetof(Vertex, TexCoords);	
     glVertexAttribPointer(_shaderEffect.position, 2, GL_FLOAT, GL_FALSE, stride, ofsCoords);
 	glVertexAttribPointer(_shaderEffect.textureCoord, 2, GL_FLOAT, GL_FALSE, stride, ofsTexCoords);	

@@ -50,7 +50,7 @@ static UIView<DisplayViewSurface>	*view;
 Uint32 SDL_GetTicks() {
 	timeval tv;
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec - time_start) * 1000UL + tv.tv_usec / 1000;
+	return (int) (tv.tv_sec - time_start) * 1000UL + tv.tv_usec / 1000;
 }
 
 void SDL_UnlockSurface(SDL_Surface* a) {
@@ -83,7 +83,7 @@ void SDL_VideoQuit() {
 int SDL_Init(int initFlags) {
 	timeval tv;
 	gettimeofday(&tv, NULL);
-	time_start = tv.tv_sec;
+	time_start = (int) tv.tv_sec;
     
     SDL_VideoInit(NULL, initFlags);
 
